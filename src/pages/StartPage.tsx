@@ -6,7 +6,7 @@ function StartPage() {
         <h1>Startsidan</h1>
         <p>Klicka nedan för att starta spelet</p>
         <Link to="/runesbeachclub">
-        <button>Start Game</button>
+            <button>Start Game</button>
         </Link>
         </div>
     );
