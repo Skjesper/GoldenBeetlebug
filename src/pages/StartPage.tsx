@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import backgroundImage from './../assets/backgroundImages/game_background.png';
-
+import Button from './../components/Button';
 import styled from '@emotion/styled';
-import React, { useState, useEffect } from 'react';
-
+import Background from '../components/Background';
 
 const StartContainer = styled.div`
   display: flex;
@@ -12,12 +11,8 @@ const StartContainer = styled.div`
   background-color: #b69191;
 
   @media (orientation: landscape) {
-    background: #c76565;
-    background-image: url(${backgroundImage});
-    background-size: cover;
-    background-position: center;
+    background: transparent; 
     flex-direction: row;
-    filter: blur(1px);
   }
 `;
 
@@ -36,14 +31,13 @@ const StyledH1 = styled.h1`
 
  function StartPage() {
   return (
-    
+    <>
+    <Background/>
       <StartContainer>
         <StyledH1>Vrid skärmen till liggande läge</StyledH1>
-      <Link to="/runesbeachclub">
-        <button>Start Game</button>
-      </Link>
+      <Button to="/runesbeachclub">Starta</Button>
       </StartContainer>
-    
+    </>
   );
 };
 
