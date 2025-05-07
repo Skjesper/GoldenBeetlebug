@@ -16,7 +16,7 @@ const StyledButton = styled.button`
             background-color: #48b300;
         }
 
-        @media (orientation: landscape) {
+        @media (orientation: portrait) {
             display: none;
         }
         
