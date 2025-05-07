@@ -9,11 +9,17 @@ const StartContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   background-color: #b69191;
+  align-items: flex-end;
+  justify-content: space-around;
 
   @media (orientation: landscape) {
-    background: transparent; 
+    background: transparent;
     flex-direction: row;
   }
+`;
+
+const ButtonContainer = styled.div`
+  margin-bottom: 4rem;
 `;
 
 const StyledH1 = styled.h1`
@@ -23,22 +29,24 @@ const StyledH1 = styled.h1`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   padding: 8rem 3rem;
   text-align: center;
-  
+
   @media (orientation: landscape) {
     display: none;
   }
 `;
 
- function StartPage() {
+function StartPage() {
   return (
     <>
-    <Background/>
+      <Background />
       <StartContainer>
         <StyledH1>Vrid skärmen till liggande läge</StyledH1>
-      <Button to="/runesbeachclub">Starta</Button>
+        <ButtonContainer>
+          <Button to="/runesbeachclub">Starta</Button>
+        </ButtonContainer>
       </StartContainer>
     </>
   );
-};
+}
 
 export default StartPage;
