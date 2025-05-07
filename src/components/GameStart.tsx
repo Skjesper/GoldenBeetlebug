@@ -9,8 +9,10 @@ const GameContainer = styled.div<GameContainerProps>`
   display: flex;
   flex-direction: ${props => props.isLandscape ? 'row' : 'column'};
   height: 100vh;
-  background-color: ${props => props.isLandscape ? '#c76565' : '#101010'};
+  background-color: ${props => props.isLandscape ? '#c76565' : '#b69a9a'};
 `;
+
+
 
 const Game: React.FC = () => {
   const [isLandscape, setIsLandscape] = useState<boolean>(window.innerWidth > window.innerHeight);
@@ -31,7 +33,7 @@ const Game: React.FC = () => {
   
   return (
     <GameContainer isLandscape={isLandscape}>
-      Spelinnehåll
+      <h1>Vrid skärmen till liggande läge</h1>
     </GameContainer>
   );
 };
