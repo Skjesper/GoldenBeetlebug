@@ -6,9 +6,10 @@ interface BackgroundProps {
   children: ReactNode;
   maxWidth?: string;
   maxHeight?: string;
+  blurred?: boolean;
 }
 
-const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string }>`
+const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurred?: boolean }>`
     position: relative;
     width: 100%;
     height: 100%;
@@ -19,6 +20,8 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string }>`
     background-image: url(${backgroundImage});
     background-size: cover;
     background-position: center;
+    filter: ${props => props.blurred ? 'blur(1px)' : 'none'};
+
 
     @media (orientation: landscape) and (max-width: 1024px) {
         aspect-ratio: 16 / 9;
@@ -46,9 +49,9 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string }>`
     }
 `;
 
-function Background({ children, maxWidth, maxHeight }: BackgroundProps) {
+function Background({ children, maxWidth, maxHeight, blurred = false }: BackgroundProps) {
     return (
-        <BackgroundDiv maxWidth={maxWidth} maxHeight={maxHeight}>
+        <BackgroundDiv maxWidth={maxWidth} maxHeight={maxHeight} blurred={blurred}>
             {children}
         </BackgroundDiv>
     );
