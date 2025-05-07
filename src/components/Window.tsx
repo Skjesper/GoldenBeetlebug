@@ -31,6 +31,31 @@ interface WindowProps {
     background-size: cover;
     background-position: center;
 
+    @media (orientation: landscape) and (max-width: 1024px) {
+        aspect-ratio: 16 / 9;
+        height: auto;
+        width: 90%;
+    }
+    
+    @media (orientation: portrait) and (max-width: 768px) {
+        &:before {
+        content: "Vrid skärmen till liggande läge";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: white;
+        font-size: 1.5rem;
+        text-align: center;
+        z-index: 100;
+        }
+    }
+
   `;
 
 function Window({ children, maxWidth, maxHeight }: WindowProps) {
