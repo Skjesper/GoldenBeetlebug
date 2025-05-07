@@ -39,4 +39,8 @@ function Button({ children, to }: ButtonProps) {
     return <StyledButton>{children}</StyledButton>;
 }
 
+{/* <Button to="/"></Button>
+<Button to="/resultat"></Button>
+<Button to="/runesbeachclub"></Button> */}
+
 export default Button;
