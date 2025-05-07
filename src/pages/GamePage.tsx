@@ -1,17 +1,12 @@
-import { Link } from "react-router-dom";
 import RuneHunt from "../components/RuneHunt";
+import Window from "../components/Window";
 
 function GamePage() {
   
   return (
-    <div>
-
+    <Window>
       <RuneHunt />
-      {/* <h1>Spelsidan</h1>
-        <Link to="/resultat">
-            <button>Avsluta spelet</button>
-        </Link> */}
-    </div>
+    </Window>
   );
 }
   
