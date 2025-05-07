@@ -17,10 +17,20 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     max-height: ${props => props.maxHeight || '80vh'};
     border-radius: 8px;
     overflow: hidden;
-    background-image: url(${backgroundImage});
-    background-size: cover;
-    background-position: center;
-    filter: ${props => props.blurred ? 'blur(1px)' : 'none'};
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url(${backgroundImage});
+      background-size: cover;
+      background-position: center;
+      filter: ${props => props.blurred ? 'blur(1px)' : 'none'};
+      z-index: -1;
+    }
 
 
     @media (orientation: landscape) and (max-width: 1024px) {
