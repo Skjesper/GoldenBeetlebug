@@ -4,10 +4,9 @@ import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
 
 
-
 export default function RuneHunt () {
 
-    const [gameRunning, setGameRunning] = useState<boolean>(false);
+    const [gameRunning, setGameRunning] = useState<boolean>(true);
     const [score, setScore] = useState<number>(0);
     const [highScore, setHighscore] = useState<number>(0);
 
@@ -16,7 +15,7 @@ export default function RuneHunt () {
         setGameRunning(false);
     }
 
-    const startGame = () => {
+    function startGame() {
         setGameRunning(true);
         setScore(0);
       };
@@ -31,9 +30,7 @@ export default function RuneHunt () {
         }
       };
 
-
-    
-
+      
     return (
         <div>
 
@@ -54,9 +51,9 @@ export default function RuneHunt () {
         <h1>Detta är en H1</h1>
       
 
-        <button onClick={startGame}>
+        {/* <button onClick={startGame}>
             {gameRunning ? "Pågår..." : "Starta spelet"}
-        </button>
+        </button> */}
         </div>
     )
 
