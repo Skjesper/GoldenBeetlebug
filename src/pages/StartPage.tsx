@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import backgroundImage from './../assets/backgroundImages/game_background.png';
 
 import styled from '@emotion/styled';
 import React, { useState, useEffect } from 'react';
@@ -12,7 +13,11 @@ const StartContainer = styled.div`
 
   @media (orientation: landscape) {
     background: #c76565;
+    background-image: url(${backgroundImage});
+    background-size: cover;
+    background-position: center;
     flex-direction: row;
+    filter: blur(1px);
   }
 `;
 
