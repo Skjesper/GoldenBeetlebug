@@ -4,13 +4,14 @@ import Window from '../components/Window';
 
 const ButtonContainer = styled.div`
   margin-bottom: 4rem;
+  z-index: 100;
 `;
 
 
 function StartPage() {
   return (
     <>
-      <Window>
+      <Window blurred>
         <ButtonContainer>
           <Button to="/runesbeachclub">Starta</Button>
         </ButtonContainer>
