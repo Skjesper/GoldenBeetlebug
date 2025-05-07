@@ -36,7 +36,11 @@ export default function Scoreboard({
         <p>{highScore}</p>
 
         {onScorePoint && (
-          <Rune onClick={onScorePoint} startPosition={getRandomNumber(0, 50)} bounceHeight={getRandomNumber(100, 200)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()}></Rune>
+          <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(10, 90)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()}></Rune>
+
+      )}
+        {onScorePoint && (
+          <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(300, 500)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()}></Rune>
 
       )}
 
