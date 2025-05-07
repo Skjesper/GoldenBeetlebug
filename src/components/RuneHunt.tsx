@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
@@ -9,7 +9,7 @@ export default function RuneHunt () {
 
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [score, setScore] = useState<number>(0);
-    const [highscore, setHighscore] = useState<number>(0);
+    const [highScore, setHighscore] = useState<number>(0);
 
     const handleTimeOut = () => {
         console.log("Times up");
@@ -18,7 +18,19 @@ export default function RuneHunt () {
 
     const startGame = () => {
         setGameRunning(true);
+        setScore(0);
       };
+
+    if (score > highScore) {
+        setHighscore(score);
+    }
+
+    const handleScore = () => {
+        if (gameRunning) {
+          setScore(prevScore => prevScore + 10);
+        }
+      };
+
 
     
 
