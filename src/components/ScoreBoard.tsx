@@ -1,4 +1,5 @@
 import react from 'react';
+import Rune from './Rune';
 
 interface ScoreboardProps {
 
@@ -26,12 +27,13 @@ export default function Scoreboard({
         <p>{highScore}</p>
 
         {onScorePoint && (
-        <button 
-          onClick={onScorePoint}
-          className="score-button"
-        >
-          Få poäng (simulering)
-        </button>
+          <Rune onClick={onScorePoint}></Rune>
+        // <button 
+        //   onClick={onScorePoint}
+        //   className="score-button"
+        // >
+        //   Få poäng (simulering)
+        // </button>
       )}
 
         </div>

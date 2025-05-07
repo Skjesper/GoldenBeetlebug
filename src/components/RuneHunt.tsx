@@ -51,6 +51,7 @@ export default function RuneHunt () {
           onScorePoint={handleScore}
         />
       </div>
+      
         <h1>Detta är en H1</h1>
       
 
