@@ -6,6 +6,7 @@ import EndScreen from './EndScreen';
 export default function RuneHunt() {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [gameOver, setGameOver] = useState<boolean>(false);
+    
     const [score, setScore] = useState<number>(0);
     const [highScore, setHighscore] = useState<number>(0);
 
@@ -15,7 +16,7 @@ export default function RuneHunt() {
         setGameOver(true);
     }
 
-    const startGame = () => {
+    function startGame() {
         setGameRunning(true);
         setGameOver(false);
         setScore(0);
@@ -31,6 +32,7 @@ export default function RuneHunt() {
         if (gameRunning) {
             setScore(prevScore => prevScore + 10);
         }
+
     };
 
     return (
@@ -64,6 +66,7 @@ export default function RuneHunt() {
                     onRestart={startGame}
                 />
             )}
+
         </div>
     );
 }

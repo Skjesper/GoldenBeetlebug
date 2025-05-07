@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
-import backgroundImage from './../assets/backgroundImages/game_background.png';
 import Button from './../components/Button';
 import styled from '@emotion/styled';
 import Background from '../components/Background';
+
 
 const StartContainer = styled.div`
   display: flex;
