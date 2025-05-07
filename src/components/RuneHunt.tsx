@@ -6,6 +6,7 @@ import EndScreen from './EndScreen';
 export default function RuneHunt() {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [gameOver, setGameOver] = useState<boolean>(false);
+    const [countdown, setCountDown] = useState<number>(0);
     
     const [score, setScore] = useState<number>(0);
     const [highScore, setHighscore] = useState<number>(0);
@@ -17,9 +18,21 @@ export default function RuneHunt() {
     }
 
     function startGame() {
-        setGameRunning(true);
+        setCountDown(3);
         setGameOver(false);
         setScore(0);
+
+        const countdownInterval = setInterval(() => {
+            setCountDown(prevCount => {
+              if (prevCount <= 1) {
+               
+                clearInterval(countdownInterval);
+                setGameRunning(true);
+                return 0;
+              }
+              return prevCount - 1;
+            });
+          }, 1000);
     };
 
     useEffect(() => {
@@ -55,8 +68,18 @@ export default function RuneHunt() {
                     </div>
                     <h1>Detta är en H1</h1>
                     
-                    <button onClick={startGame}>
-                        {gameRunning ? "Pågår..." : "Starta spelet"}
+                   
+                    {countdown > 0 && (
+                        <div className="countdown-display">
+                            <h2 className="countdown-number">{countdown}</h2>
+                        </div>
+                    )}
+                    
+                    <button 
+                        onClick={startGame}
+                        disabled={countdown > 0} 
+                    >
+                        {gameRunning ? "Pågår..." : countdown > 0 ? `Startar om ${countdown}...` : "Starta spelet"}
                     </button>
                 </>
             ) : (
@@ -66,7 +89,6 @@ export default function RuneHunt() {
                     onRestart={startGame}
                 />
             )}
-
         </div>
     );
 }
