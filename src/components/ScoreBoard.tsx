@@ -9,6 +9,15 @@ interface ScoreboardProps {
 
 }
 
+function getRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomDirection(): string {
+  return Math.random() < 0.5 ? "translateX" : "translateY";
+}
+
+
 export default function Scoreboard({ 
     score, 
     highScore, 
@@ -27,13 +36,8 @@ export default function Scoreboard({
         <p>{highScore}</p>
 
         {onScorePoint && (
-          <Rune onClick={onScorePoint}></Rune>
-        // <button 
-        //   onClick={onScorePoint}
-        //   className="score-button"
-        // >
-        //   Få poäng (simulering)
-        // </button>
+          <Rune onClick={onScorePoint} startPosition={getRandomNumber(0, 50)} bounceHeight={getRandomNumber(100, 200)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()}></Rune>
+
       )}
 
         </div>
