@@ -8,6 +8,17 @@ interface WindowProps {
     maxHeight?: string;
   }
 
+  const WindowContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 20px;
+`;
+
 function Window({ children, maxWidth, maxHeight }: WindowProps) {
   return (
     <WindowContainer>
