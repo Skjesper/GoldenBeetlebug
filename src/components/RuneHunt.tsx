@@ -32,8 +32,6 @@ export default function RuneHunt () {
       };
 
 
-    
-
     return (
         <div>
 
