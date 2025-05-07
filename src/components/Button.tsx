@@ -18,13 +18,13 @@ const StyledButton = styled.button`
 
         @media (orientation: portrait) {
             display: none;
-        }
-        
+        }  
 `;
 
 type ButtonProps = {
     children: ReactNode;
     to?: string;
+    onClick?: () => void;
 }
 
 function Button({ children, to }: ButtonProps) {
