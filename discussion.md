@@ -1,6 +1,4 @@
-Page for ideas and discussion
-
-testing projectstoday
+# Page for ideas and discussion
 
 
-more information about project
+# More information about project
