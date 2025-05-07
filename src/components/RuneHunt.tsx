@@ -41,7 +41,7 @@ export default function RuneHunt() {
                 <>
                     <div className="game-header">
                         <Timer 
-                            initialTime={30} 
+                            initialTime={10} 
                             isRunning={gameRunning} 
                             onTimeOut={handleTimeOut}
                             countDown={true}
