@@ -1,4 +1,3 @@
-// import { Link } from "react-router-dom";
 import RuneHunt from "../components/RuneHunt";
 import Window from "../components/Window";
 
