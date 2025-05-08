@@ -1,4 +1,5 @@
 import react from 'react';
+import Rune from './Rune';
 
 interface ScoreboardProps {
 
@@ -7,6 +8,15 @@ interface ScoreboardProps {
     onScorePoint?: () => void;
 
 }
+
+function getRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomDirection(): string {
+  return Math.random() < 0.5 ? "translateX" : "translateY";
+}
+
 
 export default function Scoreboard({ 
     score, 
@@ -26,12 +36,12 @@ export default function Scoreboard({
         <p>{highScore}</p>
 
         {onScorePoint && (
-        <button 
-          onClick={onScorePoint}
-          className="score-button"
-        >
-          Få poäng (simulering)
-        </button>
+          <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(10, 90)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()}></Rune>
+
+      )}
+        {onScorePoint && (
+          <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(300, 500)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()}></Rune>
+
       )}
 
         </div>
