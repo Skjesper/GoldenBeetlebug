@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 
 interface WindowProps {
     children: ReactNode;
+    blurred?: boolean;
   }
 
 const WindowContainer = styled.div`
@@ -18,10 +19,10 @@ padding: 20px;
 `;
 
 
-function Window({ children }: WindowProps) {
+function Window({ children, blurred = false }: WindowProps) {
     return (
       <WindowContainer>
-        <Background>
+        <Background blurred ={blurred}>
           {children}
         </Background>
       </WindowContainer>
