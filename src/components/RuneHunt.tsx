@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
+import StageSelect from './StageSelect';
+
+import backgroundImage1 from './../assets/backgroundImages/game_background.png'
+import backgroundImage2 from './../assets/backgroundImages/dessert_bg.png'
+import backgroundImage3 from './../assets/backgroundImages/forest_bg.png'
+import backgroundImage4 from './../assets/backgroundImages/winter_bg.png'
 
 export default function RuneHunt() {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
@@ -48,8 +54,37 @@ export default function RuneHunt() {
 
     };
 
+    const StageSelectMode: boolean = !gameOver && !gameRunning;
+
+    const stageImages = [
+      {
+        id: 1,
+        src: backgroundImage1, 
+        alt: "Beachclub stage"
+      },
+      {
+        id: 2,
+        src: backgroundImage2,
+        alt: "Dessert stage"
+      },
+      {
+        id: 3,
+        src: backgroundImage3,
+        alt: "Forest stage"
+      },
+      {
+        id: 4,
+        src: backgroundImage4,
+        alt: "Winter stage"
+      }
+    ];
+
     return (
         <div>
+          {StageSelectMode && (
+            <StageSelect images={stageImages} />
+          )}
+
             {!gameOver ? (
                 <>
                     <div className="game-header">

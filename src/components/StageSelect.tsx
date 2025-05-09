@@ -90,6 +90,7 @@ export default function StageSelect({ images }: StageSelectProps) {
             borderRadius: '1rem',
             
           }}
+          
           />
           </StyledImageContainer>
       ))}
