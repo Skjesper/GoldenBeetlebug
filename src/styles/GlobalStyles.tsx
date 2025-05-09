@@ -4,10 +4,11 @@ const globalStyles = css`
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
     :root {
-        --primary: #2960f8;
+        --primary: #D31717;
         --secondary: #fff;
+        --primary-dark: #901111;
         --text-main: #333;
-        --text-light: #767676;
+        --text-light: #B3B2B2;
         --background: #ffffff;
         --error: #e74c3c;
 
@@ -33,20 +34,20 @@ const globalStyles = css`
         --weight-black: 900;
     }
     
-    html {
+    * {
         font-family: var(--font-primary);
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
     
     h1, h2, h3, h4, h5, h6 {
         font-family: var(--font-display);
         font-weight: var(--weight-bold);
-  
     }
 
-    * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    a {
+        text-decoration: none;
     }
     
 ;`
