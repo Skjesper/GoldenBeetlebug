@@ -17,6 +17,9 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     max-height: ${props => props.maxHeight || '80vh'};
     border-radius: 8px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     &:before {
       content: "";
