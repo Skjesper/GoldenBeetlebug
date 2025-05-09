@@ -8,6 +8,51 @@ interface EndScreenProps {
     onRestart: () => void;
 }
 
+const Container = styled.div`
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #717070;
+  width: 34.25rem;
+  height: 18.625rem;
+  border-radius: 20px;
+  gap: 1rem;
+
+`;
+
+
+const Title = styled.h2`
+  font-size: 3rem;
+
+`;
+
+const ScoreContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+`;
+
+const ScoreItem = styled.h3`
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+`;
+
+const ButtonContainer = styled.div`
+
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+`;
+
+
+
 export default function EndScreen({ score, highScore, onRestart }: EndScreenProps) {
     const getResultMessage = () => {
         if (score >= highScore && highScore > 0) return "Nytt rekord!";
@@ -16,26 +61,34 @@ export default function EndScreen({ score, highScore, onRestart }: EndScreenProp
     };
 
     return (
-        <div>
-          <h1>Spelet är slut!</h1>
+        <Container>
+          <Title>Spelet är slut!</Title>
           
-          <div>
+          
+          <ScoreContainer>
             <h2>Ditt resultat</h2>
             <div>
+            <ScoreItem>
               <span>Poäng: {score}</span>
+            </ScoreItem>
+              
             </div>
-            <div>
+            <ScoreItem>
               <span>Bästa resultat: {highScore}</span>
-            </div>
-          </div>
+            </ScoreItem>
+          </ScoreContainer>
           
           <div>
             <p>{getResultMessage()}</p>
           </div>
-          
-          <Button onClick={onRestart}>
-            Spela igen
-          </Button>
-        </div>
+          <ButtonContainer>
+            <Button onClick={onRestart}>
+              Spela igen
+            </Button>
+            <Button onClick={onRestart}>
+              Leaderboard
+            </Button>
+          </ButtonContainer>
+        </Container>
     );
 }
