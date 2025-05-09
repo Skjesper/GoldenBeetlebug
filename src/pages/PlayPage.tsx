@@ -1,7 +1,7 @@
 import RuneHunt from "../components/RuneHunt";
 import Window from "../components/Window";
 
-function GamePage() {
+function PlayPage() {
   
   return (
     <Window>
@@ -10,4 +10,4 @@ function GamePage() {
   );
 }
   
-  export default GamePage;
+  export default PlayPage;
