@@ -4,6 +4,7 @@ type RuneProps = {
     onClick?: () => void;
     bounceHeight: number;
     startPosition: number;
+    time: number;
     firstTurn: string;
     secondTurn: string;
     thirdTurn: string;
@@ -14,11 +15,11 @@ const StyledRune = styled.button<RuneProps>`
 width: 60px;
 height: 60px;
 background-color: hotpink;
-animation: bounce 3s infinite;
+animation: bounce ${props => props.time}s infinite;
         
-@keyframes bounce {
+/* @keyframes bounce {
     0%, 100% {
-        transform: translateY(${props => props.startPosition}px);
+        transform: translateY(0px);
     }
     20% {
         transform: ${props => props.firstTurn}(${props => props.bounceHeight}%);
@@ -36,11 +37,33 @@ animation: bounce 3s infinite;
         transform: ${props => props.secondTurn}(${props => props.bounceHeight}%);
     }
     
+} */
+
+    @keyframes bounce {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    20% {
+        transform: ${props => props.firstTurn}(200px);
+    }
+    40% {
+        transform: ${props => props.secondTurn}(200px);
+    }
+    60% {
+        transform: ${props => props.thirdTurn}(200px);
+    }
+    70% {
+        transform: ${props => props.firstTurn}(200px);
+    }
+    80% {
+        transform: ${props => props.secondTurn}(200px);
+    }
+    
 }
 `;
 
 
-const Rune = ({ onClick, bounceHeight, startPosition, firstTurn, secondTurn, thirdTurn }: RuneProps) => {
+const Rune = ({ onClick, bounceHeight, startPosition, firstTurn, secondTurn, thirdTurn, time }: RuneProps) => {
 
 
     return(
@@ -48,6 +71,7 @@ const Rune = ({ onClick, bounceHeight, startPosition, firstTurn, secondTurn, thi
 onClick={onClick}
 bounceHeight={bounceHeight} 
 startPosition={startPosition}
+time={time}
 firstTurn={firstTurn}
 secondTurn={secondTurn}
 thirdTurn={thirdTurn}
