@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RuneHuntPage from "./pages/RuneHuntPage";
 import LeaderboardPage from "./pages/EndPage";
 import PlayPage from "./pages/PlayPage";
-import './App.css'
 
 function App() {
 
