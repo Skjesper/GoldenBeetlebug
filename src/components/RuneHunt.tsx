@@ -59,6 +59,15 @@ const CountdownNumber = styled.h2`
 `;
 
 
+
+const GameHeader = styled.section`
+
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+margin: 1rem;
+`;
+
 export default function RuneHunt() {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [gameOver, setGameOver] = useState<boolean>(false);
@@ -142,9 +151,9 @@ function startGame() {
 
             {!gameOver ? (
                 <>
-                    <div className="game-header">
+                  <GameHeader>
                         <Timer 
-                            initialTime={10} 
+                            initialTime={300} 
                             isRunning={gameRunning} 
                             onTimeOut={handleTimeOut}
                             countDown={true}
@@ -155,8 +164,7 @@ function startGame() {
                             highScore={highScore}
                             onScorePoint={handleScore}
                         />
-                    </div>
-                    <h1>Detta är en H1</h1>
+                        </GameHeader>
                     
                    
                     {countdown > 0 && (

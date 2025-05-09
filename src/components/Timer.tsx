@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
 
 interface TimerProps {
   initialTime?: number;
@@ -7,6 +8,13 @@ interface TimerProps {
   onTimeOut?: () => void;
   countDown?: boolean;
 }
+
+const TimerContainer = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  /* Lägg till fler stilar här */
+`;
 
 export default function Timer({ 
   initialTime = 60, 
@@ -50,8 +58,8 @@ export default function Timer({
   const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   
   return (
-    <div className="timer">
+    <TimerContainer>
       {formattedTime}
-    </div>
-  );
+    </TimerContainer>
+  )
 }
