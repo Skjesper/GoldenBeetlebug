@@ -1,7 +1,7 @@
 import { Global, css } from '@emotion/react';
 
 const globalStyles = css`
-    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
     :root {
         --primary: #2960f8;
@@ -12,16 +12,16 @@ const globalStyles = css`
         --error: #e74c3c;
 
         --font-primary: 'Inter', sans-serif;
-        --font-display: 'Playfair Display', serif;
+        --font-display: 'Instrument Serif', serif;
 
-        /* Font sizes */
+        /* Font sizes
         --text-xs: 0.75rem;
         --text-sm: 0.875rem;
         --text-base: 1rem;
         --text-lg: 1.125rem;
         --text-xl: 1.25rem;
         --text-2xl: 1.5rem;
-        --text-3xl: 1.875rem;
+        --text-3xl: 1.875rem; */
         
         /* Font weights */
         --weight-thin: 100;
