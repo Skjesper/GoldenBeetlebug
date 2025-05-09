@@ -7,6 +7,8 @@ function PlayPage() {
     <Window>
       <RuneHunt />
     </Window>
+
+
   );
 }
   
