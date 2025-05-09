@@ -1,6 +1,14 @@
 import react from 'react';
+import styled from '@emotion/styled';
 import Rune from './Rune';
 
+const ScoreContainer = styled.section`
+
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+
+`;
 interface ScoreboardProps {
 
     score: number;
@@ -25,26 +33,26 @@ export default function Scoreboard({
   }: ScoreboardProps) {
 
     return (
-        <div>
+        <ScoreContainer>
         <h2>
-            Poäng
+            Poäng: <span>{score}</span>
         </h2>
-        <p>{score}</p>
+       
         <h2>
-            Rekord
+            Rekord: <span>{highScore}</span>
         </h2>
-        <p>{highScore}</p>
+       
 
-        {onScorePoint && (
+        {/* {onScorePoint && (
           <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(10, 90)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()} time={getRandomNumber(3,6)}></Rune>
 
       )}
         {onScorePoint && (
           <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(300, 500)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()} time={getRandomNumber(3,6)}></Rune>
 
-      )}
+      )} */}
 
-        </div>
+        </ScoreContainer>
     )
 
 }
