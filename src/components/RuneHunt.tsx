@@ -63,6 +63,7 @@ export default function RuneHunt() {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [countdown, setCountDown] = useState<number>(0);
+    const [start, setStart] = useState<boolean>(false);
     
     const [score, setScore] = useState<number>(0);
     const [highScore, setHighscore] = useState<number>(0);
@@ -74,6 +75,7 @@ export default function RuneHunt() {
     }
 
 function startGame() {
+        setStart(true);
         setCountDown(3);
         setGameOver(false);
         setScore(0);
@@ -103,7 +105,7 @@ function startGame() {
 
     };
 
-    const StageSelectMode: boolean = !gameOver && !gameRunning;
+    const StageSelectMode: boolean = !gameOver && !start;
 
     const stageImages = [
       {
