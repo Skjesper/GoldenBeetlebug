@@ -56,16 +56,19 @@ interface ImageObject {
 interface StageSelectProps {
 images: ImageObject[];
 startGame: () => void;
+imageId: number | null;
 }
 
 
-export default function StageSelect({ images, startGame }: StageSelectProps) {
+export default function StageSelect({ images, startGame, imageId }: StageSelectProps) {
     
     const [selectedId, setSelectedId] = useState<number | null>(null);
     
     const handleSelect = (id: number) => {
     setSelectedId(id);
     };
+
+    imageId = selectedId;
 
     return (
         <>

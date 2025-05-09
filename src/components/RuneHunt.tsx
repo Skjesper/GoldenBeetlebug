@@ -135,7 +135,7 @@ function startGame() {
 
           {StageSelectMode && (
           <EndScreenContainer>
-            <StageSelect images={stageImages} startGame={startGame} />
+            <StageSelect images={stageImages} startGame={startGame} imageId={id}/>
             
           </EndScreenContainer>
           )}
