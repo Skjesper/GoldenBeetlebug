@@ -27,7 +27,7 @@ type ButtonProps = {
     onClick?: () => void;
 }
 
-function Button({ children, to }: ButtonProps) {
+function Button({ children, to, onClick }: ButtonProps) {
     if (to) {
         return (
             <Link to={to}>
@@ -36,7 +36,7 @@ function Button({ children, to }: ButtonProps) {
         );
     }
 
-    return <StyledButton>{children}</StyledButton>;
+    return <StyledButton onClick={onClick}>{children}</StyledButton>;
 }
 
 {/* <Button to="/"></Button>
