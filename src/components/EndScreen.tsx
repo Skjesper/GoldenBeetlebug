@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from './Button';
+import styled from '@emotion/styled';
 
 interface EndScreenProps {
     score: number;
@@ -20,12 +22,10 @@ export default function EndScreen({ score, highScore, onRestart }: EndScreenProp
           <div>
             <h2>Ditt resultat</h2>
             <div>
-              <span>Poäng: </span>
-              <span>{score}</span>
+              <span>Poäng: {score}</span>
             </div>
             <div>
-              <span>Bästa resultat: </span>
-              <span>{highScore}</span>
+              <span>Bästa resultat: {highScore}</span>
             </div>
           </div>
           
@@ -33,9 +33,9 @@ export default function EndScreen({ score, highScore, onRestart }: EndScreenProp
             <p>{getResultMessage()}</p>
           </div>
           
-          <button onClick={onRestart}>
+          <Button onClick={onRestart}>
             Spela igen
-          </button>
+          </Button>
         </div>
     );
 }
