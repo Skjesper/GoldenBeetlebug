@@ -165,8 +165,6 @@ function startGame() {
                             onScorePoint={handleScore}
                         />
                         </GameHeader>
-
-                    <h1>Detta är en H1</h1>
                     
                    
                     {countdown > 0 && (
