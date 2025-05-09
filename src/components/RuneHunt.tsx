@@ -2,6 +2,29 @@ import React, { useState, useEffect } from 'react';
 import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
+import styled from '@emotion/styled';
+
+
+const EndScreenContainer = styled.div`
+  /* Täck hela RuneHunt-komponenten */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  /* Centrera EndScreen i mitten */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Optional: Lägg till en semi-transparent bakgrund */
+  background-color: rgba(0, 0, 0, 0.5);
+  
+  /* Se till att EndScreen visas ovanpå spelinnehållet */
+  z-index: 10;
+`;
+
 
 export default function RuneHunt() {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
@@ -83,11 +106,13 @@ export default function RuneHunt() {
                     </button>
                 </>
             ) : (
+                <EndScreenContainer>
                 <EndScreen 
                     score={score}
                     highScore={highScore}
                     onRestart={startGame}
                 />
+                </EndScreenContainer>
             )}
         </div>
     );
