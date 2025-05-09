@@ -85,7 +85,7 @@ export default function EndScreen({ score, highScore, onRestart }: EndScreenProp
             <Button onClick={onRestart}>
               Spela igen
             </Button>
-            <Button onClick={onRestart}>
+            <Button to="/runehunt/leaderboard">
               Leaderboard
             </Button>
           </ButtonContainer>
