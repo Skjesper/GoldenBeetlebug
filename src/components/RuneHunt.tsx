@@ -132,13 +132,13 @@ function startGame() {
 
     return (
         <div>
-          <EndScreenContainer>
 
           {StageSelectMode && (
+          <EndScreenContainer>
             <StageSelect images={stageImages} startGame={startGame} />
             
-          )}
           </EndScreenContainer>
+          )}
 
             {!gameOver ? (
                 <>
