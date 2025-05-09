@@ -36,7 +36,9 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     @media (orientation: landscape) and (max-width: 1024px) {
         aspect-ratio: 16 / 9;
         height: auto;
-        width: 90%;
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
     }
     
     @media (orientation: portrait) and (max-width: 768px) {
@@ -56,6 +58,7 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
         text-align: center;
         z-index: 100;
         }
+
     }
 `;
 
