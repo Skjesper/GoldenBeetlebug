@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RuneHuntPage from "./pages/RuneHuntPage";
-import LeaderboardPage from "./pages/EndPage";
+import LeaderboardPage from "./pages/LeaderboardPage";
 import PlayPage from "./pages/PlayPage";
 
 function App() {
