@@ -3,17 +3,30 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 const StyledButton = styled.button`
-        background-color: #ea0b0b;
-        color: #ffffff;
+        background-color: var(--primary);
+        color: var(--secondary);
         border: none;
-        font-size: 1rem;
-        cursor: pointer;
-        width: fit-content;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
+        display: flex;
+        height: 44px;
+        padding: 10px 32px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        align-self: stretch;
+        aspect-ratio: 31/11;
+        border-radius: 40px;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: 400;
+
 
         &:hover {
-            background-color: #48b300;
+            background-color: var(--primary-dark);
+        }
+
+        &:disabled {
+            background-color: var(--primary);
         }
 
         @media (orientation: portrait) {
