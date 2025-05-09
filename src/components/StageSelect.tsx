@@ -55,10 +55,11 @@ interface ImageObject {
   
 interface StageSelectProps {
 images: ImageObject[];
+startGame: () => void;
 }
 
 
-export default function StageSelect({ images }: StageSelectProps) {
+export default function StageSelect({ images, startGame }: StageSelectProps) {
     
     const [selectedId, setSelectedId] = useState<number | null>(null);
     
@@ -96,8 +97,8 @@ export default function StageSelect({ images }: StageSelectProps) {
       ))}
 
       </StyledImageGrid>
-      <Button to='/runehunt/play'>Spela</Button>
-          </StyledContainer>
+      <Button onClick={startGame}>Spela</Button>
+        </StyledContainer>
      
       </>
     );

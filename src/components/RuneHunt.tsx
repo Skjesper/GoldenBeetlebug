@@ -73,7 +73,7 @@ export default function RuneHunt() {
         setGameOver(true);
     }
 
-    function startGame() {
+function startGame() {
         setCountDown(3);
         setGameOver(false);
         setScore(0);
@@ -130,9 +130,13 @@ export default function RuneHunt() {
 
     return (
         <div>
+          <EndScreenContainer>
+
           {StageSelectMode && (
-            <StageSelect images={stageImages} />
+            <StageSelect images={stageImages} startGame={startGame} />
+            
           )}
+          </EndScreenContainer>
 
             {!gameOver ? (
                 <>
@@ -159,12 +163,12 @@ export default function RuneHunt() {
                         </CountdownContainer>
 )}
                     
-                    <Button 
+                    {/* <Button 
                         onClick={startGame}
                         disabled={countdown > 0} 
                     >
                         {gameRunning ? "Pågår..." : countdown > 0 ? `Startar om ${countdown}...` : "Starta spelet"}
-                    </Button>
+                    </Button> */}
                 </>
             ) : (
                 <EndScreenContainer>
