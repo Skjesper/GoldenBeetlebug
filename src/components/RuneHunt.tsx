@@ -3,6 +3,7 @@ import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
 import styled from '@emotion/styled';
+import Button from './Button';
 
 
 const EndScreenContainer = styled.div`
@@ -12,17 +13,43 @@ const EndScreenContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  
-  
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  
   background-color: rgba(0, 0, 0, 0.5);
-  
-  
   z-index: 10;
+`;
+
+const CountdownContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+`;
+
+const CountdownNumber = styled.h2`
+  font-size: 35rem; 
+  color: #000000;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+  animation: pulse 1s infinite; 
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.3);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 
 
@@ -48,7 +75,6 @@ export default function RuneHunt() {
         const countdownInterval = setInterval(() => {
             setCountDown(prevCount => {
               if (prevCount <= 1) {
-               
                 clearInterval(countdownInterval);
                 setGameRunning(true);
                 return 0;
@@ -93,25 +119,25 @@ export default function RuneHunt() {
                     
                    
                     {countdown > 0 && (
-                        <div className="countdown-display">
-                            <h2 className="countdown-number">{countdown}</h2>
-                        </div>
-                    )}
+                        <CountdownContainer>
+                            <CountdownNumber>{countdown}</CountdownNumber>
+                        </CountdownContainer>
+)}
                     
-                    <button 
+                    <Button 
                         onClick={startGame}
                         disabled={countdown > 0} 
                     >
                         {gameRunning ? "Pågår..." : countdown > 0 ? `Startar om ${countdown}...` : "Starta spelet"}
-                    </button>
+                    </Button>
                 </>
             ) : (
                 <EndScreenContainer>
-                <EndScreen 
-                    score={score}
-                    highScore={highScore}
-                    onRestart={startGame}
-                />
+                    <EndScreen 
+                        score={score}
+                        highScore={highScore}
+                        onRestart={startGame}
+                    />
                 </EndScreenContainer>
             )}
         </div>
