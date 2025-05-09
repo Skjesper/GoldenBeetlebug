@@ -25,9 +25,15 @@ type ButtonProps = {
     children: ReactNode;
     to?: string;
     onClick?: () => void;
+    disabled?: boolean;
+    
 }
 
-function Button({ children, to, onClick }: ButtonProps) {
+function Button({ children, to, onClick, disabled }: ButtonProps) {
+
+    if (disabled) {
+        return <StyledButton disabled>{children}</StyledButton>;
+    }
     if (to) {
         return (
             <Link to={to}>
