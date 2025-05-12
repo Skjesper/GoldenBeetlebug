@@ -7,9 +7,10 @@ interface BackgroundProps {
   maxWidth?: string;
   maxHeight?: string;
   blurred?: boolean;
+  backgroundImage?: string; 
 }
 
-const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurred?: boolean }>`
+const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurred?: boolean; backgroundImage?: string }>`
     position: relative;
     width: 100%;
     height: 100%;
@@ -28,7 +29,7 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url(${backgroundImage});
+      background-image: url(${props => props.backgroundImage || backgroundImage});
       background-size: cover;
       background-position: center;
       filter: ${props => props.blurred ? 'blur(1px)' : 'none'};
@@ -61,16 +62,16 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
         text-align: center;
         z-index: 100;
         }
-
+        
     }
 `;
 
-function Background({ children, maxWidth, maxHeight, blurred = false }: BackgroundProps) {
+function Background({ children, maxWidth, maxHeight, blurred = false, backgroundImage }: BackgroundProps) {
     return (
-        <BackgroundDiv maxWidth={maxWidth} maxHeight={maxHeight} blurred={blurred}>
+        <BackgroundDiv maxWidth={maxWidth} maxHeight={maxHeight} blurred={blurred} backgroundImage={backgroundImage}>
             {children}
         </BackgroundDiv>
     );
 };
   
-  export default Background;
+export default Background;
