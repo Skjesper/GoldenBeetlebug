@@ -12,6 +12,14 @@ import styled from '@emotion/styled';
 import Button from './Button';
 
 
+const GameScreenContainer = styled.section`
+
+    height: 100vh;
+    padding: 1.5rem 0;
+    
+`;
+
+
 const EndScreenContainer = styled.div`
  
   position: absolute;
@@ -150,6 +158,7 @@ function startGame() {
           )}
 
             {!gameOver ? (
+              <GameScreenContainer className='gameContainer'>
                 <>
                   <GameHeader>
                         <Timer 
@@ -180,6 +189,7 @@ function startGame() {
                         {gameRunning ? "Pågår..." : countdown > 0 ? `Startar om ${countdown}...` : "Starta spelet"}
                     </Button> */}
                 </>
+                </GameScreenContainer>
             ) : (
                 <EndScreenContainer>
                     <EndScreen 
@@ -190,5 +200,6 @@ function startGame() {
                 </EndScreenContainer>
             )}
         </div>
+       
     );
 }
