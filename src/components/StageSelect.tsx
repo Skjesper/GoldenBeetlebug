@@ -1,4 +1,3 @@
-
 import styled from '@emotion/styled';
 import  { useState } from 'react';
 import Button from './Button';
@@ -56,19 +55,18 @@ interface ImageObject {
 interface StageSelectProps {
 images: ImageObject[];
 startGame: () => void;
-imageId: number | null;
+onStageSelect?: (selectedId: number) => void;
 }
 
 
-export default function StageSelect({ images, startGame, imageId }: StageSelectProps) {
+export default function StageSelect({ images, startGame, onStageSelect }: StageSelectProps) {
     
     const [selectedId, setSelectedId] = useState<number | null>(null);
     
     const handleSelect = (id: number) => {
     setSelectedId(id);
+    onStageSelect?.(id);
     };
-
-    imageId = selectedId;
 
     return (
         <>
