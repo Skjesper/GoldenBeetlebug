@@ -7,7 +7,7 @@ interface BackgroundProps {
   maxWidth?: string;
   maxHeight?: string;
   blurred?: boolean;
-  backgroundImage?: string;
+  backgroundImage?: string; 
 }
 
 const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurred?: boolean; backgroundImage?: string }>`
@@ -62,7 +62,7 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
         text-align: center;
         z-index: 100;
         }
-
+        
     }
 `;
 
@@ -74,4 +74,4 @@ function Background({ children, maxWidth, maxHeight, blurred = false, background
     );
 };
   
-  export default Background;
+export default Background;
