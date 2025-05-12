@@ -8,7 +8,7 @@ interface WindowProps {
   }
 
   const WindowContainer = styled.div`
-  position: relative;
+  /* position: relative;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -20,13 +20,13 @@ interface WindowProps {
   @media (max-width: 1024px) {
     padding: 0;
     height: 100vh;
-  }
+  } */
 `;
 
 
 function Window({ children, blurred = false }: WindowProps) {
     return (
-      <WindowContainer>
+      <WindowContainer className='windowContainer'>
         <Background blurred ={blurred}>
           {children}
         </Background>
