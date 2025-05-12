@@ -7,19 +7,20 @@ interface BackgroundProps {
   maxWidth?: string;
   maxHeight?: string;
   blurred?: boolean;
+  className?: string;
 }
 
 const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurred?: boolean }>`
     position: relative;
     width: 100%;
     height: 100%;
-    max-width: ${props => props.maxWidth || '1200px'};
-    max-height: ${props => props.maxHeight || '80vh'};
+    
+    
     border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
 
     &:before {
       content: "";
@@ -65,12 +66,23 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     }
 `;
 
-function Background({ children, maxWidth, maxHeight, blurred = false }: BackgroundProps) {
-    return (
-        <BackgroundDiv maxWidth={maxWidth} maxHeight={maxHeight} blurred={blurred}>
-            {children}
-        </BackgroundDiv>
-    );
-};
-  
+function Background({ 
+    children, 
+    maxWidth, 
+    maxHeight, 
+    blurred = false,
+    className = '' // Lägg till denna parameter med default-värde
+  }: BackgroundProps) {
+      return (
+          <BackgroundDiv 
+            maxWidth={maxWidth} 
+            maxHeight={maxHeight} 
+            blurred={blurred}
+            className={className} // Skicka vidare className
+          >
+              {children}
+          </BackgroundDiv>
+      );
+  };
+    
   export default Background;

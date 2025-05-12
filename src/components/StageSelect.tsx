@@ -1,105 +1,143 @@
-
 import styled from '@emotion/styled';
-import  { useState } from 'react';
+import { useState } from 'react';
 import Button from './Button';
 
 const StyledContainer = styled.div`
-width: 100%;
-height: 100%;
-background-color: #8ec28e;
-color: #173d25;
-display: flex;
-flex-direction: column;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-gap: 1rem;
+  width: 100%;
+  height: 100%;
+  background-color: #8ec28e;
+  color: #173d25;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  padding: 0.5rem;
+  box-sizing: border-box;
 `;
 
+const StyledHeader = styled.div`
+  text-align: center;
+  margin-bottom: 0.5rem;
+  
+  h1 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.5rem;
+    
+    @media (max-width: 768px) {
+      font-size: 1.25rem;
+    }
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    max-width: 90%;
+    margin: 0 auto;
+    
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+  }
+`;
+
+// Nu alltid 2 bilder per rad för mobil i liggande läge
 const StyledImageGrid = styled.div`
-width: 70%;
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-gap: 4rem;
-margin-top: 2rem;
+  width: 90%;
+  height: 70%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 kolumner standard */
+  grid-gap: 1.5rem;
+  overflow-y: auto;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr); /* 2 kolumner på tablet */
+    grid-gap: 1rem;
+    width: 95%;
+  }
+  
+  @media (max-width: 768px) and (orientation: landscape) {
+    grid-template-columns: repeat(2, 1fr); /* Exakt 2 kolumner i liggande läge */
+    grid-gap: 0.75rem;
+    height: 65%;
+  }
 `;
 
 const StyledImageContainer = styled.div`
-    width: 20rem;
-    height: 12rem;
-    overflow: hidden;
-    box-sizing: border-box;
-    outline: 1px solid transparent;
-    padding:2px;
-    
+  aspect-ratio: 5/3; 
+  box-sizing: border-box;
+  outline: 1px solid transparent;
+  padding: 1px;
+  max-width: 100%;
+  
+  &:hover {
+    outline-color: hotpink;
+  }
+  
+  &.selected {
+    outline: 3px solid gold;
+  }
+  
+  @media (max-width: 768px) and (orientation: landscape) {
+    aspect-ratio: 3/2; /* Lite mindre avlång för liggande mobilläge */
+  }
+`;
 
-    &:hover {
-        outline-color: hotpink;
-        }
-    
-    &.selected {
-        outline: 4px solid gold;
-        
-    }
-    
-
+const StyledButton = styled(Button)`
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 `;
 
 interface ImageObject {
     src: string;
     alt: string;
     id: number;
-  }
+}
   
 interface StageSelectProps {
-images: ImageObject[];
-startGame: () => void;
+    images: ImageObject[];
+    startGame: () => void;
 }
 
-
 export default function StageSelect({ images, startGame }: StageSelectProps) {
-    
     const [selectedId, setSelectedId] = useState<number | null>(null);
     
     const handleSelect = (id: number) => {
-    setSelectedId(id);
+        setSelectedId(id);
     };
 
     return (
-        <>
-        
-        <StyledContainer>
-            <h1>Välj bana</h1>
-            <p>Info om hur du spelar, varför du spelar, hur du vinner, varför du aldrig kommer vinna och hur vi ska tjäna alla pengar. Hej och hå, kämpa på!</p>
-            <StyledImageGrid>
-
-        {images.map((image) => (      
-        <StyledImageContainer 
-            key={image.id} 
-            onClick={() => handleSelect(image.id)}
-            className={selectedId === image.id ? "selected" : ""}
->
-        <img 
-          key={image.id}
-          src={image.src}
-          alt={image.alt}
-          style={{ 
-            width: '100%',
-            height: '100%', 
-            borderRadius: '1rem',
+        <StyledContainer className='selectContainer'>
+            <StyledHeader>
+                <h1>Välj bana</h1>
+                <p>Info om hur du spelar, varför du spelar, hur du vinner, varför du aldrig kommer vinna och hur vi ska tjäna alla pengar.</p>
+            </StyledHeader>
             
-          }}
-          
-          />
-          </StyledImageContainer>
-      ))}
-
-      </StyledImageGrid>
-      <Button onClick={startGame}>Spela</Button>
+            <StyledImageGrid>
+                {images.map((image) => (      
+                    <StyledImageContainer 
+                        key={image.id} 
+                        onClick={() => handleSelect(image.id)}
+                        className={selectedId === image.id ? "selected" : ""}
+                    >
+                        <img 
+                            src={image.src}
+                            alt={image.alt}
+                            style={{ 
+                                width: '100%',
+                                height: '100%', 
+                                borderRadius: '0.5rem',
+                                objectFit: 'cover'
+                            }}
+                        />
+                    </StyledImageContainer>
+                ))}
+            </StyledImageGrid>
+            
+            <StyledButton onClick={startGame}>Spela</StyledButton>
         </StyledContainer>
-     
-      </>
     );
 }
