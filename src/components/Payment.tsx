@@ -9,6 +9,7 @@ const PaymentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 `;
 
 const Title = styled.h1`
