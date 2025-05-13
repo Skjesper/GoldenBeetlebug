@@ -42,25 +42,24 @@ const StyledHeader = styled.div`
   }
 `;
 
-// Nu alltid 2 bilder per rad för mobil i liggande läge
 const StyledImageGrid = styled.div`
   width: 90%;
   height: 70%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 kolumner standard */
+  grid-template-columns: repeat(3, 1fr); 
   grid-gap: 1.5rem;
   overflow-y: auto;
   margin: 0.5rem 0;
   padding: 0.5rem;
   
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr); /* 2 kolumner på tablet */
+    grid-template-columns: repeat(2, 1fr); 
     grid-gap: 1rem;
     width: 95%;
   }
   
   @media (max-width: 768px) and (orientation: landscape) {
-    grid-template-columns: repeat(2, 1fr); /* Exakt 2 kolumner i liggande läge */
+    grid-template-columns: repeat(2, 1fr); 
     grid-gap: 0.75rem;
     height: 65%;
   }
@@ -82,7 +81,7 @@ const StyledImageContainer = styled.div`
   }
   
   @media (max-width: 768px) and (orientation: landscape) {
-    aspect-ratio: 3/2; /* Lite mindre avlång för liggande mobilläge */
+    aspect-ratio: 3/2;
   }
 `;
 
@@ -116,7 +115,7 @@ export default function StageSelect({ images, startGame }: StageSelectProps) {
                 <p>Info om hur du spelar, varför du spelar, hur du vinner, varför du aldrig kommer vinna och hur vi ska tjäna alla pengar.</p>
             </StyledHeader>
             
-            <StyledImageGrid>
+            <StyledImageGrid className='styledImageGrid'>
                 {images.map((image) => (      
                     <StyledImageContainer 
                         key={image.id} 

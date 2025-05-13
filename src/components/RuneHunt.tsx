@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
@@ -9,7 +9,7 @@ import backgroundImage2 from './../assets/backgroundImages/dessert_bg.png'
 import backgroundImage3 from './../assets/backgroundImages/forest_bg.png'
 import backgroundImage4 from './../assets/backgroundImages/winter_bg.png'
 import styled from '@emotion/styled';
-import Button from './Button';
+
 
 
 const GameScreenContainer = styled.section`
@@ -17,10 +17,6 @@ const GameScreenContainer = styled.section`
     height: 100vh;
     padding: 0 0.5rem;
     
-
-     
-  
-
 
   @media (min-width: 768px) {
     padding: 1.5rem 1rem;
@@ -57,7 +53,7 @@ const CountdownContainer = styled.div`
 `;
 
 const CountdownNumber = styled.h2`
-  font-size: 35rem; 
+  font-size: 25rem; 
   color: #000000;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
@@ -77,7 +73,7 @@ const CountdownNumber = styled.h2`
 
   @media (min-width: 768px) {
 
-    font-size: 25rem;
+    font-size: 35rem;
   }
 `;
 
