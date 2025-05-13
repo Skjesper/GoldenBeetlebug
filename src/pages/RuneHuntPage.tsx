@@ -7,9 +7,13 @@ import Payment from '../components/Payment';
 function RuneHuntPage() {
   return (
     <>
+
       <Window blurred>
+     
         <Payment></Payment>
+        
       </Window>
+
     </>
   );
 }

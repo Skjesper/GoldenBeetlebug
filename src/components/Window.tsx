@@ -10,25 +10,25 @@ interface WindowProps {
 
   const WindowContainer = styled.div`
   position: relative;
-  width: 100%;
+  /* width: 100%; */
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  padding: 20px;
+  padding: 1.5rem;
   
   @media (max-width: 1024px) {
     padding: 0;
-    height: 100vh;
-  }
+    
+  } 
 `;
 
 
 function Window({ children, blurred = false, backgroundImage }: WindowProps) {
     return (
-      <WindowContainer>
-        <Background blurred={blurred} backgroundImage={backgroundImage}>
+      <WindowContainer className='windowContainer'>
+        <Background blurred ={blurred} backgroundImage={backgroundImage}>
           {children}
         </Background>
       </WindowContainer>

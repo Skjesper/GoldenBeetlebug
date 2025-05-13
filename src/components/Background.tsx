@@ -7,6 +7,7 @@ interface BackgroundProps {
   maxWidth?: string;
   maxHeight?: string;
   blurred?: boolean;
+  className?: string;
   backgroundImage?: string; 
 }
 
@@ -14,14 +15,12 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     position: relative;
     width: 100%;
     height: 100%;
-    max-width: ${props => props.maxWidth || '1200px'};
-    max-height: ${props => props.maxHeight || '80vh'};
     border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    cursor: url('champagne_bottle.png'), auto;
+    
 
     &:before {
       content: "";
@@ -67,12 +66,25 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     }
 `;
 
-function Background({ children, maxWidth, maxHeight, blurred = false, backgroundImage }: BackgroundProps) {
-    return (
-        <BackgroundDiv maxWidth={maxWidth} maxHeight={maxHeight} blurred={blurred} backgroundImage={backgroundImage}>
-            {children}
-        </BackgroundDiv>
-    );
-};
-  
-export default Background;
+function Background({ 
+    children, 
+    maxWidth, 
+    maxHeight, 
+    blurred = false,
+    className = '',
+    backgroundImage
+  }: BackgroundProps) {
+      return (
+          <BackgroundDiv 
+            maxWidth={maxWidth} 
+            maxHeight={maxHeight} 
+            blurred={blurred}
+            className={className}
+            backgroundImage={backgroundImage}
+          >
+              {children}
+          </BackgroundDiv>
+      );
+  };
+    
+  export default Background;
