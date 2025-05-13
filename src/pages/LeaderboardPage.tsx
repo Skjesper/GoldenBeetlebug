@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -7,6 +8,8 @@ import HighScore from '../components/HighScore';
 function LeaderboardPage() {
   const [gameScore, setGameScore] = useState<number>(0);
 
+  const [backgroundImage] = useState<string | undefined>(undefined);
+    
   useEffect(() => {
     const savedScore = localStorage.getItem('gameScore');
     if (savedScore !== null) {
@@ -26,8 +29,12 @@ function LeaderboardPage() {
       <Link to="/runehunt/play">
         <button>Spela igen</button>
       </Link>
+       <Window backgroundImage={backgroundImage}>
+            <Leaderboard/>
+        </Window>
     </div>
   );
+
 }
   
   export default LeaderboardPage;
