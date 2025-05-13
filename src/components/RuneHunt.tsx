@@ -17,7 +17,16 @@ const GameScreenContainer = styled.section`
     height: 100vh;
     padding: 1.5rem 0;
     
+
+    @media (min-width: 768px) {
+    
+      padding: 0.5rem 0;
+
+    }
+    
 `;
+
+
 
 
 const EndScreenContainer = styled.div`
