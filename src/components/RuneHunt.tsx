@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
@@ -9,7 +9,21 @@ import backgroundImage2 from './../assets/backgroundImages/dessert_bg.png'
 import backgroundImage3 from './../assets/backgroundImages/forest_bg.png'
 import backgroundImage4 from './../assets/backgroundImages/winter_bg.png'
 import styled from '@emotion/styled';
-import Button from './Button';
+
+
+
+const GameScreenContainer = styled.section`
+
+    height: 100vh;
+    padding: 0 0.5rem;
+    
+
+  @media (min-width: 768px) {
+    padding: 1.5rem 1rem;
+  }
+`;
+
+
 
 
 const EndScreenContainer = styled.div`
@@ -39,7 +53,7 @@ const CountdownContainer = styled.div`
 `;
 
 const CountdownNumber = styled.h2`
-  font-size: 35rem; 
+  font-size: 25rem; 
   color: #000000;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
@@ -55,6 +69,11 @@ const CountdownNumber = styled.h2`
     100% {
       transform: scale(1);
     }
+  }
+
+  @media (min-width: 768px) {
+
+    font-size: 35rem;
   }
 `;
 
@@ -161,6 +180,7 @@ function startGame() {
           )}
 
             {!gameOver ? (
+              <GameScreenContainer className='gameContainer'>
                 <>
                   <GameHeader>
                         <Timer 
@@ -179,18 +199,13 @@ function startGame() {
                     
                    
                     {countdown > 0 && (
-                        <CountdownContainer>
+                        <CountdownContainer className='countdownContainer'>
                             <CountdownNumber>{countdown}</CountdownNumber>
                         </CountdownContainer>
 )}
-                    
-                    {/* <Button 
-                        onClick={startGame}
-                        disabled={countdown > 0} 
-                    >
-                        {gameRunning ? "Pågår..." : countdown > 0 ? `Startar om ${countdown}...` : "Starta spelet"}
-                    </Button> */}
+               
                 </>
+                </GameScreenContainer>
             ) : (
                 <EndScreenContainer>
                     <EndScreen 
@@ -201,5 +216,6 @@ function startGame() {
                 </EndScreenContainer>
             )}
         </div>
+       
     );
 }
