@@ -7,14 +7,13 @@ const ScoreContainer = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
   gap: 2rem;
 
 `;
 interface ScoreboardProps {
 
     score: number;
-    highScore: number;
+    highScore?: number;
     onScorePoint?: () => void;
 
 }
@@ -30,7 +29,7 @@ function getRandomDirection(): string {
 
 export default function Scoreboard({ 
     score, 
-    highScore, 
+    // highScore, 
     onScorePoint 
   }: ScoreboardProps) {
 
@@ -41,18 +40,18 @@ export default function Scoreboard({
         </h2>
        
         <h2>
-            Rekord: <span>{highScore}</span>
+            {/* Rekord: <span>{highScore}</span> */}
         </h2>
        
-
+{/* 
         {/* {onScorePoint && (
           <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(10, 90)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()} time={getRandomNumber(3,6)}></Rune>
 
-      )}
+      )} */}
         {onScorePoint && (
           <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(300, 500)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()} time={getRandomNumber(3,6)}></Rune>
 
-      )} */}
+      )} 
 
         </ScoreContainer>
     )
