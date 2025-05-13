@@ -1,17 +1,15 @@
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import Window from "../components/Window";
+import Leaderboard from '../components/Leaderboard';
 
 function LeaderboardPage() {
-  return (
-    <div>
-      <h1>Resultat</h1>
-      <Link to="/runehunt/start">
-        <button>Startsidan</button>
-      </Link>
-      <Link to="/runehunt/play">
-        <button>Spela igen</button>
-      </Link>
-    </div>
-  );
+    const [backgroundImage] = useState<string | undefined>(undefined);
+
+    return (
+        <Window backgroundImage={backgroundImage}>
+            <Leaderboard/>
+        </Window>
+    );
 }
   
   export default LeaderboardPage;
