@@ -15,15 +15,16 @@ import Button from './Button';
 const GameScreenContainer = styled.section`
 
     height: 100vh;
-    padding: 1.5rem 0;
+    padding: 0 0.5rem;
     
 
-    @media (min-width: 768px) {
-    
-      padding: 0.5rem 0;
+     
+  
 
-    }
-    
+
+  @media (min-width: 768px) {
+    padding: 1.5rem 1rem;
+  }
 `;
 
 
@@ -72,6 +73,11 @@ const CountdownNumber = styled.h2`
     100% {
       transform: scale(1);
     }
+  }
+
+  @media (min-width: 768px) {
+
+    font-size: 25rem;
   }
 `;
 
@@ -186,17 +192,11 @@ function startGame() {
                     
                    
                     {countdown > 0 && (
-                        <CountdownContainer>
+                        <CountdownContainer className='countdownContainer'>
                             <CountdownNumber>{countdown}</CountdownNumber>
                         </CountdownContainer>
 )}
-                    
-                    {/* <Button 
-                        onClick={startGame}
-                        disabled={countdown > 0} 
-                    >
-                        {gameRunning ? "Pågår..." : countdown > 0 ? `Startar om ${countdown}...` : "Starta spelet"}
-                    </Button> */}
+               
                 </>
                 </GameScreenContainer>
             ) : (
