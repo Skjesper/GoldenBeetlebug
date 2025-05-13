@@ -21,6 +21,7 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    cursor: url('champagne_bottle.png'), auto;
 
     &:before {
       content: "";
