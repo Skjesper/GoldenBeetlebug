@@ -43,17 +43,7 @@ export default function Scoreboard({
         <h2>
             Rekord: <span>{highScore}</span>
         </h2>
-       
-
-        {/* {onScorePoint && (
-          <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(10, 90)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()} time={getRandomNumber(3,6)}></Rune>
-
-      )}
-        {onScorePoint && (
-          <Rune onClick={onScorePoint} startPosition={getRandomNumber(1, 2)} bounceHeight={getRandomNumber(300, 500)} firstTurn={getRandomDirection()} secondTurn={getRandomDirection()} thirdTurn={getRandomDirection()} time={getRandomNumber(3,6)}></Rune>
-
-      )} */}
-
+      
         </ScoreContainer>
     )
 
