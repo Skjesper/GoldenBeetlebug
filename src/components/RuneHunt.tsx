@@ -89,9 +89,10 @@ margin: 1rem;
 
 interface RuneHuntProps {
     onBackgroundChange?: (backgroundImage: string) => void;
+    onGameOver?: (finalScore: number) => void; 
 }
 
-export default function RuneHunt({ onBackgroundChange }: RuneHuntProps) {
+export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntProps) {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [countdown, setCountDown] = useState<number>(0);
@@ -102,8 +103,13 @@ export default function RuneHunt({ onBackgroundChange }: RuneHuntProps) {
 
     const handleTimeOut = () => {
         console.log("Times up");
+        localStorage.setItem('gameScore', score.toString());
         setGameRunning(false);
         setGameOver(true);
+
+      //   if (onGameOver) {
+      //     onGameOver(score);
+      // }
     }
 
 function startGame() {
@@ -184,7 +190,7 @@ function startGame() {
                 <>
                   <GameHeader>
                         <Timer 
-                            initialTime={300} 
+                            initialTime={30} 
                             isRunning={gameRunning} 
                             onTimeOut={handleTimeOut}
                             countDown={true}
