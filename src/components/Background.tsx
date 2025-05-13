@@ -15,13 +15,12 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     position: relative;
     width: 100%;
     height: 100%;
-    
-    
     border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    
 
     &:before {
       content: "";
