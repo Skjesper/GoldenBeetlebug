@@ -87,7 +87,11 @@ justify-content: space-between;
 margin: 1rem;
 `;
 
-export default function RuneHunt() {
+interface RuneHuntProps {
+    onBackgroundChange?: (backgroundImage: string) => void;
+}
+
+export default function RuneHunt({ onBackgroundChange }: RuneHuntProps) {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [countdown, setCountDown] = useState<number>(0);
@@ -133,6 +137,13 @@ function startGame() {
 
     };
 
+    const handleStageSelect = (selectedId: number) => {
+        const selectedStage = stageImages.find(stage => stage.id === selectedId);
+        if (selectedStage && onBackgroundChange) {
+            onBackgroundChange(selectedStage.src);
+        }
+    };
+
     const StageSelectMode: boolean = !gameOver && !start;
 
     const stageImages = [
@@ -163,7 +174,7 @@ function startGame() {
 
           {StageSelectMode && (
           <EndScreenContainer>
-            <StageSelect images={stageImages} startGame={startGame} />
+            <StageSelect images={stageImages} startGame={startGame} onStageSelect={handleStageSelect} />
             
           </EndScreenContainer>
           )}
