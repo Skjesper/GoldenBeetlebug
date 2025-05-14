@@ -19,12 +19,10 @@ function LeaderboardPage() {
 
   return (
     <div>
-      <h1>Resultat</h1>
-      <HighScore />
-        <ScoreForm score={gameScore}/>
 
        <Window backgroundImage={backgroundImage}>
-            <Leaderboard/>
+            <ScoreForm score={gameScore}/>
+            {/* <Leaderboard/> */}
         </Window>
     </div>
   );
