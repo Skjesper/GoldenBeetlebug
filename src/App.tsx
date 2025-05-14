@@ -8,9 +8,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/runehunt/start" element={<RuneHuntPage />} />
-        <Route path="/runehunt/play" element={<PlayPage />} />
-        <Route path="/runehunt/leaderboard" element={<LeaderboardPage />} />
+        <Route path="/" element={<RuneHuntPage />} />
+        <Route path="/play" element={<PlayPage />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
       </Routes>
     </BrowserRouter>
   )
