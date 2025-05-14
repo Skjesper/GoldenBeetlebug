@@ -27,8 +27,13 @@ const ListItem = styled.li `
     text-decoration: 0.8px black underline;
 `;
 
+interface LeaderboardScore {
+    nickname: string;
+    points: number;
+}
+
 function Leaderboard() {
-      const [leaderBoardScores, setLeaderBoardScores] = useState<Array<number> | null>(null);
+      const [leaderBoardScores, setLeaderBoardScores] = useState<LeaderboardScore[] | null>(null);
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState('');
     
@@ -38,15 +43,17 @@ function Leaderboard() {
             try {
               const { data, error } = await supabase
                 .from('scores')
-                .select('points')
+                .select('nickname, points')
                 .order('points', { ascending: false })
                 .limit(5);
               
               if (error) {
                 throw error;
               }
+
+              console.log(data);
               
-              setLeaderBoardScores(data?.points || 0);
+              setLeaderBoardScores(data);
             } catch (error) {
 
               console.error('Error fetching high scores:', error);
@@ -60,14 +67,23 @@ function Leaderboard() {
           fetchLeaderBoardScores();
         }, []);
 
+            if (loading) return <div>Loading...</div>;
+            if (error) return <div>Error: {error}</div>;
+
     return (
         <>
             <Container>
+
                 <Title>Leaderboard</Title>
+
                 <ListContainer>
-                    <ListItem>
-                    </ListItem>
+                    {leaderBoardScores?.map((score, index) => (
+                        <ListItem key={index}>
+                            {score.nickname} - {score.points} points
+                        </ListItem>
+                    ))}
                 </ListContainer>
+
             </Container>
         </>
     )
