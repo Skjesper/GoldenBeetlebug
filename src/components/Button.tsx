@@ -39,6 +39,7 @@ type ButtonProps = {
     to?: string;
     onClick?: () => void;
     disabled?: boolean;
+    type?: string
     
 }
 

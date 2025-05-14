@@ -1,13 +1,13 @@
 
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import Window from "../components/Window";
+import Leaderboard from "../components/Leaderboard";
 import ScoreForm from '../components/ScoreForm';
 import HighScore from '../components/HighScore';
 
 function LeaderboardPage() {
   const [gameScore, setGameScore] = useState<number>(0);
-
+  const [display, setDisplay] = useState<boolean>(false); 
   const [backgroundImage] = useState<string | undefined>(undefined);
     
   useEffect(() => {
@@ -18,21 +18,15 @@ function LeaderboardPage() {
   }, []);
 
   return (
-    <div>
-      <h1>Resultat</h1>
-      <HighScore />
-        <ScoreForm score={gameScore}/>
-
-      <Link to="/runehunt/start">
-        <button>Startsidan</button>
-      </Link>
-      <Link to="/runehunt/play">
-        <button>Spela igen</button>
-      </Link>
-       <Window backgroundImage={backgroundImage}>
-            <Leaderboard/>
-        </Window>
-    </div>
+     <div>
+   <Window backgroundImage={backgroundImage}>
+     {!display ? (
+       <ScoreForm score={gameScore}  onDisplayChange={setDisplay}/>
+     ) : (
+       <Leaderboard/>
+     )}
+   </Window>
+ </div>
   );
 
 }
