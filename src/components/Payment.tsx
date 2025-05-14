@@ -45,7 +45,7 @@ function Payment() {
                 <Input type="password" id="password" placeholder="Lösenord"/>
             </Form>
             
-            <Button to='/runehunt/play'>Betala</Button>
+            <Button to='/play'>Betala</Button>
 
         </PaymentContainer>
     );
