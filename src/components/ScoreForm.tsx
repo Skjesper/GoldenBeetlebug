@@ -68,9 +68,10 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
       }
 
       // Återställ formuläret efter framgångsrik inskickning
+      setMessage('Poäng sparad!');
       setNickname('');
       setPoints(0);
-      setMessage('Poäng sparad!');
+      onDisplayChange?.(true);
     
     } catch (error) {
       console.error('Error saving score:', error);
@@ -80,10 +81,7 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
     }
   };
 
-const handleDisplay = () => {
- 
-  onDisplayChange?.(true);
-};
+
 
   return (
     <div>
@@ -105,7 +103,7 @@ const handleDisplay = () => {
             <Button 
             type="submit" 
             disabled={loading} 
-            onClick={handleDisplay}>
+            >
 
               {loading ? 'Sparar...' : 'Spara'}
 
