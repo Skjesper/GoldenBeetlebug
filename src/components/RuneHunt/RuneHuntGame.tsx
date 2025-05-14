@@ -1,6 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Rune, { createRandomRune, setRuneImageSource } from './Rune';
+
+import Rune, { createRandomRune } from './Rune';
+import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
+
 
 // Importera rune-bilden - justera sökvägen enligt din projektstruktur
 import runeImage from '../../assets/rune.png';
@@ -21,7 +24,7 @@ const GameCanvas = styled.canvas`
   display: block;
   border: 2px solid #4a2511;
   border-radius: 8px;
-  cursor: crosshair;
+  cursor: url(${Champagne}) 90 10, pointer;
   width: 100%;
   height: 100%;
 `;
