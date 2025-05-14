@@ -8,7 +8,10 @@ const ScoreContainer = styled.section`
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+`;
 
+const ScoreText = styled.h2`
+    text-align: center;
 `;
 interface ScoreboardProps {
 
@@ -35,9 +38,9 @@ export default function Scoreboard({
 
     return (
         <ScoreContainer>
-        <h2>
-            Poäng: <span>{score}</span>
-        </h2>
+        <ScoreText>
+          {score}p
+        </ScoreText>
        
         <h2>
             {/* Rekord: <span>{highScore}</span> */}
