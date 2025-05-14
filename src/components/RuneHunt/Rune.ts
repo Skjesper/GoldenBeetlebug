@@ -17,7 +17,7 @@ export const DEFAULT_RUNE: RuneProps = {
     y: 0,
     radius: 40,
     color: '#3498db',
-    gravity: 0.0,    // Ingen gravitation
+    gravity: 0.0,    
     velocityX: 2,
     velocityY: 2,
     isActive: true
@@ -33,7 +33,9 @@ export class Rune {
     update(canvasWidth: number, canvasHeight: number) {
         // Hämta egenskaper från this.props
         const { gravity, velocityX, velocityY, radius, x, y } = this.props;
-        const bounceDamping = 0.9; // Mindre energiförlust för mer rörelse
+        
+        // Remove the damping factor to maintain constant speed
+        // const bounceDamping = 0.9; // This was causing speed reduction
         
         // Uppdatera hastighet med gravitation (ska vara 0 i detta fall)
         const newVelocityY = velocityY + gravity;
@@ -48,8 +50,8 @@ export class Rune {
         
         // Kontrollera kollision med höger/vänster vägg
         if (newPositionX + radius > canvasWidth || newPositionX - radius < 0) {
-            // Vänd X-hastigheten
-            this.props.velocityX = -velocityX * bounceDamping;
+            // Vänd X-hastigheten utan att ändra hastigheten
+            this.props.velocityX = -velocityX; // Removed damping
             
             // Korrigera positionen
             if (newPositionX + radius > canvasWidth) {
@@ -61,8 +63,8 @@ export class Rune {
         
         // Kontrollera kollision med topp/botten
         if (newPositionY + radius > canvasHeight || newPositionY - radius < 0) {
-            // Vänd Y-hastigheten
-            this.props.velocityY = -newVelocityY * bounceDamping;
+            // Vänd Y-hastigheten utan att ändra hastigheten
+            this.props.velocityY = -newVelocityY; // Removed damping
             
             // Korrigera positionen
             if (newPositionY + radius > canvasHeight) {
@@ -71,6 +73,7 @@ export class Rune {
                 this.props.y = radius;
             }
         }
+    
     }
 
     draw(ctx: CanvasRenderingContext2D) {
@@ -107,7 +110,7 @@ export function createRandomRune(
     const speedX = minSpeed + Math.random() * (maxSpeed - minSpeed);
     const speedY = minSpeed + Math.random() * (maxSpeed - minSpeed);
     
-    // 50% chans för negativ riktning i varje dimension
+    
     const directionX = Math.random() > 0.5 ? 1 : -1;
     const directionY = Math.random() > 0.5 ? 1 : -1;
     
@@ -116,7 +119,7 @@ export function createRandomRune(
     const color = `hsl(${hue}, 70%, 50%)`;
     
     return new Rune({
-        id: Date.now() + Math.random(),  // Unikt ID
+        id: Date.now() + Math.random(), 
         x,
         y,
         radius,
