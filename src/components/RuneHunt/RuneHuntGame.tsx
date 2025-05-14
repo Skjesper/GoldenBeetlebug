@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Rune, { createRandomRune } from './Rune';
+import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
 
 
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
@@ -17,7 +18,7 @@ const GameCanvas = styled.canvas`
   display: block;
   border: 2px solid #4a2511;
   border-radius: 8px;
-  cursor: crosshair;
+  cursor: url(${Champagne}) 90 10, pointer;
   width: 100%;
   height: 100%;
 `;

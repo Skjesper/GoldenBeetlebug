@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Button from './Button';
-import Champagne from '../assets/mouseClickers/champagne_bottle.png';
+
 
 const PaymentContainer = styled.div`
   max-width: 37.5rem;
@@ -12,7 +12,7 @@ const PaymentContainer = styled.div`
   /* justify-content: center;  */
   align-items: center; 
   /* height: 100%; */
-  cursor: url(${Champagne}) 90 10, pointer;
+  
 `;
 
 const Title = styled.h1`
