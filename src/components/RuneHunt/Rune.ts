@@ -1,3 +1,4 @@
+// Rune.ts
 export interface RuneProps {
     id: number;
     x: number;
@@ -16,7 +17,7 @@ export const DEFAULT_RUNE: RuneProps = {
     y: 0,
     radius: 40,
     color: '#3498db',
-    gravity: 0.2, 
+    gravity: 0.0,    // Ingen gravitation
     velocityX: 2,
     velocityY: 2,
     isActive: true
@@ -29,62 +30,101 @@ export class Rune {
         this.props = { ...DEFAULT_RUNE, ...props };
     }
 
-    update(canvasHeight: number) {
-        const gravity = this.props.gravity;
-        const currentVelocity = this.props.velocityY;
-        const ballRadius = this.props.radius;
-        const ballCenterY = this.props.y;
-        const bounceDamping = 0.8; 
+    update(canvasWidth: number, canvasHeight: number) {
+        // Hämta egenskaper från this.props
+        const { gravity, velocityX, velocityY, radius, x, y } = this.props;
+        const bounceDamping = 0.9; // Mindre energiförlust för mer rörelse
         
-        const newVelocity = currentVelocity + gravity;
-        this.props.velocityY = newVelocity;
+        // Uppdatera hastighet med gravitation (ska vara 0 i detta fall)
+        const newVelocityY = velocityY + gravity;
+        this.props.velocityY = newVelocityY;
         
-        const newPositionY = ballCenterY + newVelocity;
+        // Uppdatera position baserat på båda hastighetskomponenterna
+        const newPositionX = x + velocityX;
+        const newPositionY = y + newVelocityY;
+        
+        this.props.x = newPositionX;
         this.props.y = newPositionY;
         
-        const ballBottomEdge = newPositionY + ballRadius;
-        const isBallHittingBottom = ballBottomEdge > canvasHeight;
-
-        if (isBallHittingBottom) {
-            const correctedPositionY = canvasHeight - ballRadius;
-            this.props.y = correctedPositionY;
+        // Kontrollera kollision med höger/vänster vägg
+        if (newPositionX + radius > canvasWidth || newPositionX - radius < 0) {
+            // Vänd X-hastigheten
+            this.props.velocityX = -velocityX * bounceDamping;
             
-            const bounceVelocity = -newVelocity * bounceDamping;
-            this.props.velocityY = bounceVelocity;
+            // Korrigera positionen
+            if (newPositionX + radius > canvasWidth) {
+                this.props.x = canvasWidth - radius;
+            } else if (newPositionX - radius < 0) {
+                this.props.x = radius;
+            }
         }
         
-        const ballTopEdge = newPositionY - ballRadius;
-        const isBallHittingTop = ballTopEdge < 0;
-        
-        if (isBallHittingTop) {
-            const correctedPositionY = ballRadius;
-            this.props.y = correctedPositionY;
+        // Kontrollera kollision med topp/botten
+        if (newPositionY + radius > canvasHeight || newPositionY - radius < 0) {
+            // Vänd Y-hastigheten
+            this.props.velocityY = -newVelocityY * bounceDamping;
             
-            const bounceVelocity = -newVelocity * bounceDamping;
-            this.props.velocityY = bounceVelocity;
+            // Korrigera positionen
+            if (newPositionY + radius > canvasHeight) {
+                this.props.y = canvasHeight - radius;
+            } else if (newPositionY - radius < 0) {
+                this.props.y = radius;
+            }
         }
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        const centerX = this.props.x;
-        const centerY = this.props.y;
-        const radius = this.props.radius;
-        const ballColor = this.props.color;
+        const { x, y, radius, color } = this.props;
 
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        ctx.fillStyle = ballColor;
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
         ctx.fill();
     }
-}
     
-export function createRune(x: number, y: number, radius: number = 20, color: string = '#3498db'): Rune {  // Ändrat returtyp från Ball till Rune
+    // Metod för att kontrollera om en punkt är inuti denna rune (används för klick)
+    containsPoint(pointX: number, pointY: number): boolean {
+        const dx = pointX - this.props.x;
+        const dy = pointY - this.props.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        return distance <= this.props.radius;
+    }
+}
+
+// Skapa en rune med slumpmässig hastighet och färg
+export function createRandomRune(
+    x: number, 
+    y: number, 
+    minRadius = 20, 
+    maxRadius = 50,
+    minSpeed = 1,
+    maxSpeed = 5
+): Rune {
+    const radius = minRadius + Math.random() * (maxRadius - minRadius);
+    
+    // Slumpmässig hastighet med slumpmässig riktning
+    const speedX = minSpeed + Math.random() * (maxSpeed - minSpeed);
+    const speedY = minSpeed + Math.random() * (maxSpeed - minSpeed);
+    
+    // 50% chans för negativ riktning i varje dimension
+    const directionX = Math.random() > 0.5 ? 1 : -1;
+    const directionY = Math.random() > 0.5 ? 1 : -1;
+    
+    // Generera en ljus, slumpmässig färg
+    const hue = Math.floor(Math.random() * 360);
+    const color = `hsl(${hue}, 70%, 50%)`;
+    
     return new Rune({
+        id: Date.now() + Math.random(),  // Unikt ID
         x,
         y,
         radius,
-        color
+        color,
+        velocityX: speedX * directionX,
+        velocityY: speedY * directionY,
+        gravity: 0.0  // Ingen gravitation
     });
 }
-      
+
 export default Rune;

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Rune, { createRune } from './Rune';
+import Rune, { createRandomRune } from './Rune';
 
 // Stylad Container och Canvas
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
@@ -23,19 +23,18 @@ interface RuneHuntProps {
   width?: string;
   height?: string;
   backgroundColor?: string;
+  numRunes?: number;  // Antal bollar att hålla aktiva
 }
 
 const RuneHuntGame: React.FC<RuneHuntProps> = ({
   width = '100%',
   height = '100%',
-  backgroundColor = '#f0f0f0'
+  backgroundColor = '#f0f0f0',
+  numRunes = 8  // Standard 8 bollar
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
-  
-  // Använd useRef istället för useState för spelentiteter
-  // eftersom vi inte behöver rendera om komponenten när de uppdateras
-  const runeRef = useRef<Rune | null>(null);
+  const runesRef = useRef<Rune[]>([]);  // Array av runes
   
   // Uppdatera canvas dimensioner
   const updateCanvasSize = () => {
@@ -55,7 +54,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     return { width: parentWidth, height: parentHeight };
   };
   
-  // Funktion för att rita canvas - anropas direkt i gameLoop
+  // Funktion för att rita alla runes
   const drawCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -69,72 +68,104 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     
-    // Rita Rune om den finns
-    if (runeRef.current) {
-      runeRef.current.draw(ctx);
+    // Rita alla runes
+    runesRef.current.forEach(rune => {
+      rune.draw(ctx);
+    });
+    
+    // Rita information
+    ctx.font = '16px Arial';
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'left';
+    ctx.fillText(`Klicka på en boll för att skapa en ny`, 10, 25);
+  };
+  
+  // Uppdatera alla runes - ingen kollision mellan bollar
+  const updateRunes = () => {
+    runesRef.current.forEach(rune => {
+      rune.update(canvasSize.width, canvasSize.height);
+    });
+  };
+  
+  // Skapa en ny slumpmässig rune
+  const createNewRandomRune = () => {
+    const { width, height } = canvasSize;
+    
+    // Skapa en ny rune på slumpmässig position (inte för nära kanterna)
+    const randomX = Math.random() * (width - 100) + 50; 
+    const randomY = Math.random() * (height - 100) + 50;
+    
+    return createRandomRune(
+      randomX,
+      randomY,
+      15,     // Min radie
+      35,     // Max radie
+      1,      // Min hastighet
+      4       // Max hastighet
+    );
+  };
+  
+  // Funktion för att fylla på med runes till målantalet
+  const ensureRunes = () => {
+    // Skapa nya runes om det behövs
+    while (runesRef.current.length < numRunes) {
+      runesRef.current.push(createNewRandomRune());
     }
   };
   
-  // Uppdatera och rita - anropas i gameLoop
-  const update = () => {
-    if (runeRef.current) {
-      // Uppdatera Rune direkt utan att skapa en ny instans
-      runeRef.current.update(canvasSize.height);
+  // Funktion för att skapa initiala runes
+  const createInitialRunes = () => {
+    // Rensa befintliga runes först
+    runesRef.current = [];
+    
+    // Skapa alla runes på en gång
+    for (let i = 0; i < numRunes; i++) {
+      runesRef.current.push(createNewRandomRune());
     }
   };
   
-  // Huvudeffekten som hanterar inställning och animationsloop
+  // Effekt för att initiera canvas och hantera storlek
   useEffect(() => {
-    // Inställning
     updateCanvasSize();
     
-    // Hantera storleksändring
     const handleResize = () => {
-      const newSize = updateCanvasSize();
-      if (newSize && !runeRef.current) {
-        // Skapa Rune om den inte redan finns
-        runeRef.current = createRune(
-          newSize.width / 2,
-          50,
-          40,
-          '#e74c3c'
-        );
-      }
+      updateCanvasSize();
     };
     
-    // Lyssna på storleksändringar
     window.addEventListener('resize', handleResize);
     
-    // Skapa en Rune om vi har canvasSize
-    if (canvasSize.width > 0 && canvasSize.height > 0 && !runeRef.current) {
-      runeRef.current = createRune(
-        canvasSize.width / 2,
-        50,
-        40,
-        '#e74c3c'
-      );
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  // Effekt för att skapa initiala runes när canvas-storleken är känd
+  useEffect(() => {
+    if (canvasSize.width > 0 && canvasSize.height > 0 && runesRef.current.length === 0) {
+      createInitialRunes();
     }
-    
-    // Game loop
+  }, [canvasSize, numRunes]);
+  
+  // Game loop
+  useEffect(() => {
     let animationFrameId: number;
     
     const gameLoop = () => {
-      update();
+      updateRunes();
+      // Säkerställ att det alltid finns exakt numRunes antal bollar
+      ensureRunes();
       drawCanvas();
       animationFrameId = requestAnimationFrame(gameLoop);
     };
     
-    // Starta game loop
     animationFrameId = requestAnimationFrame(gameLoop);
     
-    // Cleanup
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
     };
-  }, [canvasSize]); // Endast omstarta effekten när canvasSize ändras
+  }, [canvasSize]);
   
-  // Hantera klick på canvas
+  // Hantera klick på canvas - ta bort bollar som klickas på
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -143,13 +174,26 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     const clickX = event.clientX - rect.left;
     const clickY = event.clientY - rect.top;
     
-    // Skapa en ny Rune på klickpunkten
-    runeRef.current = createRune(
-      clickX,
-      clickY,
-      20 + Math.random() * 30,
-      `hsl(${Math.random() * 360}, 70%, 50%)`
-    );
+    // Kontrollera alla bollar för att se om någon klickades
+    for (let i = 0; i < runesRef.current.length; i++) {
+      const rune = runesRef.current[i];
+      
+      const dx = clickX - rune.props.x;
+      const dy = clickY - rune.props.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      // Om klicket är inom bollen, ta bort den
+      if (distance <= rune.props.radius) {
+        // Ta bort den klickade bollen från arrayen
+        runesRef.current.splice(i, 1);
+        
+        // Lägg direkt till en ny för att ersätta den
+        runesRef.current.push(createNewRandomRune());
+        
+        // Bryt loopen när vi har hittat och hanterat en boll
+        break;
+      }
+    }
   };
   
   return (
