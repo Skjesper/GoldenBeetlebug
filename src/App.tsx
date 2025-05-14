@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<RuneHuntPage />} />
+        <Route path="/runehunt/start" element={<RuneHuntPage />} />
         <Route path="/runehunt/play" element={<PlayPage />} />
         <Route path="/runehunt/leaderboard" element={<LeaderboardPage />} />
       </Routes>
