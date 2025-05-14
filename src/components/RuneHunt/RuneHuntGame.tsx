@@ -2,7 +2,9 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Rune, { createRandomRune } from './Rune';
 
-// Stylad Container och Canvas
+
+
+
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;
   width: ${props => props.gameWidth || '100%'};
@@ -73,11 +75,6 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
       rune.draw(ctx);
     });
     
-    // Rita information
-    ctx.font = '16px Arial';
-    ctx.fillStyle = '#333';
-    ctx.textAlign = 'left';
-    ctx.fillText(`Klicka på en boll för att skapa en ny`, 10, 25);
   };
   
   // Uppdatera alla runes - ingen kollision mellan bollar
