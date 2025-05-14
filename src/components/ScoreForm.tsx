@@ -28,6 +28,15 @@ const ScoreInput = styled.form`
   align-items: center;
 `;
 
+const Input = styled.input`
+    width: 264px;
+    height: 31px;
+    border-radius: 20px;
+    border: none;
+    margin-bottom: 25px;
+    padding-left: 10px;
+`;
+
 interface ScoreFormProps {
   score?: number;
 }
@@ -74,7 +83,7 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0 }) => {
         <ScoreBoardTitle>Grymt jobbat! <br />Vill du spara ditt resutlat?</ScoreBoardTitle>
           <ScoreInput onSubmit={handleSubmit}>
               <Scoreboard score={points} />
-              <input
+              <Input
                 type="text"
                 id="nickname"
                 value={nickname}
