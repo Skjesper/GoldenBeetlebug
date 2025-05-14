@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-import Rune, { createRandomRune } from './Rune';
+
+import Rune, { createRandomRune, setRuneImageSource } from './Rune';
 import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
 
 
