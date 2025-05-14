@@ -3,6 +3,7 @@ import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
 import StageSelect from './StageSelect';
+import RuneHuntGame from './RuneHunt/RuneHuntGame';
 
 import backgroundImage1 from './../assets/backgroundImages/game_background.png'
 import backgroundImage2 from './../assets/backgroundImages/dessert_bg.png'
@@ -10,81 +11,79 @@ import backgroundImage3 from './../assets/backgroundImages/forest_bg.png'
 import backgroundImage4 from './../assets/backgroundImages/winter_bg.png'
 import styled from '@emotion/styled';
 
-
-
 const GameScreenContainer = styled.section`
-
     height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     padding: 0 0.5rem;
     
-
-  @media (min-width: 768px) {
-    padding: 1.5rem 1rem;
-  }
+    @media (min-width: 768px) {
+        padding: 1.5rem 1rem;
+    }
 `;
 
-
-
+const GameContent = styled.div`
+    flex: 1;
+    position: relative;
+    margin-top: 1rem;
+`;
 
 const EndScreenContainer = styled.div`
- 
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
 `;
 
 const CountdownContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
 `;
 
 const CountdownNumber = styled.h2`
-  font-size: 25rem; 
-  color: #000000;
-  font-weight: bold;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
-  animation: pulse 1s infinite; 
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
+    font-size: 25rem; 
+    color: #000000;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+    animation: pulse 1s infinite; 
+    
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.3);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
-    50% {
-      transform: scale(1.3);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
 
-  @media (min-width: 768px) {
-
-    font-size: 35rem;
-  }
+    @media (min-width: 768px) {
+        font-size: 35rem;
+    }
 `;
 
-
-
 const GameHeader = styled.section`
-
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
 `;
 
 interface RuneHuntProps {
@@ -107,12 +106,12 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
         setGameRunning(false);
         setGameOver(true);
 
-      //   if (onGameOver) {
-      //     onGameOver(score);
-      // }
+        if (onGameOver) {
+            onGameOver(score);
+        }
     }
 
-function startGame() {
+    function startGame() {
         setStart(true);
         setCountDown(3);
         setGameOver(false);
@@ -120,15 +119,15 @@ function startGame() {
 
         const countdownInterval = setInterval(() => {
             setCountDown(prevCount => {
-              if (prevCount <= 1) {
-                clearInterval(countdownInterval);
-                setGameRunning(true);
-                return 0;
-              }
-              return prevCount - 1;
+                if (prevCount <= 1) {
+                    clearInterval(countdownInterval);
+                    setGameRunning(true);
+                    return 0;
+                }
+                return prevCount - 1;
             });
-          }, 1000);
-    };
+        }, 1000);
+    }
 
     useEffect(() => {
         if (score > highScore) {
@@ -140,7 +139,6 @@ function startGame() {
         if (gameRunning) {
             setScore(prevScore => prevScore + 10);
         }
-
     };
 
     const handleStageSelect = (selectedId: number) => {
@@ -153,42 +151,43 @@ function startGame() {
     const StageSelectMode: boolean = !gameOver && !start;
 
     const stageImages = [
-      {
-        id: 1,
-        src: backgroundImage1, 
-        alt: "Beachclub stage"
-      },
-      {
-        id: 2,
-        src: backgroundImage2,
-        alt: "Dessert stage"
-      },
-      {
-        id: 3,
-        src: backgroundImage3,
-        alt: "Forest stage"
-      },
-      {
-        id: 4,
-        src: backgroundImage4,
-        alt: "Winter stage"
-      }
+        {
+            id: 1,
+            src: backgroundImage1, 
+            alt: "Beachclub stage"
+        },
+        {
+            id: 2,
+            src: backgroundImage2,
+            alt: "Dessert stage"
+        },
+        {
+            id: 3,
+            src: backgroundImage3,
+            alt: "Forest stage"
+        },
+        {
+            id: 4,
+            src: backgroundImage4,
+            alt: "Winter stage"
+        }
     ];
 
     return (
         <div>
-
-          {StageSelectMode && (
-          <EndScreenContainer>
-            <StageSelect images={stageImages} startGame={startGame} onStageSelect={handleStageSelect} />
-            
-          </EndScreenContainer>
-          )}
+            {StageSelectMode && (
+                <EndScreenContainer>
+                    <StageSelect 
+                        images={stageImages} 
+                        startGame={startGame} 
+                        onStageSelect={handleStageSelect} 
+                    />
+                </EndScreenContainer>
+            )}
 
             {!gameOver ? (
-              <GameScreenContainer className='gameContainer'>
-                <>
-                  <GameHeader>
+                <GameScreenContainer className='gameContainer'>
+                    <GameHeader>
                         <Timer 
                             initialTime={30} 
                             isRunning={gameRunning} 
@@ -201,16 +200,25 @@ function startGame() {
                             highScore={highScore}
                             onScorePoint={handleScore}
                         />
-                        </GameHeader>
+                    </GameHeader>
                     
-                   
-                    {countdown > 0 && (
-                        <CountdownContainer className='countdownContainer'>
-                            <CountdownNumber>{countdown}</CountdownNumber>
-                        </CountdownContainer>
-)}
-               
-                </>
+                    <GameContent>
+                        {/* Använder RuneHuntGame med proportionell canvas */}
+                        <RuneHuntGame
+                            width="100%" 
+                            height="100%"
+                            backgroundColor="transparent"
+                            numRunes={8}
+                            isActive={gameRunning} 
+                            onRuneClick={handleScore}
+                        />
+                        
+                        {countdown > 0 && (
+                            <CountdownContainer className='countdownContainer'>
+                                <CountdownNumber>{countdown}</CountdownNumber>
+                            </CountdownContainer>
+                        )}
+                    </GameContent>
                 </GameScreenContainer>
             ) : (
                 <EndScreenContainer>
@@ -222,6 +230,5 @@ function startGame() {
                 </EndScreenContainer>
             )}
         </div>
-       
     );
 }
