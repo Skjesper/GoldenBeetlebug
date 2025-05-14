@@ -46,7 +46,7 @@ const StyledImageGrid = styled.div`
   width: 90%;
   height: 70%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(2, 1fr); 
   grid-gap: 1.5rem;
   overflow-y: auto;
   margin: 0.5rem 0;

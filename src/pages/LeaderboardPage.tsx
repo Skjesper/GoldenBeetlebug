@@ -4,6 +4,15 @@ import Window from "../components/Window";
 import Leaderboard from "../components/Leaderboard";
 import ScoreForm from '../components/ScoreForm';
 import HighScore from '../components/HighScore';
+import styled from "@emotion/styled";
+
+const PageContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 function LeaderboardPage() {
   const [gameScore, setGameScore] = useState<number>(0);
@@ -20,11 +29,13 @@ function LeaderboardPage() {
   return (
      <div>
    <Window backgroundImage={backgroundImage}>
+      <PageContainer>
      {!display ? (
        <ScoreForm score={gameScore}  onDisplayChange={setDisplay}/>
      ) : (
        <Leaderboard/>
      )}
+      </PageContainer>
    </Window>
  </div>
   );
