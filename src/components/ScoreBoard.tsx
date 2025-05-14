@@ -7,14 +7,16 @@ const ScoreContainer = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
   gap: 2rem;
+`;
 
+const ScoreText = styled.h2`
+    text-align: center;
 `;
 interface ScoreboardProps {
 
     score: number;
-    highScore: number;
+    highScore?: number;
     onScorePoint?: () => void;
 
 }
@@ -30,20 +32,21 @@ function getRandomDirection(): string {
 
 export default function Scoreboard({ 
     score, 
-    highScore, 
+    // highScore, 
     onScorePoint 
   }: ScoreboardProps) {
 
     return (
         <ScoreContainer>
-        <h2>
-            Poäng: <span>{score}</span>
-        </h2>
+        <ScoreText>
+          {score}p
+        </ScoreText>
        
         <h2>
-            Rekord: <span>{highScore}</span>
+            {/* Rekord: <span>{highScore}</span> */}
         </h2>
       
+
         </ScoreContainer>
     )
 
