@@ -7,7 +7,7 @@ import HighScore from '../components/HighScore';
 
 function LeaderboardPage() {
   const [gameScore, setGameScore] = useState<number>(0);
-
+  const [display, setDisplay] = useState<boolean>(false); 
   const [backgroundImage] = useState<string | undefined>(undefined);
     
   useEffect(() => {
@@ -18,13 +18,15 @@ function LeaderboardPage() {
   }, []);
 
   return (
-    <div>
-
-       <Window backgroundImage={backgroundImage}>
-            <ScoreForm score={gameScore}/>
-            {/* <Leaderboard/> */}
-        </Window>
-    </div>
+     <div>
+   <Window backgroundImage={backgroundImage}>
+     {!display ? (
+       <ScoreForm score={gameScore}  onDisplayChange={setDisplay}/>
+     ) : (
+       <Leaderboard/>
+     )}
+   </Window>
+ </div>
   );
 
 }

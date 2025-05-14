@@ -1,4 +1,3 @@
-// src/components/ScoreForm.tsx
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import Scoreboard from './ScoreBoard';
@@ -39,17 +38,21 @@ const Input = styled.input`
 
 interface ScoreFormProps {
   score?: number;
+  onDisplayChange?: (value: boolean) => void;
 }
 
-const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0 }) => {
+const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
   const [nickname, setNickname] = useState('');
   const [points, setPoints] = useState<number>(score);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  
 
   useEffect(() => {
     setPoints(score);
   }, [score]);
+
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,6 +71,7 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0 }) => {
       setNickname('');
       setPoints(0);
       setMessage('Poäng sparad!');
+    
     } catch (error) {
       console.error('Error saving score:', error);
       setMessage('Fel: Kunde inte spara poäng');
@@ -76,13 +80,18 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0 }) => {
     }
   };
 
+const handleDisplay = () => {
+ 
+  onDisplayChange?.(true);
+};
+
   return (
     <div>
       
-      <ScoreBoardContainer>
+      <ScoreBoardContainer >
         <ScoreBoardTitle>Grymt jobbat! <br />Vill du spara ditt resutlat?</ScoreBoardTitle>
           <ScoreInput onSubmit={handleSubmit}>
-              <Scoreboard score={points} />
+              <Scoreboard score={points}  />
               <Input
                 type="text"
                 id="nickname"
@@ -93,8 +102,13 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0 }) => {
               />
 
 
-            <Button type="submit" disabled={loading}>
+            <Button 
+            type="submit" 
+            disabled={loading} 
+            onClick={handleDisplay}>
+
               {loading ? 'Sparar...' : 'Spara'}
+
             </Button>
 
           </ScoreInput>
