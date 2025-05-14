@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Rune, { createRune } from './Rune';
 
-// Styled Components
+// Stylad Container och Canvas
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;
   width: ${props => props.gameWidth || '100%'};
@@ -31,10 +31,13 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   backgroundColor = '#f0f0f0'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  // State för att hålla faktiska canvas-dimensioner i pixlar
   const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
   
-  // Funktion för att uppdatera canvas dimensioner
+  // Använd useRef istället för useState för spelentiteter
+  // eftersom vi inte behöver rendera om komponenten när de uppdateras
+  const runeRef = useRef<Rune | null>(null);
+  
+  // Uppdatera canvas dimensioner
   const updateCanvasSize = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -42,20 +45,17 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     const parent = canvas.parentElement;
     if (!parent) return;
     
-    // Hämta förälderdivens faktiska pixelstorlek
     const { width: parentWidth, height: parentHeight } = parent.getBoundingClientRect();
     
-    // Uppdatera canvas pixeldimensioner - viktigt för skarp rendering
     canvas.width = parentWidth;
     canvas.height = parentHeight;
     
-    // Spara dimensionerna i state för användning i andra funktioner
     setCanvasSize({ width: parentWidth, height: parentHeight });
     
     return { width: parentWidth, height: parentHeight };
   };
   
-  // Funktion för att rita på canvas
+  // Funktion för att rita canvas - anropas direkt i gameLoop
   const drawCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -63,48 +63,94 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    // Använd canvasSize.width och canvasSize.height som är nummer
     const { width: canvasWidth, height: canvasHeight } = canvasSize;
     
-    // Rensa och fyll canvas med bakgrundsfärg
+    // Rensa canvas
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     
-    // Rita en välkomsttext som visar att canvas fungerar
-    ctx.font = '32px Fantasy';
-    ctx.fillStyle = '#4a2511';
-    ctx.textAlign = 'center';
-    ctx.fillText('RuneHunt', canvasWidth / 2, canvasHeight / 3);
-    
-    ctx.font = '20px Arial';
-    ctx.fillText('Canvas är redo för spellogik', canvasWidth / 2, canvasHeight / 2);
-    
-    // Här kan du senare initiera spelmotorn och koppla den till canvas
+    // Rita Rune om den finns
+    if (runeRef.current) {
+      runeRef.current.draw(ctx);
+    }
   };
   
-  // Effekt för att initiera canvas och lyssna på storleksändringar
+  // Uppdatera och rita - anropas i gameLoop
+  const update = () => {
+    if (runeRef.current) {
+      // Uppdatera Rune direkt utan att skapa en ny instans
+      runeRef.current.update(canvasSize.height);
+    }
+  };
+  
+  // Huvudeffekten som hanterar inställning och animationsloop
   useEffect(() => {
-    // Uppdatera först dimensionerna
+    // Inställning
     updateCanvasSize();
     
-    // Lyssna på storleksändringar
+    // Hantera storleksändring
     const handleResize = () => {
-      updateCanvasSize();
-      // Rita om efter resize
-      drawCanvas();
+      const newSize = updateCanvasSize();
+      if (newSize && !runeRef.current) {
+        // Skapa Rune om den inte redan finns
+        runeRef.current = createRune(
+          newSize.width / 2,
+          50,
+          40,
+          '#e74c3c'
+        );
+      }
     };
     
+    // Lyssna på storleksändringar
     window.addEventListener('resize', handleResize);
     
+    // Skapa en Rune om vi har canvasSize
+    if (canvasSize.width > 0 && canvasSize.height > 0 && !runeRef.current) {
+      runeRef.current = createRune(
+        canvasSize.width / 2,
+        50,
+        40,
+        '#e74c3c'
+      );
+    }
+    
+    // Game loop
+    let animationFrameId: number;
+    
+    const gameLoop = () => {
+      update();
+      drawCanvas();
+      animationFrameId = requestAnimationFrame(gameLoop);
+    };
+    
+    // Starta game loop
+    animationFrameId = requestAnimationFrame(gameLoop);
+    
+    // Cleanup
     return () => {
+      cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
     };
-  }, []); // Kör bara en gång vid montering
+  }, [canvasSize]); // Endast omstarta effekten när canvasSize ändras
   
-  // Effekt för att rita på canvasen när bakgrundsfärg eller canvasSize ändras
-  useEffect(() => {
-    drawCanvas();
-  }, [backgroundColor, canvasSize]);
+  // Hantera klick på canvas
+  const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const clickY = event.clientY - rect.top;
+    
+    // Skapa en ny Rune på klickpunkten
+    runeRef.current = createRune(
+      clickX,
+      clickY,
+      20 + Math.random() * 30,
+      `hsl(${Math.random() * 360}, 70%, 50%)`
+    );
+  };
   
   return (
     <GameContainer 
@@ -115,6 +161,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
       <GameCanvas
         ref={canvasRef}
         className="rune-hunt-canvas"
+        onClick={handleCanvasClick}
       />
     </GameContainer>
   );
