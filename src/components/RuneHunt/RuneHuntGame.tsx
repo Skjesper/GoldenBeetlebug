@@ -2,9 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Rune, { createRandomRune } from './Rune';
 
-// Vi tar bort de fasta dimensionerna helt
-// const GAME_WIDTH = 1600;  
-// const GAME_HEIGHT = 900;
 
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;

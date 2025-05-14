@@ -12,21 +12,21 @@ import backgroundImage4 from './../assets/backgroundImages/winter_bg.png'
 import styled from '@emotion/styled';
 
 const GameScreenContainer = styled.section`
-    height: 100vh;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 0 0.5rem;
+    /* padding: 0 0.5rem;
     
     @media (min-width: 768px) {
         padding: 1.5rem 1rem;
-    }
+    } */
 `;
 
 const GameContent = styled.div`
     flex: 1;
     position: relative;
-    margin-top: 1rem;
+    margin-top: -4.4rem;
 `;
 
 const EndScreenContainer = styled.div`
@@ -187,7 +187,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
 
             {!gameOver ? (
                 <GameScreenContainer className='gameContainer'>
-                    <GameHeader>
+                     <GameHeader>
                         <Timer 
                             initialTime={30} 
                             isRunning={gameRunning} 
@@ -200,7 +200,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
                             highScore={highScore}
                             onScorePoint={handleScore}
                         />
-                    </GameHeader>
+                    </GameHeader> 
                     
                     <GameContent>
                         {/* Använder RuneHuntGame med proportionell canvas */}
