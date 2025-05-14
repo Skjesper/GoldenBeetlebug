@@ -98,12 +98,12 @@ export function createRandomRune(
     y: number, 
     minRadius = 20, 
     maxRadius = 50,
-    minSpeed = 1,
-    maxSpeed = 5
+    minSpeed = 4,
+    maxSpeed = 10,
 ): Rune {
     const radius = minRadius + Math.random() * (maxRadius - minRadius);
     
-    // Slumpmässig hastighet med slumpmässig riktning
+    
     const speedX = minSpeed + Math.random() * (maxSpeed - minSpeed);
     const speedY = minSpeed + Math.random() * (maxSpeed - minSpeed);
     

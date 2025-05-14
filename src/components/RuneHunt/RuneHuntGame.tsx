@@ -87,21 +87,24 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     });
   };
   
-  // Skapa en ny slumpmässig rune
-  const createNewRandomRune = () => {
+  // Funktion för att skapa en boll på slumpmässig position
+  const createRandomPositionedRune = () => {
     const { width, height } = canvasSize;
     
-    // Skapa en ny rune på slumpmässig position (inte för nära kanterna)
-    const randomX = Math.random() * (width - 100) + 50; 
-    const randomY = Math.random() * (height - 100) + 50;
+    // Sätt en marginal så att bollarna inte skapas för nära kanterna
+    const marginFromEdge = 50;
+    
+    // Generera slumpmässiga koordinater inom spelplanen med hänsyn till marginal
+    const randomX = marginFromEdge + Math.random() * (width - 2 * marginFromEdge);
+    const randomY = marginFromEdge + Math.random() * (height - 2 * marginFromEdge);
     
     return createRandomRune(
       randomX,
       randomY,
       15,     // Min radie
       35,     // Max radie
-      1,      // Min hastighet
-      4       // Max hastighet
+      2,      // Min hastighet (uppdaterad från 1 till 2)
+      5       // Max hastighet
     );
   };
   
@@ -109,7 +112,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   const ensureRunes = () => {
     // Skapa nya runes om det behövs
     while (runesRef.current.length < numRunes) {
-      runesRef.current.push(createNewRandomRune());
+      runesRef.current.push(createRandomPositionedRune());
     }
   };
   
@@ -120,7 +123,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     
     // Skapa alla runes på en gång
     for (let i = 0; i < numRunes; i++) {
-      runesRef.current.push(createNewRandomRune());
+      runesRef.current.push(createRandomPositionedRune());
     }
   };
   
@@ -187,10 +190,39 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
         // Ta bort den klickade bollen från arrayen
         runesRef.current.splice(i, 1);
         
-        // Lägg direkt till en ny för att ersätta den
-        runesRef.current.push(createNewRandomRune());
+        // Lägg till en ny boll på en slumpmässig position
+        runesRef.current.push(createRandomPositionedRune());
         
         // Bryt loopen när vi har hittat och hanterat en boll
+        break;
+      }
+    }
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLCanvasElement>) => {
+    // Förhindra standard touch-beteenden som scrollning
+    event.preventDefault();
+    
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const touch = event.touches[0]; // Första fingerberöringen
+    
+    const touchX = touch.clientX - rect.left;
+    const touchY = touch.clientY - rect.top;
+    
+    // Använd samma logik som för musklick
+    for (let i = 0; i < runesRef.current.length; i++) {
+      const rune = runesRef.current[i];
+      
+      const dx = touchX - rune.props.x;
+      const dy = touchY - rune.props.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance <= rune.props.radius) {
+        runesRef.current.splice(i, 1);
+        runesRef.current.push(createRandomPositionedRune());
         break;
       }
     }
@@ -206,6 +238,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
         ref={canvasRef}
         className="rune-hunt-canvas"
         onClick={handleCanvasClick}
+        onTouchStart={handleTouchStart}
       />
     </GameContainer>
   );
