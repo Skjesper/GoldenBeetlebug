@@ -7,7 +7,7 @@ const Container = styled.div `
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #D9D9D9;
+    background-color: #FFF;
     width: 44.25rem;
     height: 20.625rem;
     border-radius: 20px;
