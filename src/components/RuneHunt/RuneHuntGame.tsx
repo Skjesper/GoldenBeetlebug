@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import Rune, { createRune } from './Rune';
 
 // Styled Components
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
