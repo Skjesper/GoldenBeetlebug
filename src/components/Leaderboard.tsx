@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
 
 const Container = styled.div `
     display: flex;
@@ -26,14 +28,44 @@ const ListItem = styled.li `
 `;
 
 function Leaderboard() {
+      const [leaderBoardScores, setLeaderBoardScores] = useState<Array<number> | null>(null);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState('');
+    
+
+      useEffect(() => {
+          const fetchLeaderBoardScores = async () => {
+            try {
+              const { data, error } = await supabase
+                .from('scores')
+                .select('points')
+                .order('points', { ascending: false })
+                .limit(5);
+              
+              if (error) {
+                throw error;
+              }
+              
+              setLeaderBoardScores(data?.points || 0);
+            } catch (error) {
+
+              console.error('Error fetching high scores:', error);
+              setError('Kunde inte hämta leaderboard');
+
+            } finally {
+              setLoading(false);
+            }
+          };
+          
+          fetchLeaderBoardScores();
+        }, []);
+
     return (
         <>
             <Container>
                 <Title>Leaderboard</Title>
                 <ListContainer>
                     <ListItem>
-                        <span>Anna Dahlberg </span>
-                        <span>200</span>
                     </ListItem>
                 </ListContainer>
             </Container>
