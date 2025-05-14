@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Window from "../components/Window";
 import Leaderboard from "../components/Leaderboard";
 import ScoreForm from '../components/ScoreForm';
-import HighScore from '../components/HighScore';
 import styled from "@emotion/styled";
 
 const PageContainer = styled.div`

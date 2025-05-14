@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Button from './Button';
 import styled from '@emotion/styled';
 

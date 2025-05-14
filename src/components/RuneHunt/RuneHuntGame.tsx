@@ -2,9 +2,9 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Rune, { createRandomRune } from './Rune';
 
-// Fast spelstorlek med 16:9 proportion
-const GAME_WIDTH = 1600;  
-const GAME_HEIGHT = 900;
+// Vi tar bort de fasta dimensionerna helt
+// const GAME_WIDTH = 1600;  
+// const GAME_HEIGHT = 900;
 
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;
@@ -21,6 +21,8 @@ const GameCanvas = styled.canvas`
   border: 2px solid #4a2511;
   border-radius: 8px;
   cursor: crosshair;
+  width: 100%;
+  height: 100%;
 `;
 
 // Props för komponenten
@@ -43,83 +45,60 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const scaleRef = useRef<number>(1);
   const runesRef = useRef<Rune[]>([]);
   const animationFrameIdRef = useRef<number | null>(null);
   
-  // Vi använder en fast intern spelstorlek
-  const [canvasSize] = useState({ width: GAME_WIDTH, height: GAME_HEIGHT });
+  // Använd dynamisk canvasSize baserat på containerens dimensioner
+  const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
   
-  // Uppdatera canvas visningsstorlek men behåll aspektförhållandet
+  // Uppdatera canvas storlek baserat på förälderns storlek
   const updateCanvasSize = () => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
     
-    // Hämta containerns dimensioner
+    // Hämta containerns faktiska dimensioner
     const { width: containerWidth, height: containerHeight } = container.getBoundingClientRect();
     
-    // Sätt interna canvas-dimensioner till vår fasta spelstorlek
-    canvas.width = GAME_WIDTH;
-    canvas.height = GAME_HEIGHT;
+    // Uppdatera canvas pixeldimensioner för att matcha containern
+    canvas.width = containerWidth;
+    canvas.height = containerHeight;
     
-    // Beräkna aspektförhållanden
-    const gameAspect = GAME_WIDTH / GAME_HEIGHT;
-    const containerAspect = containerWidth / containerHeight;
+    // Uppdatera state för att spelloopar ska använda rätt spelplansstorlek
+    setCanvasSize({ width: containerWidth, height: containerHeight });
     
-    let cssWidth, cssHeight, scale;
-    
-    if (containerAspect > gameAspect) {
-      // Container är bredare än vårt spelaspekt
-      scale = containerHeight / GAME_HEIGHT;
-      cssHeight = containerHeight;
-      cssWidth = GAME_WIDTH * scale;
-    } else {
-      // Container är högre än vårt spelaspekt
-      scale = containerWidth / GAME_WIDTH;
-      cssWidth = containerWidth;
-      cssHeight = GAME_HEIGHT * scale;
-    }
-    
-    // Sätt CSS-dimensioner för visningsskalning
-    canvas.style.width = `${cssWidth}px`;
-    canvas.style.height = `${cssHeight}px`;
-    
-    // Spara skalningsfaktor för inmatningskoordinatomvandling
-    scaleRef.current = scale;
-    
-    return { width: GAME_WIDTH, height: GAME_HEIGHT, scale };
+    return { width: containerWidth, height: containerHeight };
   };
   
-// I drawCanvas-funktionen, se till att vi rensar hela canvas innan ritning
-const drawCanvas = () => {
-  const canvas = canvasRef.current;
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  
-  // Rensa hela canvas-arean helt och hållet
-  ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-  
-  // Fyll bakgrunden om en bakgrundsfärg är angiven
-  if (backgroundColor !== 'transparent') {
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-  }
-  
-  // Rita alla runes
-  runesRef.current.forEach(rune => {
-    rune.draw(ctx);
-  });
-};;
+  // Rensar canvas och ritar allt
+  const drawCanvas = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    // Rensa hela canvas-arean helt och hållet
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Fyll bakgrunden om en bakgrundsfärg är angiven
+    if (backgroundColor !== 'transparent') {
+      ctx.fillStyle = backgroundColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    // Rita alla runes
+    runesRef.current.forEach(rune => {
+      rune.draw(ctx);
+    });
+  };
   
   // Uppdatera alla runes
   const updateRunes = () => {
     if (!isActive) return;
     
     runesRef.current.forEach(rune => {
-      rune.update(GAME_WIDTH, GAME_HEIGHT);
+      rune.update(canvasSize.width, canvasSize.height);
     });
   };
   
@@ -129,8 +108,8 @@ const drawCanvas = () => {
     const marginFromEdge = 50;
     
     // Generera slumpmässiga koordinater inom spelplanen med hänsyn till marginal
-    const randomX = marginFromEdge + Math.random() * (GAME_WIDTH - 2 * marginFromEdge);
-    const randomY = marginFromEdge + Math.random() * (GAME_HEIGHT - 2 * marginFromEdge);
+    const randomX = marginFromEdge + Math.random() * (canvasSize.width - 2 * marginFromEdge);
+    const randomY = marginFromEdge + Math.random() * (canvasSize.height - 2 * marginFromEdge);
     
     return createRandomRune(
       randomX,
@@ -163,9 +142,10 @@ const drawCanvas = () => {
   
   // Effekt för att initiera canvas och hantera storlek
   useEffect(() => {
+    // Första uppdatering av storlek
     updateCanvasSize();
-    createInitialRunes();
     
+    // Lyssna på storleksförändringar
     const handleResize = () => {
       updateCanvasSize();
     };
@@ -174,8 +154,39 @@ const drawCanvas = () => {
     
     return () => {
       window.removeEventListener('resize', handleResize);
+      
+      // Rensa animation frames vid avmontering
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
     };
   }, []);
+  
+  // Skapa initiala runes när canvasSize är definierad
+  useEffect(() => {
+    if (canvasSize.width > 0 && canvasSize.height > 0 && runesRef.current.length === 0) {
+      createInitialRunes();
+    }
+    
+    // Om storleken ändras kraftigt, justera befintliga runes för att undvika att de hamnar utanför
+    if (runesRef.current.length > 0) {
+      runesRef.current.forEach(rune => {
+        // Kontrollera och justera x-position
+        if (rune.props.x < rune.props.radius) {
+          rune.props.x = rune.props.radius + 10;
+        } else if (rune.props.x > canvasSize.width - rune.props.radius) {
+          rune.props.x = canvasSize.width - rune.props.radius - 10;
+        }
+        
+        // Kontrollera och justera y-position
+        if (rune.props.y < rune.props.radius) {
+          rune.props.y = rune.props.radius + 10;
+        } else if (rune.props.y > canvasSize.height - rune.props.radius) {
+          rune.props.y = canvasSize.height - rune.props.radius - 10;
+        }
+      });
+    }
+  }, [canvasSize]);
   
   // Game loop
   useEffect(() => {
@@ -197,9 +208,9 @@ const drawCanvas = () => {
         cancelAnimationFrame(animationFrameIdRef.current);
       }
     };
-  }, [isActive]);
+  }, [isActive, canvasSize]);
   
-  // Hantera klick på canvas - konvertera skärmkoordinater till spelkoordinater
+  // Hantera klick på canvas - mycket enklare nu utan skalning
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isActive) return;
     
@@ -207,11 +218,10 @@ const drawCanvas = () => {
     if (!canvas) return;
     
     const rect = canvas.getBoundingClientRect();
-    const scale = scaleRef.current;
     
-    // Konvertera skärmkoordinater till spelkoordinater
-    const gameX = (event.clientX - rect.left) / scale;
-    const gameY = (event.clientY - rect.top) / scale;
+    // Vi behöver inte längre skala om koordinaterna eftersom canvas matchar container
+    const gameX = event.clientX - rect.left;
+    const gameY = event.clientY - rect.top;
     
     // Kontrollera alla runes för träffar
     for (let i = 0; i < runesRef.current.length; i++) {
@@ -247,12 +257,11 @@ const drawCanvas = () => {
     if (!canvas) return;
     
     const rect = canvas.getBoundingClientRect();
-    const scale = scaleRef.current;
     const touch = event.touches[0];
     
-    // Konvertera touch-koordinater till spelkoordinater
-    const gameX = (touch.clientX - rect.left) / scale;
-    const gameY = (touch.clientY - rect.top) / scale;
+    // Direkt användning av koordinater utan skalning
+    const gameX = touch.clientX - rect.left;
+    const gameY = touch.clientY - rect.top;
     
     // Använd samma logik som för musklick
     for (let i = 0; i < runesRef.current.length; i++) {

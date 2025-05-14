@@ -1,4 +1,4 @@
-import react from 'react';
+
 import styled from '@emotion/styled';
 
 
@@ -23,7 +23,7 @@ interface ScoreboardProps {
 export default function Scoreboard({ 
     score, 
     // highScore, 
-    onScorePoint 
+    // onScorePoint 
   }: ScoreboardProps) {
 
     return (
