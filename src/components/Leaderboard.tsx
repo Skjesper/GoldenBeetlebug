@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import Button from "./Button";
 
 const Container = styled.div `
     display: flex;
@@ -83,6 +84,8 @@ function Leaderboard() {
                         </ListItem>
                     ))}
                 </ListContainer>
+
+                <Button to='/'>Startsidan</Button>
 
             </Container>
         </>
