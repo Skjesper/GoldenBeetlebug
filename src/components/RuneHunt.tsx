@@ -13,9 +13,10 @@ import styled from '@emotion/styled';
 
 const GameScreenContainer = styled.section`
     height: 100%;
-    width: 100%;
+    width: 100vw;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+   
     /* padding: 0 0.5rem;
     
     @media (min-width: 768px) {
@@ -24,10 +25,13 @@ const GameScreenContainer = styled.section`
 `;
 
 const GameContent = styled.div`
+    display: flex;
     flex: 1;
     position: relative;
-    margin-top: -4.4rem;
-    width: 100%;
+    justify-content: center;
+
+    /* margin-top: -4.4rem; */
+    width: 100vw;
     height: 100%;
 `;
 
@@ -198,9 +202,9 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
 
             {!gameOver ? (
                 <GameScreenContainer className='gameContainer'>
-                     <GameHeader>
+                     {/* <GameHeader>
                         <Timer 
-                            initialTime={30} 
+                            initialTime={300} 
                             isRunning={gameRunning} 
                             onTimeOut={handleTimeOut}
                             countDown={true}
@@ -211,13 +215,13 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
                             highScore={highScore}
                             onScorePoint={handleScore}
                         />
-                    </GameHeader> 
+                    </GameHeader>  */}
                     
                     <GameContent>
                         {/* Använder RuneHuntGame med proportionell canvas och bakgrundsbild */}
                         <RuneHuntGame
-                            width="100%" 
-                            height="100%"
+                            width="80%" 
+                            height="80%"
                             backgroundColor="transparent"
                             backgroundImage={selectedBackground}  // Skicka in den valda bakgrundsbilden
                             numRunes={8}
