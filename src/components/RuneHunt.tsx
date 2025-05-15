@@ -225,7 +225,6 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
                     <EndScreen 
                         score={score}
                         highScore={highScore}
-                        onRestart={startGame}
                     />
                 </EndScreenContainer>
             )}

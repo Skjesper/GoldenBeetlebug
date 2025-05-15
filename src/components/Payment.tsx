@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import Button from './Button';
 
-
 const PaymentContainer = styled.div`
   max-width: 37.5rem;
   width: 80%;
