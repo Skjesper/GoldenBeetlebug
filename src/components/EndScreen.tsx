@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 interface EndScreenProps {
     score: number;
     highScore: number;
-    onRestart: () => void;
 }
 
 const Container = styled.div`
@@ -53,7 +52,7 @@ const ButtonContainer = styled.div`
 
 
 
-export default function EndScreen({ score, highScore, onRestart }: EndScreenProps) {
+export default function EndScreen({ score, highScore }: EndScreenProps) {
     const getResultMessage = () => {
         if (score >= highScore && highScore > 0) return "Nytt rekord!";
         if (score > 0) return "Bra spelat!";
