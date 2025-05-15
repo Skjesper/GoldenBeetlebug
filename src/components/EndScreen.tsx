@@ -82,11 +82,8 @@ export default function EndScreen({ score, highScore, onRestart }: EndScreenProp
             <p>{getResultMessage()}</p>
           </div>
           <ButtonContainer>
-            <Button onClick={onRestart}>
-              Spela igen
-            </Button>
             <Button to="/leaderboard">
-              Leaderboard
+              Spara resultat
             </Button>
           </ButtonContainer>
         </Container>
