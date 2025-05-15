@@ -1,11 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Rune, { createRandomRune } from './Rune';
 
-// Vi tar bort de fasta dimensionerna helt
-// const GAME_WIDTH = 1600;  
-// const GAME_HEIGHT = 900;
 
+import Rune, { createRandomRune, setRuneImageSource } from './Rune';
+import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
+
+
+// Importera rune-bilden - justera sökvägen enligt din projektstruktur
+import runeImage from '../../assets/rune.png';
+
+// Styled components för spelkontainern
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;
   width: ${props => props.gameWidth || '100%'};
@@ -16,21 +20,22 @@ const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   overflow: hidden;
 `;
 
+// Styled component för canvas-elementet
 const GameCanvas = styled.canvas`
   display: block;
   border: 2px solid #4a2511;
   border-radius: 8px;
-  cursor: crosshair;
+  cursor: url(${Champagne}) 90 10, pointer;
   width: 100%;
   height: 100%;
 `;
 
-// Props för komponenten
+// Props-interface för RuneHuntGame-komponenten
 interface RuneHuntProps {
   width?: string;
   height?: string;
   backgroundColor?: string;
-  numRunes?: number;  // Antal bollar att hålla aktiva
+  numRunes?: number;  // Antal runes att hålla aktiva
   isActive?: boolean;  // Om spelet är aktivt
   onRuneClick?: () => void;  // Callback för klick på en rune
 }
@@ -39,38 +44,46 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   width = '100%',
   height = '100%',
   backgroundColor = '#f0f0f0',
-  numRunes = 8,  // Standard 8 bollar
+  numRunes = 8,  // Standard 8 runes
   isActive = true,
   onRuneClick = () => {}
 }) => {
+  // Referens till canvas-elementet
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  // Referens till container-elementet
   const containerRef = useRef<HTMLDivElement | null>(null);
+  // Referens till alla aktiva runes
   const runesRef = useRef<Rune[]>([]);
+  // Referens till den aktuella animations-framen
   const animationFrameIdRef = useRef<number | null>(null);
   
-  // Använd dynamisk canvasSize baserat på containerens dimensioner
-  const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
+  // State för att spåra den faktiska spelstorleken (beräknas dynamiskt)
+  const [gameSize, setGameSize] = useState({ width: 800, height: 600 });
   
-  // Uppdatera canvas storlek baserat på förälderns storlek
+  // Uppdatera canvas storlek baserat på tillgängligt utrymme
   const updateCanvasSize = () => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
     
-    // Hämta containerns faktiska dimensioner
+    // Hämta containerns dimensioner - detta är det tillgängliga utrymmet
     const { width: containerWidth, height: containerHeight } = container.getBoundingClientRect();
     
+    // Nu använder vi det tillgängliga utrymmet direkt istället för en fast proportion
+    const newGameWidth = containerWidth;
+    const newGameHeight = containerHeight;
+    
     // Uppdatera canvas pixeldimensioner för att matcha containern
-    canvas.width = containerWidth;
-    canvas.height = containerHeight;
+    canvas.width = newGameWidth;
+    canvas.height = newGameHeight;
     
-    // Uppdatera state för att spelloopar ska använda rätt spelplansstorlek
-    setCanvasSize({ width: containerWidth, height: containerHeight });
+    // Uppdatera vår interna spelstorlek
+    setGameSize({ width: newGameWidth, height: newGameHeight });
     
-    return { width: containerWidth, height: containerHeight };
+    return { width: newGameWidth, height: newGameHeight };
   };
   
-  // Rensar canvas och ritar allt
+  // Rensa canvas och rita alla runes
   const drawCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -81,7 +94,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     // Rensa hela canvas-arean helt och hållet
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Fyll bakgrunden om en bakgrundsfärg är angiven
+    // Fyll bakgrunden om en bakgrundsfärg är angiven och inte transparent
     if (backgroundColor !== 'transparent') {
       ctx.fillStyle = backgroundColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -93,12 +106,13 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     });
   };
   
-  // Uppdatera alla runes
+  // Uppdatera alla runes positioner
   const updateRunes = () => {
     if (!isActive) return;
     
     runesRef.current.forEach(rune => {
-      rune.update(canvasSize.width, canvasSize.height);
+      // Använd den aktuella spelstorleken för gränsdetektering
+      rune.update(gameSize.width, gameSize.height);
     });
   };
   
@@ -108,8 +122,8 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     const marginFromEdge = 50;
     
     // Generera slumpmässiga koordinater inom spelplanen med hänsyn till marginal
-    const randomX = marginFromEdge + Math.random() * (canvasSize.width - 2 * marginFromEdge);
-    const randomY = marginFromEdge + Math.random() * (canvasSize.height - 2 * marginFromEdge);
+    const randomX = marginFromEdge + Math.random() * (gameSize.width - 2 * marginFromEdge);
+    const randomY = marginFromEdge + Math.random() * (gameSize.height - 2 * marginFromEdge);
     
     return createRandomRune(
       randomX,
@@ -140,12 +154,33 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     }
   };
   
-  // Effekt för att initiera canvas och hantera storlek
+  // När komponenten monteras: Ställ in bildkälla för runes
   useEffect(() => {
-    // Första uppdatering av storlek
-    updateCanvasSize();
+    // Sätt bildkällan för alla runes
+    setRuneImageSource(runeImage);
     
-    // Lyssna på storleksförändringar
+    // Du kan också prova med en absolut sökväg om importen inte fungerar:
+    // setRuneImageSource('/src/assets/rune.png');
+    
+    // Eller om alternativ bild önskas:
+    // setRuneImageSource('/src/assets/rune1.png');
+  }, []);
+  
+  // När komponenten monteras och vid storleksändringar
+  useEffect(() => {
+    // Rensa eventuella animationsframes
+    if (animationFrameIdRef.current) {
+      cancelAnimationFrame(animationFrameIdRef.current);
+      animationFrameIdRef.current = null;
+    }
+    
+    // Initial uppdatering av storlek och runes
+    const size = updateCanvasSize();
+    if (size && runesRef.current.length === 0) {
+      createInitialRunes();
+    }
+    
+    // Lyssna på storleksändringar
     const handleResize = () => {
       updateCanvasSize();
     };
@@ -154,41 +189,36 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     
     return () => {
       window.removeEventListener('resize', handleResize);
-      
-      // Rensa animation frames vid avmontering
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current);
       }
     };
   }, []);
   
-  // Skapa initiala runes när canvasSize är definierad
+  // Återskapa runes när spelstorleken ändras kraftigt
+  // Detta förhindrar att runes fastnar utanför kanten när spelplanen ändrar storlek
   useEffect(() => {
-    if (canvasSize.width > 0 && canvasSize.height > 0 && runesRef.current.length === 0) {
-      createInitialRunes();
-    }
-    
-    // Om storleken ändras kraftigt, justera befintliga runes för att undvika att de hamnar utanför
-    if (runesRef.current.length > 0) {
+    if (gameSize.width > 0 && gameSize.height > 0) {
+      // Flytta alla befintliga runes tillbaka in på spelplanen
       runesRef.current.forEach(rune => {
-        // Kontrollera och justera x-position
+        // Justera x-position om utanför kanten
         if (rune.props.x < rune.props.radius) {
           rune.props.x = rune.props.radius + 10;
-        } else if (rune.props.x > canvasSize.width - rune.props.radius) {
-          rune.props.x = canvasSize.width - rune.props.radius - 10;
+        } else if (rune.props.x > gameSize.width - rune.props.radius) {
+          rune.props.x = gameSize.width - rune.props.radius - 10;
         }
         
-        // Kontrollera och justera y-position
+        // Justera y-position om utanför kanten
         if (rune.props.y < rune.props.radius) {
           rune.props.y = rune.props.radius + 10;
-        } else if (rune.props.y > canvasSize.height - rune.props.radius) {
-          rune.props.y = canvasSize.height - rune.props.radius - 10;
+        } else if (rune.props.y > gameSize.height - rune.props.radius) {
+          rune.props.y = gameSize.height - rune.props.radius - 10;
         }
       });
     }
-  }, [canvasSize]);
+  }, [gameSize]);
   
-  // Game loop
+  // Game loop - uppdaterar speltillståndet och ritar alla runes
   useEffect(() => {
     if (animationFrameIdRef.current) {
       cancelAnimationFrame(animationFrameIdRef.current);
@@ -208,7 +238,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
         cancelAnimationFrame(animationFrameIdRef.current);
       }
     };
-  }, [isActive, canvasSize]);
+  }, [isActive, gameSize]);
   
   // Hantera klick på canvas - mycket enklare nu utan skalning
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
