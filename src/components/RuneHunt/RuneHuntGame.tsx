@@ -28,6 +28,12 @@ const GameCanvas = styled.canvas`
   cursor: url(${Champagne}) 90 10, pointer;
   width: 100%;
   height: 100%;
+
+  /* Prevent default touch behaviors */
+  touch-action: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 // Props-interface för RuneHuntGame-komponenten
@@ -281,7 +287,6 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   // Hantera touch-händelser på liknande sätt
   const handleTouchStart = (event: React.TouchEvent<HTMLCanvasElement>) => {
     if (!isActive) return;
-    event.preventDefault();
     
     const canvas = canvasRef.current;
     if (!canvas) return;
