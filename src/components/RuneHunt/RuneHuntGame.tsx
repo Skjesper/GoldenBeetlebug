@@ -287,7 +287,6 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   // Hantera touch-händelser på liknande sätt
   const handleTouchStart = (event: React.TouchEvent<HTMLCanvasElement>) => {
     if (!isActive) return;
-    event.preventDefault();
     
     const canvas = canvasRef.current;
     if (!canvas) return;
