@@ -13,13 +13,13 @@ const StyledContainer = styled.div`
   align-items: center;
   gap: 0.5rem;
   overflow: hidden;
-  padding: 0.5rem;
+  padding: 1.5rem;
   box-sizing: border-box;
 `;
 
 const StyledHeader = styled.div`
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   
   h1 {
     margin: 0 0 0.25rem 0;
@@ -31,10 +31,9 @@ const StyledHeader = styled.div`
   }
   
   p {
-    margin: 0;
+    margin: 0 auto;
     font-size: 0.9rem;
     max-width: 90%;
-    margin: 0 auto;
     
     @media (max-width: 768px) {
       font-size: 0.8rem;
@@ -42,42 +41,53 @@ const StyledHeader = styled.div`
   }
 `;
 
+// Using a different approach for grid layout to ensure outlines are visible
 const StyledImageGrid = styled.div`
   width: 90%;
   height: 70%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  grid-gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
   overflow-y: auto;
-  margin: 0.5rem 0;
-  padding: 0.5rem;
+  overflow-x: hidden;
+  padding: 1rem;
+  padding-right: 2rem;
   
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr); 
-    grid-gap: 1rem;
     width: 95%;
+    gap: 1.2rem;
   }
   
   @media (max-width: 768px) and (orientation: landscape) {
-    grid-template-columns: repeat(2, 1fr); 
-    grid-gap: 0.75rem;
     height: 65%;
+    gap: 1rem;
   }
 `;
 
 const StyledImageContainer = styled.div`
-  aspect-ratio: 5/3; 
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5/3;
+  border-radius: 0.5rem;
   box-sizing: border-box;
-  outline: 1px solid transparent;
-  padding: 1px;
-  max-width: 100%;
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  transition: outline-color 0.2s ease;
   
   &:hover {
     outline-color: hotpink;
   }
   
   &.selected {
-    outline: 3px solid gold;
+    outline-color: gold;
+    outline-width: 3px;
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    object-fit: cover;
   }
   
   @media (max-width: 768px) and (orientation: landscape) {
@@ -86,7 +96,7 @@ const StyledImageContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
 `;
 
@@ -97,21 +107,19 @@ interface ImageObject {
 }
   
 interface StageSelectProps {
-images: ImageObject[];
-startGame: () => void;
-onStageSelect?: (selectedId: number) => void;
+    images: ImageObject[];
+    startGame: () => void;
+    onStageSelect?: (selectedId: number) => void;
 }
-
 
 export default function StageSelect({ images, startGame, onStageSelect }: StageSelectProps) {
     
     const [selectedId, setSelectedId] = useState<number | null>(null);
     
     const handleSelect = (id: number) => {
-    setSelectedId(id);
-    onStageSelect?.(id);
+        setSelectedId(id);
+        onStageSelect?.(id);
     };
-
     return (
         <StyledContainer className='selectContainer'>
             <StyledHeader>
