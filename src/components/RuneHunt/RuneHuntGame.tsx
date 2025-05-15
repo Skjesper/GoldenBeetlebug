@@ -1,10 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-
 import Rune, { createRandomRune, setRuneImageSource } from './Rune';
 import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
-
 
 // Importera rune-bilden - justera sökvägen enligt din projektstruktur
 import runeImage from '../../assets/rune.png';
@@ -41,6 +39,7 @@ interface RuneHuntProps {
   width?: string;
   height?: string;
   backgroundColor?: string;
+  backgroundImage?: string;  // Ny prop för bakgrundsbild
   numRunes?: number;  // Antal runes att hålla aktiva
   isActive?: boolean;  // Om spelet är aktivt
   onRuneClick?: () => void;  // Callback för klick på en rune
@@ -50,6 +49,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   width = '100%',
   height = '100%',
   backgroundColor = '#f0f0f0',
+  backgroundImage,  // Ta emot bakgrundsbilden
   numRunes = 8,  // Standard 8 runes
   isActive = true,
   onRuneClick = () => {}
@@ -62,6 +62,10 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   const runesRef = useRef<Rune[]>([]);
   // Referens till den aktuella animations-framen
   const animationFrameIdRef = useRef<number | null>(null);
+  // Referens till bakgrundsbilden
+  const backgroundImageRef = useRef<HTMLImageElement | null>(null);
+  // State för att hålla reda på om bakgrundsbilden är laddad
+  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
   
   // State för att spåra den faktiska spelstorleken (beräknas dynamiskt)
   const [gameSize, setGameSize] = useState({ width: 800, height: 600 });
@@ -89,6 +93,22 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     return { width: newGameWidth, height: newGameHeight };
   };
   
+  // Ladda bakgrundsbild när den ändras
+  useEffect(() => {
+    if (backgroundImage) {
+      setIsBackgroundLoaded(false);
+      const img = new Image();
+      img.onload = () => {
+        backgroundImageRef.current = img;
+        setIsBackgroundLoaded(true);
+      };
+      img.src = backgroundImage;
+    } else {
+      backgroundImageRef.current = null;
+      setIsBackgroundLoaded(false);
+    }
+  }, [backgroundImage]);
+  
   // Rensa canvas och rita alla runes
   const drawCanvas = () => {
     const canvas = canvasRef.current;
@@ -100,8 +120,12 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     // Rensa hela canvas-arean helt och hållet
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Fyll bakgrunden om en bakgrundsfärg är angiven och inte transparent
-    if (backgroundColor !== 'transparent') {
+    // Om en bakgrundsbild finns och är laddad, rita den först
+    if (backgroundImageRef.current && isBackgroundLoaded) {
+      ctx.drawImage(backgroundImageRef.current, 0, 0, canvas.width, canvas.height);
+    }
+    // Annars, använd bakgrundsfärgen om den inte är transparent
+    else if (backgroundColor !== 'transparent') {
       ctx.fillStyle = backgroundColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
@@ -135,7 +159,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
       randomX,
       randomY,
       15,     // Min radie
-      35,     // Max radie
+      70,     // Max radie
       2,      // Min hastighet
       5       // Max hastighet
     );
@@ -223,6 +247,13 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
       });
     }
   }, [gameSize]);
+  
+  // Rita om när bakgrundsbilden har laddats
+  useEffect(() => {
+    if (isBackgroundLoaded && canvasRef.current) {
+      drawCanvas();
+    }
+  }, [isBackgroundLoaded]);
   
   // Game loop - uppdaterar speltillståndet och ritar alla runes
   useEffect(() => {
