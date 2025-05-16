@@ -114,15 +114,21 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     
     // Skala runstenens storlek baserat på canvas-storlek
     const minRadius = Math.min(gameSize.width, gameSize.height) * 0.02; // 2% av den mindre dimensionen
-    const maxRadius = Math.min(gameSize.width, gameSize.height) * 0.05; // 5% av den mindre dimensionen
+    const maxRadius = Math.min(gameSize.width, gameSize.height) * 0.10; // 10% av den mindre dimensionen (enligt din ändring)
     
-    // Skala runstenens hastighet baserat på canvas-storlek
-    const minSpeed = Math.min(gameSize.width, gameSize.height) * 0.0025; // 0.25% av den mindre dimensionen
-    const maxSpeed = Math.min(gameSize.width, gameSize.height) * 0.006; // 0.6% av den mindre dimensionen
+    // Skala runstenens hastighet baserat på hur lång tid det ska ta att korsa skärmen
+    // Vi vill att det ska ta mellan 5-10 sekunder att korsa skärmen
+    // Vid 60 fps (frames per second) betyder det att hastigheten måste vara:
+    // skärmbredd / (sekunder * 60)
+    const screenCrossTimeMin = 5; // sekunder för att korsa skärmen (snabbast)
+    const screenCrossTimeMax = 10; // sekunder för att korsa skärmen (långsammast)
+    
+    // Hastighet i pixlar per frame för att korsa skärmen inom den angivna tiden
+    const minSpeed = Math.min(gameSize.width, gameSize.height) / (screenCrossTimeMax * 60);
+    const maxSpeed = Math.min(gameSize.width, gameSize.height) / (screenCrossTimeMin * 60);
     
     return createRandomRune(randomX, randomY, minRadius, maxRadius, minSpeed, maxSpeed);
-  };
-
+};
   const ensureRunes = () => {
     while (runesRef.current.length < numRunes) {
       runesRef.current.push(createRandomPositionedRune());
