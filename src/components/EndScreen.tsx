@@ -8,7 +8,7 @@ interface EndScreenProps {
 }
 
 const Container = styled.div`
-  
+  padding: 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;

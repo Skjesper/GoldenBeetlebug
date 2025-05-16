@@ -7,7 +7,8 @@ import Button from './Button';
 const ScoreBoardContainer = styled.div`
     /* width: 22.5625rem;
     height: 16.8125rem; */
-    border-radius: 0.25rem;
+    padding: 4rem;
+    border-radius: 20px;
     background: var(--background);
     display: flex;
     gap:1rem;

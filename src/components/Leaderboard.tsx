@@ -9,6 +9,7 @@ const Container = styled.div `
     align-items: center;
     justify-content: center;
     background-color: var(--background);
+    padding: 4rem 12rem;
     /* width: 44.25rem;
     height: 20.625rem; */
     border-radius: 20px;
@@ -32,7 +33,7 @@ const ListContainer = styled.ol `
 
 const ListItem = styled.li `
     font-family: var(--font-secondary);
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-decoration: 0.8px black underline;
     font-weight: 100;
 `;

@@ -36,7 +36,7 @@ const globalStyles = css`
   }
 
   * {
-    font-family: var(--font-primary);
+    font-family: var(--font-secondary);
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -45,7 +45,6 @@ const globalStyles = css`
   h1 {
     font-family: var(--font-primary);
     font-size: 5rem;
-    font-family: var(--font-display);
     text-align: center;
     font-weight: 400;
     color: var(--primary);

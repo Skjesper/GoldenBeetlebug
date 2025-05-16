@@ -2,20 +2,28 @@ import styled from '@emotion/styled';
 import Button from './Button';
 
 const PaymentContainer = styled.div`
-  max-width: 37.5rem;
-  width: 80%;
+  width: 100%;
+  height: 100%;
+  /* width: 80%; */
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 4rem;  */
   display: flex;
   flex-direction: column; 
   /* justify-content: center;  */
   align-items: center; 
+  justify-content: center;
   /* height: 100%; */
+  background-color: var(--background);
+  gap: 1.5rem;
   
 `;
 
 const Title = styled.h1`
-  font-size: 8rem;
+    font-family: var(--font-primary);
+    font-size: 8rem;
+    text-align: center;
+    font-weight: 400;
+    color: var(--dark);
 `;
 
 const Form = styled.form`
@@ -37,7 +45,7 @@ const Input = styled.input`
 function Payment() {
     return (
         <PaymentContainer className='paymentContainer'>
-            <h1>Rune Hunt</h1>
+            <Title>Rune Hunt</Title>
 
             <Form className='formContainer'>
                 <Input type="text" id="username" placeholder="Användarnamn" />
