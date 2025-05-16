@@ -33,7 +33,7 @@ const GameContent = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
+     right: 0;
     margin: 0 auto;
     width: 80%;
     height: 100%;
@@ -89,7 +89,7 @@ const CountdownNumber = styled.h2`
     }
 
     @media (min-width: 768px) {
-        font-size: 35rem;
+        font-size: 18rem;
     }
 `;
 

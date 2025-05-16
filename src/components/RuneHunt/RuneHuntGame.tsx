@@ -1,14 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-
-
 import Rune, { createRandomRune, setRuneImageSources } from './Rune';
 import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
 
 import runeImage from '../../assets/runeAlive.png';
 import runeImage2 from '../../assets/runeDead.png';
-
 
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;
@@ -110,10 +107,20 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   };
 
   const createRandomPositionedRune = () => {
-    const marginFromEdge = 50;
+    // Skala marginaler baserat på canvas-storlek
+    const marginFromEdge = Math.min(gameSize.width, gameSize.height) * 0.06; // 6% av den mindre dimensionen
     const randomX = marginFromEdge + Math.random() * (gameSize.width - 2 * marginFromEdge);
     const randomY = marginFromEdge + Math.random() * (gameSize.height - 2 * marginFromEdge);
-    return createRandomRune(randomX, randomY, 15, 40, 2, 5);
+    
+    // Skala runstenens storlek baserat på canvas-storlek
+    const minRadius = Math.min(gameSize.width, gameSize.height) * 0.02; // 2% av den mindre dimensionen
+    const maxRadius = Math.min(gameSize.width, gameSize.height) * 0.05; // 5% av den mindre dimensionen
+    
+    // Skala runstenens hastighet baserat på canvas-storlek
+    const minSpeed = Math.min(gameSize.width, gameSize.height) * 0.0025; // 0.25% av den mindre dimensionen
+    const maxSpeed = Math.min(gameSize.width, gameSize.height) * 0.006; // 0.6% av den mindre dimensionen
+    
+    return createRandomRune(randomX, randomY, minRadius, maxRadius, minSpeed, maxSpeed);
   };
 
   const ensureRunes = () => {
@@ -130,10 +137,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   };
 
   useEffect(() => {
-    
     setRuneImageSources(runeImage, runeImage2);
-    
-
   }, []);
 
   useEffect(() => {
@@ -148,7 +152,11 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     }
 
     const handleResize = () => {
-      updateCanvasSize();
+      const newSize = updateCanvasSize();
+      if (newSize) {
+        // Återskapa runor när skärmstorleken ändras för att passa det nya utrymmet bättre
+        createInitialRunes();
+      }
     };
 
     window.addEventListener('resize', handleResize);
