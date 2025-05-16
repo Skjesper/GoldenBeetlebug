@@ -158,7 +158,7 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
         <StyledContainer className='selectContainer'>
             <StyledHeader>
                 <h1>Välj bana</h1>
-                <p>Info om hur du spelar, varför du spelar, hur du vinner, varför du aldrig kommer vinna och hur vi ska tjäna alla pengar.</p>
+                <h3>Info om hur du spelar, varför du spelar, hur du vinner, varför du aldrig kommer vinna och hur vi ska tjäna alla pengar.</h3>
             </StyledHeader>
             
             <StyledImageGrid className='styledImageGrid'>
@@ -181,7 +181,7 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
 
                         <Overlay className="overlay">
                             <OverlayText className="overlayText">
-                              Runes Beach Club
+                              {image.alt}
                             </OverlayText>
                         </Overlay>
                     </StyledImageContainer>
