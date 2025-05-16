@@ -50,6 +50,10 @@ const globalStyles = css`
         font-weight: var(--weight-regular);
     }
 
+    p {
+        font-family: var(--font-secondary);
+    }
+
     a {
         text-decoration: none;
     }

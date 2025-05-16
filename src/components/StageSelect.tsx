@@ -5,8 +5,8 @@ import Button from './Button';
 const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #8ec28e;
-  color: #173d25;
+  background-color: var(--background);
+  color: var(--dark);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
