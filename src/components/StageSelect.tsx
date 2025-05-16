@@ -75,11 +75,11 @@ const StyledImageContainer = styled.div`
   transition: outline-color 0.2s ease;
   
   &:hover {
-    outline-color: hotpink;
+    outline-color: var(--accent);
   }
   
   &.selected {
-    outline-color: gold;
+    outline-color: var(--primary);
     outline-width: 3px;
   }
   

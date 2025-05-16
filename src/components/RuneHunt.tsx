@@ -202,9 +202,9 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
 
             {!gameOver ? (
                 <GameScreenContainer className='gameContainer'>
-                     {/* <GameHeader>
+                     <GameHeader>
                         <Timer 
-                            initialTime={300} 
+                            initialTime={10} 
                             isRunning={gameRunning} 
                             onTimeOut={handleTimeOut}
                             countDown={true}
@@ -215,7 +215,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
                             highScore={highScore}
                             onScorePoint={handleScore}
                         />
-                    </GameHeader>  */}
+                    </GameHeader> 
                     
                     <GameContent>
                         {/* Använder RuneHuntGame med proportionell canvas och bakgrundsbild */}

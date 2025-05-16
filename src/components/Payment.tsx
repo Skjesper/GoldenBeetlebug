@@ -37,7 +37,7 @@ const Input = styled.input`
 function Payment() {
     return (
         <PaymentContainer className='paymentContainer'>
-            <Title className='title'>Rune Hunt</Title>
+            <h1>Rune Hunt</h1>
 
             <Form className='formContainer'>
                 <Input type="text" id="username" placeholder="Användarnamn" />
