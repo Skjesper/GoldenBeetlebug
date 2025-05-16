@@ -28,6 +28,22 @@ const GameContent = styled.div`
     height: 100%;
 `;
 
+
+    const GameBackground = styled.div<{ backgroundImage?: string }>`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+    background-image: ${props => props.backgroundImage ? `url(${props.backgroundImage})` : 'none'};
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+`;
+
+
 const EndScreenContainer = styled.div`
     position: absolute;
     top: 0;
@@ -181,6 +197,9 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
             {!gameOver ? (
                 <GameScreenContainer className='gameContainer'>
                     <GameContent>
+                    <GameBackground backgroundImage={selectedBackground} />
+
+
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
@@ -196,12 +215,12 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
                             />
                         </FixedUI>
 
-                        {/* Canvas */}
+                     
                         <RuneHuntGame
                             width="80%" 
                             height="80%"
                             backgroundColor="transparent"
-                            backgroundImage={selectedBackground}
+                            // backgroundImage={selectedBackground}
                             numRunes={8}
                             isActive={gameRunning} 
                             onRuneClick={handleScore}
@@ -212,6 +231,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
                                 <CountdownNumber>{countdown}</CountdownNumber>
                             </CountdownContainer>
                         )}
+                        
                     </GameContent>
                 </GameScreenContainer>
             ) : (
