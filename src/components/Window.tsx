@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Background from './Background';
+// import Background from './Background';
 import type { ReactNode } from 'react';
 
 interface WindowProps {
