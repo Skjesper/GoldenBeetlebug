@@ -30,6 +30,21 @@ const imageCache: Record<string, HTMLImageElement> = {};
 // We'll set this from RuneHuntGame.tsx
 let runeImageSrc: string | null = null;
 
+// This makes it possible to have two different runes
+let runeImageSource1: HTMLImageElement | null = null;
+let runeImageSource2: HTMLImageElement | null = null;
+let currentImageIndex = 0;
+let lastSwitchTime = 0;
+const SWITCH_INTERVAL = 500; 
+
+export function setRuneImageSources(image1: string, image2: string) {
+  runeImageSource1 = new Image();
+  runeImageSource1.src = image1;
+  
+  runeImageSource2 = new Image();
+  runeImageSource2.src = image2;
+}
+
 export class Rune {
     props: RuneProps;
     imageLoaded: boolean = false;
@@ -105,27 +120,26 @@ export class Rune {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        const { x, y, radius, color, image } = this.props;
-
-        // Draw the image if it's loaded
-        if (image && this.imageLoaded) {
-            // Calculate dimensions to properly center the image
-            const size = radius * 2;
-            ctx.drawImage(
-                image,
-                x - radius, // Center horizontally
-                y - radius, // Center vertically
-                size,
-                size
-            );
-        } else {
-            // Fall back to drawing a circle if the image isn't loaded
-            ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.fillStyle = color;
-            ctx.fill();
+        const currentTime = Date.now();
+        
+        // This makes runes head change every 500 ms or whatever switch interval is
+        if (currentTime - lastSwitchTime > SWITCH_INTERVAL) {
+          currentImageIndex = currentImageIndex === 0 ? 1 : 0;
+          lastSwitchTime = currentTime;
         }
-    }
+        
+        const currentImage = currentImageIndex === 0 ? runeImageSource1 : runeImageSource2;
+        
+        if (currentImage) {
+          ctx.drawImage(
+            currentImage,
+            this.props.x - this.props.radius,
+            this.props.y - this.props.radius,
+            this.props.radius * 2,
+            this.props.radius * 2
+          );
+        }
+      }
     
     // Metod för att kontrollera om en punkt är inuti denna rune (används för klick)
     containsPoint(pointX: number, pointY: number): boolean {

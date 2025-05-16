@@ -2,12 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 
-import Rune, { createRandomRune, setRuneImageSource } from './Rune';
+import Rune, { createRandomRune, setRuneImageSources } from './Rune';
 import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
 
-
-// Importera rune-bilden - justera sökvägen enligt din projektstruktur
 import runeImage from '../../assets/rune.png';
+import runeImage2 from '../../assets/rune1.png';
 
 // Styled components för spelkontainern
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
@@ -163,7 +162,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   // När komponenten monteras: Ställ in bildkälla för runes
   useEffect(() => {
     // Sätt bildkällan för alla runes
-    setRuneImageSource(runeImage);
+    setRuneImageSources(runeImage, runeImage2);
     
     // Du kan också prova med en absolut sökväg om importen inte fungerar:
     // setRuneImageSource('/src/assets/rune.png');
