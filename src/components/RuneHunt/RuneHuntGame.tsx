@@ -113,7 +113,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     const marginFromEdge = 50;
     const randomX = marginFromEdge + Math.random() * (gameSize.width - 2 * marginFromEdge);
     const randomY = marginFromEdge + Math.random() * (gameSize.height - 2 * marginFromEdge);
-    return createRandomRune(randomX, randomY, 15, 70, 2, 5);
+    return createRandomRune(randomX, randomY, 15, 40, 2, 5);
   };
 
   const ensureRunes = () => {
