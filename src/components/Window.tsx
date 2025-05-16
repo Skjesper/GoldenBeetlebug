@@ -25,12 +25,12 @@ interface WindowProps {
 `;
 
 
-function Window({ children, blurred = false, backgroundImage }: WindowProps) {
+function Window({ children }: WindowProps) {
     return (
       <WindowContainer className='windowContainer'>
-        <Background blurred ={blurred} backgroundImage={backgroundImage}>
+       
           {children}
-        </Background>
+        
       </WindowContainer>
     );
   }

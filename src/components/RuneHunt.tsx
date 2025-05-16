@@ -13,9 +13,10 @@ import styled from '@emotion/styled';
 
 const GameScreenContainer = styled.section`
     height: 100%;
-    width: 100%;
+    width: 100vw;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+   
     /* padding: 0 0.5rem;
     
     @media (min-width: 768px) {
@@ -24,9 +25,14 @@ const GameScreenContainer = styled.section`
 `;
 
 const GameContent = styled.div`
+    display: flex;
     flex: 1;
     position: relative;
-    margin-top: -4.4rem;
+    justify-content: center;
+
+    /* margin-top: -4.4rem; */
+    width: 100vw;
+    height: 100%;
 `;
 
 const EndScreenContainer = styled.div`
@@ -99,6 +105,9 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
     
     const [score, setScore] = useState<number>(0);
     const [highScore, setHighscore] = useState<number>(0);
+    
+    // Ny state för att spåra den valda bakgrundsbilden
+    const [selectedBackground, setSelectedBackground] = useState<string | undefined>(undefined);
 
     const handleTimeOut = useCallback(() => {
         console.log("Times up");
@@ -143,8 +152,14 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
 
     const handleStageSelect = (selectedId: number) => {
         const selectedStage = stageImages.find(stage => stage.id === selectedId);
-        if (selectedStage && onBackgroundChange) {
-            onBackgroundChange(selectedStage.src);
+        if (selectedStage) {
+            // Uppdatera den lokala staten för bakgrundsbild
+            setSelectedBackground(selectedStage.src);
+            
+            // Anropa callback om den finns (för att skicka till föräldrakomponent)
+            if (onBackgroundChange) {
+                onBackgroundChange(selectedStage.src);
+            }
         }
     };
 
@@ -187,9 +202,9 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
 
             {!gameOver ? (
                 <GameScreenContainer className='gameContainer'>
-                     <GameHeader>
+                     {/* <GameHeader>
                         <Timer 
-                            initialTime={30} 
+                            initialTime={300} 
                             isRunning={gameRunning} 
                             onTimeOut={handleTimeOut}
                             countDown={true}
@@ -200,14 +215,15 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
                             highScore={highScore}
                             onScorePoint={handleScore}
                         />
-                    </GameHeader> 
+                    </GameHeader>  */}
                     
                     <GameContent>
-                        {/* Använder RuneHuntGame med proportionell canvas */}
+                        {/* Använder RuneHuntGame med proportionell canvas och bakgrundsbild */}
                         <RuneHuntGame
-                            width="100%" 
-                            height="100%"
+                            width="80%" 
+                            height="80%"
                             backgroundColor="transparent"
+                            backgroundImage={selectedBackground}  // Skicka in den valda bakgrundsbilden
                             numRunes={8}
                             isActive={gameRunning} 
                             onRuneClick={handleScore}
