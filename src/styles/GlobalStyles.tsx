@@ -1,19 +1,18 @@
 import { Global, css } from '@emotion/react';
 
 const globalStyles = css`
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@100..900&family=Hachi+Maru+Pop&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
     :root {
-        --primary: #D31717;
-        --secondary: #fff;
-        --primary-dark: #901111;
-        --text-main: #333;
-        --text-light: #B3B2B2;
-        --background: #ffffff;
+        --primary: #C5301D;
+        --secondary: #FA7E2B;
+        --accent: #5F9422;
+        --primary-dark: #300E0A;
+        --background: #F6E9D3;
         --error: #e74c3c;
 
-        --font-primary: 'Inter', sans-serif;
-        --font-display: 'Instrument Serif', serif;
+        --font-primary: 'Hachi Maru Pop', sans-serif;
+        --font-secondary: 'Encode Sans SC', serif;
 
         /* Font sizes
         --text-xs: 0.75rem;
