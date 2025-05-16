@@ -16,12 +16,6 @@ const GameScreenContainer = styled.section`
     width: 100vw;
     display: flex;
     justify-content: center;
-   
-    /* padding: 0 0.5rem;
-    
-    @media (min-width: 768px) {
-        padding: 1.5rem 1rem;
-    } */
 `;
 
 const GameContent = styled.div`
@@ -29,11 +23,26 @@ const GameContent = styled.div`
     flex: 1;
     position: relative;
     justify-content: center;
-
-    /* margin-top: -4.4rem; */
-    width: 100vw;
+    align-items: center;
+    width: 100%;
     height: 100%;
 `;
+
+
+    const GameBackground = styled.div<{ backgroundImage?: string }>`
+    position: absolute;
+    top: 0;
+    left: 0;
+     right: 0;
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+    background-image: ${props => props.backgroundImage ? `url(${props.backgroundImage})` : 'none'};
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+`;
+
 
 const EndScreenContainer = styled.div`
     position: absolute;
@@ -80,16 +89,21 @@ const CountdownNumber = styled.h2`
     }
 
     @media (min-width: 768px) {
-        font-size: 35rem;
+        font-size: 18rem;
     }
 `;
 
-const GameHeader = styled.section`
+const FixedUI = styled.div`
+    position: absolute;
+    padding: 1rem;
+    top: 0;
     display: flex;
-    flex-direction: row;
+    width: 80%;
     justify-content: space-between;
-    align-items: center;
-    margin: 1rem;
+    pointer-events: none;
+    
+    
+    z-index: 5;
 `;
 
 interface RuneHuntProps {
@@ -102,11 +116,10 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [countdown, setCountDown] = useState<number>(0);
     const [start, setStart] = useState<boolean>(false);
-    
+
     const [score, setScore] = useState<number>(0);
     const [highScore, setHighscore] = useState<number>(0);
-    
-    // Ny state för att spåra den valda bakgrundsbilden
+
     const [selectedBackground, setSelectedBackground] = useState<string | undefined>(undefined);
 
     const handleTimeOut = useCallback(() => {
@@ -153,10 +166,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
     const handleStageSelect = (selectedId: number) => {
         const selectedStage = stageImages.find(stage => stage.id === selectedId);
         if (selectedStage) {
-            // Uppdatera den lokala staten för bakgrundsbild
             setSelectedBackground(selectedStage.src);
-            
-            // Anropa callback om den finns (för att skicka till föräldrakomponent)
             if (onBackgroundChange) {
                 onBackgroundChange(selectedStage.src);
             }
@@ -166,26 +176,10 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
     const StageSelectMode: boolean = !gameOver && !start;
 
     const stageImages = [
-        {
-            id: 1,
-            src: backgroundImage1, 
-            alt: "Beachclub stage"
-        },
-        {
-            id: 2,
-            src: backgroundImage2,
-            alt: "Dessert stage"
-        },
-        {
-            id: 3,
-            src: backgroundImage3,
-            alt: "Forest stage"
-        },
-        {
-            id: 4,
-            src: backgroundImage4,
-            alt: "Winter stage"
-        }
+        { id: 1, src: backgroundImage1, alt: "Rune på Beach Club" },
+        { id: 2, src: backgroundImage2, alt: "Rune på Coachella" },
+        { id: 3, src: backgroundImage3, alt: "Rune på Skogsrave" },
+        { id: 4, src: backgroundImage4, alt: "Rune på After Ski" }
     ];
 
     return (
@@ -202,28 +196,32 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
 
             {!gameOver ? (
                 <GameScreenContainer className='gameContainer'>
-                     <GameHeader>
-                        <Timer 
-                            initialTime={10} 
-                            isRunning={gameRunning} 
-                            onTimeOut={handleTimeOut}
-                            countDown={true}
-                        />
-                        
-                        <Scoreboard 
-                            score={score} 
-                            highScore={highScore}
-                            onScorePoint={handleScore}
-                        />
-                    </GameHeader> 
-                    
+
                     <GameContent>
-                        {/* Använder RuneHuntGame med proportionell canvas och bakgrundsbild */}
+                    <GameBackground backgroundImage={selectedBackground} />
+
+
+                        {/* UI ovanpå canvas */}
+                        <FixedUI>
+                            <Timer 
+                                initialTime={300} 
+                                isRunning={gameRunning} 
+                                onTimeOut={handleTimeOut}
+                                countDown={true}
+                            />
+                            <Scoreboard 
+                                score={score} 
+                                highScore={highScore}
+                                onScorePoint={handleScore}
+                            />
+                        </FixedUI>
+
+                     
                         <RuneHuntGame
                             width="80%" 
                             height="80%"
                             backgroundColor="transparent"
-                            backgroundImage={selectedBackground}  // Skicka in den valda bakgrundsbilden
+                            // backgroundImage={selectedBackground}
                             numRunes={8}
                             isActive={gameRunning} 
                             onRuneClick={handleScore}
@@ -234,6 +232,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
                                 <CountdownNumber>{countdown}</CountdownNumber>
                             </CountdownContainer>
                         )}
+                        
                     </GameContent>
                 </GameScreenContainer>
             ) : (

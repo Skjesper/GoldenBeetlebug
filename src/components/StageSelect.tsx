@@ -41,7 +41,6 @@ const StyledHeader = styled.div`
   }
 `;
 
-// Using a different approach for grid layout to ensure outlines are visible
 const StyledImageGrid = styled.div`
   width: 90%;
   height: 70%;
@@ -64,6 +63,20 @@ const StyledImageGrid = styled.div`
   }
 `;
 
+const Overlay = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+`;
+
 const StyledImageContainer = styled.div`
   position: relative;
   width: 100%;
@@ -77,6 +90,14 @@ const StyledImageContainer = styled.div`
   &:hover {
     outline-color: var(--accent);
   }
+
+  &:hover .overlay{
+    opacity: 1;
+  }
+
+  &.selected .overlay{
+    opacity: 1;
+  }
   
   &.selected {
     outline-color: var(--primary);
@@ -88,6 +109,7 @@ const StyledImageContainer = styled.div`
     height: 100%;
     border-radius: 0.5rem;
     object-fit: cover;
+    display: block;
   }
   
   @media (max-width: 768px) and (orientation: landscape) {
@@ -98,6 +120,18 @@ const StyledImageContainer = styled.div`
 const StyledButton = styled(Button)`
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+`;
+
+const OverlayText = styled.div`
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
 `;
 
 interface ImageObject {
@@ -124,7 +158,7 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
         <StyledContainer className='selectContainer'>
             <StyledHeader>
                 <h1>Välj bana</h1>
-                <p>Info om hur du spelar, varför du spelar, hur du vinner, varför du aldrig kommer vinna och hur vi ska tjäna alla pengar.</p>
+                <h3>Info om hur du spelar, varför du spelar, hur du vinner, varför du aldrig kommer vinna och hur vi ska tjäna alla pengar.</h3>
             </StyledHeader>
             
             <StyledImageGrid className='styledImageGrid'>
@@ -144,6 +178,12 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
                                 objectFit: 'cover'
                             }}
                         />
+
+                        <Overlay className="overlay">
+                            <OverlayText className="overlayText">
+                              {image.alt}
+                            </OverlayText>
+                        </Overlay>
                     </StyledImageContainer>
                 ))}
             </StyledImageGrid>
