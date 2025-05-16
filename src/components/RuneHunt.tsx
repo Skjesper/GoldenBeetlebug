@@ -196,6 +196,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
 
             {!gameOver ? (
                 <GameScreenContainer className='gameContainer'>
+
                     <GameContent>
                     <GameBackground backgroundImage={selectedBackground} />
 

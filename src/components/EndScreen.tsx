@@ -8,29 +8,16 @@ interface EndScreenProps {
 }
 
 const Container = styled.div`
-  
+  padding: 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #717070;
-  width: 34.25rem;
-  height: 18.625rem;
+  background-color: var(--background);
+  /* width: 34.25rem;
+  height: 18.625rem; */
   border-radius: 20px;
   gap: 1rem;
-
-`;
-
-
-const Title = styled.h2`
-  font-size: 3rem;
-
-`;
-
-const ScoreContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 
 `;
 
@@ -38,8 +25,9 @@ const ScoreItem = styled.h3`
 
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  gap:3rem;
 
 `;
 
@@ -61,25 +49,17 @@ export default function EndScreen({ score, highScore }: EndScreenProps) {
 
     return (
         <Container>
-          <Title>Spelet är slut!</Title>
-          
-          
-          <ScoreContainer>
-            <h2>Ditt resultat</h2>
-            <div>
+          <h1>Game Over</h1>
+        
             <ScoreItem>
-              <span>Poäng: {score}</span>
+              <h3>Resultat: {score}</h3>
+              <h3>High Score: {highScore}</h3>
             </ScoreItem>
-              
-            </div>
-            <ScoreItem>
-              <span>Bästa resultat: {highScore}</span>
-            </ScoreItem>
-          </ScoreContainer>
+         
           
-          <div>
-            <p>{getResultMessage()}</p>
-          </div>
+          
+            <h5>{getResultMessage()}</h5>
+          
           <ButtonContainer>
             <Button to="/leaderboard">
               Spara resultat
