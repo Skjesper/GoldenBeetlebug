@@ -160,10 +160,10 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
     const StageSelectMode: boolean = !gameOver && !start;
 
     const stageImages = [
-        { id: 1, src: backgroundImage1, alt: "Beachclub stage" },
-        { id: 2, src: backgroundImage2, alt: "Dessert stage" },
-        { id: 3, src: backgroundImage3, alt: "Forest stage" },
-        { id: 4, src: backgroundImage4, alt: "Winter stage" }
+        { id: 1, src: backgroundImage1, alt: "Rune på Beach Club" },
+        { id: 2, src: backgroundImage2, alt: "Rune på Coachella" },
+        { id: 3, src: backgroundImage3, alt: "Rune på Skogsrave" },
+        { id: 4, src: backgroundImage4, alt: "Rune på After Ski" }
     ];
 
     return (
