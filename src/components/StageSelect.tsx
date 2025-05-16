@@ -188,7 +188,7 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
                 ))}
             </StyledImageGrid>
             
-            <StyledButton onClick={startGame}>Spela</StyledButton>
+            <StyledButton onClick={startGame} disabled={selectedId === null}>Spela</StyledButton>
         </StyledContainer>
     );
 }
