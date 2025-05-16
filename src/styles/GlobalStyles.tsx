@@ -7,8 +7,8 @@ const globalStyles = css`
         --primary: #C5301D;
         --secondary: #FA7E2B;
         --accent: #5F9422;
-        --primary-dark: #300E0A;
-        --background: #F6E9D3;
+        --dark: #300E0A;
+        --background: #FFFAF1;
         --error: #e74c3c;
 
         --font-primary: 'Hachi Maru Pop', sans-serif;
