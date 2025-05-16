@@ -5,8 +5,8 @@ import styled from '@emotion/styled';
 import Rune, { createRandomRune, setRuneImageSources } from './Rune';
 import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
 
-import runeImage from '../../assets/rune.png';
-import runeImage2 from '../../assets/rune1.png';
+import runeImage from '../../assets/runeAlive.png';
+import runeImage2 from '../../assets/runeDead.png';
 
 // Styled components för spelkontainern
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
