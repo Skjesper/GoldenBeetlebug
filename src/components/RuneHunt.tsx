@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Timer from "./Timer";
 import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
@@ -109,7 +109,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
     // Ny state för att spåra den valda bakgrundsbilden
     const [selectedBackground, setSelectedBackground] = useState<string | undefined>(undefined);
 
-    const handleTimeOut = () => {
+    const handleTimeOut = useCallback(() => {
         console.log("Times up");
         localStorage.setItem('gameScore', score.toString());
         setGameRunning(false);
@@ -118,7 +118,7 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
         if (onGameOver) {
             onGameOver(score);
         }
-    }
+    }, [score, onGameOver]);
 
     function startGame() {
         setStart(true);
@@ -144,11 +144,11 @@ export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntPro
         }
     }, [score, highScore]);
 
-    const handleScore = () => {
+    const handleScore = useCallback(() => {
         if (gameRunning) {
             setScore(prevScore => prevScore + 10);
         }
-    };
+    }, [gameRunning]);
 
     const handleStageSelect = (selectedId: number) => {
         const selectedStage = stageImages.find(stage => stage.id === selectedId);
