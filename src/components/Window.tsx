@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Background from './Background';
+// import Background from './Background';
 import type { ReactNode } from 'react';
 
 interface WindowProps {
@@ -25,12 +25,12 @@ interface WindowProps {
 `;
 
 
-function Window({ children, blurred = false, backgroundImage }: WindowProps) {
+function Window({ children }: WindowProps) {
     return (
       <WindowContainer className='windowContainer'>
-        <Background blurred ={blurred} backgroundImage={backgroundImage}>
+       
           {children}
-        </Background>
+        
       </WindowContainer>
     );
   }

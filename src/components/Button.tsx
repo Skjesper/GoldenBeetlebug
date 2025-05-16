@@ -3,8 +3,8 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 const StyledButton = styled.button`
-        background-color: var(--primary);
-        color: var(--secondary);
+        background-color: var(--secondary);
+        color: var(--background);
         border: none;
         display: flex;
         height: 44px;
@@ -19,14 +19,15 @@ const StyledButton = styled.button`
         text-decoration: none;
         font-size: 20px;
         font-weight: 400;
+        font-family: var(--font-secondary);
 
 
         &:hover {
-            background-color: var(--primary-dark);
+            background-color: var(--primary);
         }
 
         &:disabled {
-            background-color: var(--primary);
+            background-color: var(--disabled);
         }
 
         @media (orientation: portrait) {

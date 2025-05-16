@@ -11,9 +11,9 @@ interface TimerProps {
 
 const TimerContainer = styled.div`
   font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-  /* Lägg till fler stilar här */
+  font-family: var(--font-secondary-big);
+  font-weight: var(--weight-bold);
+  color: var(--dark);
 `;
 
 export default function Timer({ 
@@ -32,14 +32,7 @@ export default function Timer({
       intervalId = window.setInterval(() => {
         setTime(prevTime => {
           const newTime = countDown ? prevTime - 1 : prevTime + 1;
-          
-          if (onTimeChange) {
-            onTimeChange(newTime);
-          }
-          
-          if (countDown && newTime <= 0 && onTimeOut) {
-            onTimeOut();
-          }
+                  
           
           return newTime;
         });
@@ -51,7 +44,17 @@ export default function Timer({
         clearInterval(intervalId);
       }
     };
-  }, [isRunning, countDown, onTimeChange, onTimeOut]);
+  }, [isRunning, countDown]);
+
+  useEffect(() => {
+  if (onTimeChange) {
+    onTimeChange(time);
+  }
+
+  if (countDown && time <= 0 && onTimeOut) {
+    onTimeOut();
+  }
+}, [time]);
   
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
