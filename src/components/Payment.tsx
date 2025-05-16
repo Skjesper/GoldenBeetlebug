@@ -4,9 +4,9 @@ import Button from './Button';
 const PaymentContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* width: 80%; */
+  padding:2rem;
   margin: 0 auto;
-  /* padding: 4rem;  */
+ 
   display: flex;
   flex-direction: column; 
   /* justify-content: center;  */
@@ -20,7 +20,7 @@ const PaymentContainer = styled.div`
 
 const Title = styled.h1`
     font-family: var(--font-primary);
-    font-size: 8rem;
+    font-size: clamp(4rem, 10vw, 8rem);
     text-align: center;
     font-weight: 400;
     color: var(--dark);
