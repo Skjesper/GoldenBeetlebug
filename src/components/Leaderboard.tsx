@@ -8,10 +8,12 @@ const Container = styled.div `
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #FFF;
-    width: 44.25rem;
-    height: 20.625rem;
+    background-color: var(--background);
+    padding: 4rem 12rem;
+    /* width: 44.25rem;
+    height: 20.625rem; */
     border-radius: 20px;
+    gap: 2rem;
 `;
 
 const Title = styled.h1 `
@@ -20,12 +22,20 @@ const Title = styled.h1 `
 
 const ListContainer = styled.ol `
     font-family: var(--font-display);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+
 `;
 
+
+
 const ListItem = styled.li `
-    font-family: var(--font-display);
-    font-size: 2rem;
+    font-family: var(--font-secondary);
+    font-size: 1.5rem;
     text-decoration: 0.8px black underline;
+    font-weight: 100;
 `;
 
 interface LeaderboardScore {

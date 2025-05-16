@@ -11,8 +11,9 @@ interface TimerProps {
 
 const TimerContainer = styled.div`
   font-size: 2rem;
-  font-weight: bold;
-  color: #333;
+  font-family: var(--font-secondary-big);
+  font-weight: var(--weight-bold);
+  color: var(--dark);
 `;
 
 export default function Timer({ 

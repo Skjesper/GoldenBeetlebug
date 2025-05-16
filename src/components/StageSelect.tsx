@@ -5,8 +5,8 @@ import Button from './Button';
 const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #8ec28e;
-  color: #173d25;
+  background-color: var(--background);
+  color: var(--dark);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -88,7 +88,7 @@ const StyledImageContainer = styled.div`
   transition: outline-color 0.2s ease;
   
   &:hover {
-    outline-color: hotpink;
+    outline-color: var(--accent);
   }
 
   &:hover .overlay{
@@ -100,7 +100,7 @@ const StyledImageContainer = styled.div`
   }
   
   &.selected {
-    outline-color: gold;
+    outline-color: var(--primary);
     outline-width: 3px;
   }
   

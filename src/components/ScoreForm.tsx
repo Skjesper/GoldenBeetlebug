@@ -5,21 +5,18 @@ import styled from '@emotion/styled';
 import Button from './Button';
 
 const ScoreBoardContainer = styled.div`
-    width: 22.5625rem;
-    height: 16.8125rem;
-    border-radius: 0.25rem;
-    background: #D9D9D9;
-
+    /* width: 22.5625rem;
+    height: 16.8125rem; */
+    padding: 4rem;
+    border-radius: 20px;
+    background: var(--background);
     display: flex;
+    gap:1rem;
     flex-direction: column;
     justify-content: center;
 `;
 
-const ScoreBoardTitle = styled.h1`
-    font-size: 1.875rem;
-    font-family: var(--font-display);
-    text-align: center;
-`;
+
 
 const ScoreInput = styled.form`
   display: flex;
@@ -87,7 +84,8 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
     <div>
       
       <ScoreBoardContainer >
-        <ScoreBoardTitle>Grymt jobbat! <br />Vill du spara ditt resutlat?</ScoreBoardTitle>
+        <h1>Grymt jobbat!</h1>
+        <h3>Vill du spara ditt resultat?</h3>
           <ScoreInput onSubmit={handleSubmit}>
               <Scoreboard score={points}  />
               <Input
