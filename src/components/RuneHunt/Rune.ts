@@ -8,6 +8,7 @@ export interface RuneProps {
     velocityX: number;
     velocityY: number;
     isActive: boolean;
+    isBad?: boolean;
     image?: HTMLImageElement;
 }
 
@@ -20,6 +21,8 @@ export const DEFAULT_RUNE: RuneProps = {
     velocityX: 2,
     velocityY: 2,
     isActive: true
+
+
 };
 
 // Image cache to avoid loading the same image multiple times
@@ -117,27 +120,49 @@ export class Rune {
         }
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
-        const currentTime = Date.now();
-        
-        // This makes runes head change every 500 ms or whatever switch interval is
-        if (currentTime - lastSwitchTime > SWITCH_INTERVAL) {
-          currentImageIndex = currentImageIndex === 0 ? 1 : 0;
-          lastSwitchTime = currentTime;
-        }
-        
-        const currentImage = currentImageIndex === 0 ? runeImageSource1 : runeImageSource2;
-        
-        if (currentImage) {
-          ctx.drawImage(
-            currentImage,
-            this.props.x - this.props.radius,
-            this.props.y - this.props.radius,
-            this.props.radius * 2,
-            this.props.radius * 2
-          );
-        }
-      }
+draw(ctx: CanvasRenderingContext2D) {
+  const currentTime = Date.now();
+  
+  // Rune animation switching logic
+  if (currentTime - lastSwitchTime > SWITCH_INTERVAL) {
+    currentImageIndex = currentImageIndex === 0 ? 1 : 0;
+    lastSwitchTime = currentTime;
+  }
+  
+  // Välj rätt bild baserat på animationstillstånd
+  const currentImage = currentImageIndex === 0 ? runeImageSource1 : runeImageSource2;
+  
+  if (currentImage) {
+    // Spara canvas-tillstånd innan vi ritar
+    ctx.save();
+    
+    // Rita originalbild
+    ctx.drawImage(
+      currentImage,
+      this.props.x - this.props.radius,
+      this.props.y - this.props.radius,
+      this.props.radius * 2,
+      this.props.radius * 2
+    );
+    
+    // Om det är en dålig rune, lägg till röd overlay
+    if (this.props.isBad) {
+      // Ställ in blandningsläge för overlay
+      ctx.globalCompositeOperation = 'source-atop';
+      
+      // Skapa en röd halvtransparent overlay
+      ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+      
+      // Rita en cirkel med overlay över bilden
+      ctx.beginPath();
+      ctx.arc(this.props.x, this.props.y, this.props.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    
+    // Återställ canvas-tillståndet
+    ctx.restore();
+  }
+}
     
     // Metod för att kontrollera om en punkt är inuti denna rune (används för klick)
     containsPoint(pointX: number, pointY: number): boolean {
