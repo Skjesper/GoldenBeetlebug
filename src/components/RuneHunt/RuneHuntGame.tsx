@@ -1,13 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-import Rune, { createRandomRune, setRuneImageSources } from './Rune';
+import Rune, { setRuneImageSources } from './Rune'; 
+import RuneGenerator from './RuneGenerator'; 
 import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
-
 
 import runeImage from '../../assets/RuneAlive.png';
 import runeImage2 from '../../assets/RuneDead.png';
-
 
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;
@@ -54,10 +53,25 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const runesRef = useRef<Rune[]>([]);
+  const runeGeneratorRef = useRef<RuneGenerator | null>(null); // Ny ref för RuneGenerator
   const animationFrameIdRef = useRef<number | null>(null);
   const backgroundImageRef = useRef<HTMLImageElement | null>(null);
   const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
   const [gameSize, setGameSize] = useState({ width: 800, height: 600 });
+  // Enkel enhetsdetektering
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+
+  // Uppdatera isMobile när fönstret ändrar storlek
+  useEffect(() => {
+    const handleDeviceDetection = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleDeviceDetection);
+    return () => {
+      window.removeEventListener('resize', handleDeviceDetection);
+    };
+  }, []);
 
   const updateCanvasSize = () => {
     const canvas = canvasRef.current;
@@ -108,33 +122,28 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     runesRef.current.forEach(rune => rune.update(gameSize.width, gameSize.height));
   };
 
-  const createRandomPositionedRune = () => {
-    // Skala marginaler baserat på canvas-storlek
-    const marginFromEdge = Math.min(gameSize.width, gameSize.height) * 0.06; // 6% av den mindre dimensionen
-    const randomX = marginFromEdge + Math.random() * (gameSize.width - 2 * marginFromEdge);
-    const randomY = marginFromEdge + Math.random() * (gameSize.height - 2 * marginFromEdge);
-    
-    // Skala runstenens storlek baserat på canvas-storlek
-    const minRadius = Math.min(gameSize.width, gameSize.height) * 0.02; // 2% av den mindre dimensionen
-    const maxRadius = Math.min(gameSize.width, gameSize.height) * 0.05; // 5% av den mindre dimensionen
-    
-    // Skala runstenens hastighet baserat på canvas-storlek
-    const minSpeed = Math.min(gameSize.width, gameSize.height) * 0.0025; // 0.25% av den mindre dimensionen
-    const maxSpeed = Math.min(gameSize.width, gameSize.height) * 0.006; // 0.6% av den mindre dimensionen
-    
-    return createRandomRune(randomX, randomY, minRadius, maxRadius, minSpeed, maxSpeed);
-  };
+  // Initialisera eller uppdatera RuneGenerator när spelstorleken eller enhetstypen ändras
+  useEffect(() => {
+    if (!runeGeneratorRef.current) {
+      runeGeneratorRef.current = new RuneGenerator(gameSize.width, gameSize.height, isMobile);
+    } else {
+      runeGeneratorRef.current.updateGameSize(gameSize.width, gameSize.height);
+      runeGeneratorRef.current.setDeviceType(isMobile);
+    }
+  }, [gameSize, isMobile]);
 
+  // Ta bort de flyttade funktionerna - låt RuneGenerator hantera detta
+  // createRandomPositionedRune är nu borta
+  
   const ensureRunes = () => {
-    while (runesRef.current.length < numRunes) {
-      runesRef.current.push(createRandomPositionedRune());
+    if (runeGeneratorRef.current) {
+      runesRef.current = runeGeneratorRef.current.ensureRunes(runesRef.current, numRunes);
     }
   };
 
   const createInitialRunes = () => {
-    runesRef.current = [];
-    for (let i = 0; i < numRunes; i++) {
-      runesRef.current.push(createRandomPositionedRune());
+    if (runeGeneratorRef.current) {
+      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes);
     }
   };
 
@@ -172,20 +181,9 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   }, []);
 
   useEffect(() => {
-    if (gameSize.width > 0 && gameSize.height > 0) {
-      runesRef.current.forEach(rune => {
-        if (rune.props.x < rune.props.radius) {
-          rune.props.x = rune.props.radius + 10;
-        } else if (rune.props.x > gameSize.width - rune.props.radius) {
-          rune.props.x = gameSize.width - rune.props.radius - 10;
-        }
-
-        if (rune.props.y < rune.props.radius) {
-          rune.props.y = rune.props.radius + 10;
-        } else if (rune.props.y > gameSize.height - rune.props.radius) {
-          rune.props.y = gameSize.height - rune.props.radius - 10;
-        }
-      });
+    if (gameSize.width > 0 && gameSize.height > 0 && runeGeneratorRef.current) {
+      // Använd RuneGenerator för att justera runorna
+      runeGeneratorRef.current.adjustRunesToFitCanvas(runesRef.current);
     }
   }, [gameSize]);
 
