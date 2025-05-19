@@ -4,7 +4,6 @@ export interface RuneProps {
     x: number;
     y: number;
     radius: number;
-    color: string;
     gravity: number;
     velocityX: number;
     velocityY: number;
@@ -17,7 +16,6 @@ export const DEFAULT_RUNE: RuneProps = {
     x: 0,
     y: 0,
     radius: 40,
-    color: '#3498db',
     gravity: 0.0,    
     velocityX: 2,
     velocityY: 2,
@@ -173,16 +171,11 @@ export function createRandomRune(
     const directionX = Math.random() > 0.5 ? 1 : -1;
     const directionY = Math.random() > 0.5 ? 1 : -1;
     
-    // Generera en ljus, slumpmässig färg
-    const hue = Math.floor(Math.random() * 360);
-    const color = `hsl(${hue}, 70%, 50%)`;
-    
     return new Rune({
         id: Date.now() + Math.random(), 
         x,
         y,
         radius,
-        color,
         velocityX: speedX * directionX,
         velocityY: speedY * directionY,
         gravity: 0.0  // Ingen gravitation
