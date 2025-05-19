@@ -123,12 +123,15 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
     const [highScore, setHighscore] = useState<number>(0);
 
     const [selectedBackground, setSelectedBackground] = useState<string | undefined>(undefined);
+    
+    const [musicPlaying, setMusicPlaying] = useState<boolean>(false);
 
     const handleTimeOut = useCallback(() => {
         console.log("Times up");
         localStorage.setItem('gameScore', score.toString());
         setGameRunning(false);
         setGameOver(true);
+        setMusicPlaying(false);
 
         if (onGameOver) {
             onGameOver(score);
@@ -146,6 +149,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                 if (prevCount <= 1) {
                     clearInterval(countdownInterval);
                     setGameRunning(true);
+                    setMusicPlaying(true);
                     return 0;
                 }
                 return prevCount - 1;
