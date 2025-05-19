@@ -4,12 +4,15 @@ import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
 import StageSelect from './StageSelect';
 import RuneHuntGame from './RuneHunt/RuneHuntGame';
+import BackgroundMusic from './BackgroundMusic';
 
 import backgroundImage1 from './../assets/backgroundImages/game_background.png'
 import backgroundImage2 from './../assets/backgroundImages/dessert_bg.png'
 import backgroundImage3 from './../assets/backgroundImages/forest_bg.png'
 import backgroundImage4 from './../assets/backgroundImages/winter_bg.png'
 import styled from '@emotion/styled';
+
+import gameplayMusic from './../assets/audio/runebeats.mp3';
 
 const GameScreenContainer = styled.section`
     height: 100%;
@@ -27,7 +30,6 @@ const GameContent = styled.div`
     width: 100%;
     height: 100%;
 `;
-
 
     const GameBackground = styled.div<{ backgroundImage?: string }>`
     position: absolute;
