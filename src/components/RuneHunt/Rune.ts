@@ -1,4 +1,4 @@
-// Rune.ts
+
 export interface RuneProps {
     id: number;
     x: number;
@@ -60,7 +60,7 @@ export class Rune {
         if (!runeImageSrc || this.imageLoaded) return;
         
         if (!imageCache[runeImageSrc]) {
-            // Create and load the image if not in cache
+            
             const img = new Image();
             img.src = runeImageSrc;
             img.onload = () => {

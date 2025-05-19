@@ -38,7 +38,7 @@ interface RuneHuntProps {
   backgroundImage?: string;
   numRunes?: number;
   isActive?: boolean;
-  onRuneClick?: () => void;
+  onRuneClick?: (rune: Rune) => void;  // Uppdaterad för att ta emot en Rune
 }
 
 const RuneHuntGame: React.FC<RuneHuntProps> = ({
@@ -131,17 +131,18 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     }
   }, [gameSize, isMobile]);
 
-
   
   const ensureRunes = () => {
     if (runeGeneratorRef.current) {
-      runesRef.current = runeGeneratorRef.current.ensureRunes(runesRef.current, numRunes);
+      // Skapa en blandning av bra och dåliga runer med 20% dåliga
+      runesRef.current = runeGeneratorRef.current.ensureRunes(runesRef.current, numRunes, 0.2);
     }
   };
 
   const createInitialRunes = () => {
     if (runeGeneratorRef.current) {
-      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes);
+      // Skapa en blandning av bra och dåliga runer med 20% dåliga
+      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes, 0.2);
     }
   };
 
@@ -229,8 +230,14 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     });
 
     if (clickedRuneIndex !== -1) {
+      // Spara referens till den klickade runen innan vi tar bort den
+      const clickedRune = runesRef.current[clickedRuneIndex];
+      
+      // Ta bort runen från listan
       runesRef.current.splice(clickedRuneIndex, 1);
-      onRuneClick();
+      
+      // Anropa callback med runen
+      onRuneClick(clickedRune);
     }
   };
 
