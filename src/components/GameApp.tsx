@@ -204,15 +204,15 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
-                                initialTime={300} 
+                                initialTime={10} 
                                 isRunning={gameRunning} 
                                 onTimeOut={handleTimeOut}
                                 countDown={true}
                             />
                             <Scoreboard 
                                 score={score} 
-                                highScore={highScore}
-                                onScorePoint={handleScore}
+                                // highScore={highScore}
+                                // onScorePoint={handleScore}
                             />
                         </FixedUI>
 
@@ -238,8 +238,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
             ) : (
                 <EndScreenContainer>
                     <EndScreen 
-                        score={score}
-                        highScore={highScore}
+                        score={score}  
                     />
                 </EndScreenContainer>
             )}

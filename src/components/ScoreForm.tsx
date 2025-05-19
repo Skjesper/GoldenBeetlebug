@@ -5,8 +5,6 @@ import styled from '@emotion/styled';
 import Button from './Button';
 
 const ScoreBoardContainer = styled.div`
-    /* width: 22.5625rem;
-    height: 16.8125rem; */
     padding: 4rem;
     border-radius: 20px;
     background: var(--background);
@@ -15,8 +13,6 @@ const ScoreBoardContainer = styled.div`
     flex-direction: column;
     justify-content: center;
 `;
-
-
 
 const ScoreInput = styled.form`
   display: flex;
@@ -64,7 +60,6 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
         throw error;
       }
 
-      // Återställ formuläret efter framgångsrik inskickning
       setMessage('Poäng sparad!');
       setNickname('');
       setPoints(0);
@@ -87,7 +82,8 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
         <h1>Grymt jobbat!</h1>
         <h3>Vill du spara ditt resultat?</h3>
           <ScoreInput onSubmit={handleSubmit}>
-              <Scoreboard score={points}  />
+          <Scoreboard score={score} showHighScore={false} />
+
               <Input
                 type="text"
                 id="nickname"
@@ -105,6 +101,11 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
 
               {loading ? 'Sparar...' : 'Spara'}
 
+            </Button>
+            <Button 
+            to='/'
+            disabled={loading} >
+              {'Startsidan'}
             </Button>
 
           </ScoreInput>
