@@ -5,10 +5,10 @@ import EndScreen from './EndScreen';
 import StageSelect from './StageSelect';
 import RuneHuntGame from './RuneHunt/RuneHuntGame';
 
-import backgroundImage1 from './../assets/backgroundImages/game_background.png'
-import backgroundImage2 from './../assets/backgroundImages/dessert_bg.png'
-import backgroundImage3 from './../assets/backgroundImages/forest_bg.png'
-import backgroundImage4 from './../assets/backgroundImages/winter_bg.png'
+import backgroundImage1 from './../assets/backgroundImages/beachclub1.png'
+import backgroundImage2 from './../assets/backgroundImages/coachella1.png'
+import backgroundImage3 from './../assets/backgroundImages/skogsrave1.png'
+import backgroundImage4 from './../assets/backgroundImages/afterski3.png'
 import styled from '@emotion/styled';
 
 const GameScreenContainer = styled.section`
