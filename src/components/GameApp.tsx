@@ -106,12 +106,12 @@ const FixedUI = styled.div`
     z-index: 5;
 `;
 
-interface RuneHuntProps {
+interface GameAppProps {
     onBackgroundChange?: (backgroundImage: string) => void;
     onGameOver?: (finalScore: number) => void; 
 }
 
-export default function RuneHunt({ onBackgroundChange, onGameOver }: RuneHuntProps) {
+export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps) {
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [countdown, setCountDown] = useState<number>(0);
