@@ -10,8 +10,6 @@ const Container = styled.div `
     justify-content: center;
     background-color: var(--background);
     padding: 4rem 12rem;
-    /* width: 44.25rem;
-    height: 20.625rem; */
     border-radius: 20px;
     gap: 2rem;
 `;
@@ -26,10 +24,7 @@ const ListContainer = styled.ol `
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-
 `;
-
-
 
 const ListItem = styled.li `
     font-family: var(--font-secondary);

@@ -1,10 +1,10 @@
-
 import Button from './Button';
 import styled from '@emotion/styled';
+import { useHighScore } from './useHighScore';
 
 interface EndScreenProps {
     score: number;
-    highScore: number;
+    highestScore?: number;
 }
 
 const Container = styled.div`
@@ -14,15 +14,12 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background-color: var(--background);
-  /* width: 34.25rem;
-  height: 18.625rem; */
   border-radius: 20px;
   gap: 1rem;
 
 `;
 
-const ScoreItem = styled.h3`
-
+const ScoreItem = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -32,7 +29,6 @@ const ScoreItem = styled.h3`
 `;
 
 const ButtonContainer = styled.div`
-
   display: flex;
   flex-direction: row;
   gap: 1rem;
@@ -40,10 +36,13 @@ const ButtonContainer = styled.div`
 
 
 
-export default function EndScreen({ score, highScore }: EndScreenProps) {
+export default function EndScreen({ score }: EndScreenProps) {
+  const { highestScore } = useHighScore();
+
     const getResultMessage = () => {
-        if (score >= highScore && highScore > 0) return "Nytt rekord!";
+        if (score >= highestScore && highestScore > 0) return "Nytt rekord!";
         if (score > 0) return "Bra spelat!";
+        console.log(highestScore)
         return "Försök igen!";
     };
 
@@ -53,7 +52,7 @@ export default function EndScreen({ score, highScore }: EndScreenProps) {
         
             <ScoreItem>
               <h3>Resultat: {score}</h3>
-              <h3>High Score: {highScore}</h3>
+              <h3>High Score: {highestScore}</h3>
             </ScoreItem>
          
           
