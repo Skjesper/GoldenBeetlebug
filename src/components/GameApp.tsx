@@ -190,6 +190,14 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
     return (
         <div>
+
+            <BackgroundMusic 
+                isPlaying={musicPlaying}
+                audioSrc={gameplayMusic}
+                volume={0.4}
+                loop={true}
+            />
+            
             {StageSelectMode && (
                 <EndScreenContainer>
                     <StageSelect 
