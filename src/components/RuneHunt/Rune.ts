@@ -8,6 +8,8 @@ export interface RuneProps {
     velocityX: number;
     velocityY: number;
     isActive: boolean;
+    createdAt?: number;
+    lifeTime?: number;
     isBad?: boolean;
     image?: HTMLImageElement;
 }
