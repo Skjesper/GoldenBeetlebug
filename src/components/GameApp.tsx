@@ -41,7 +41,7 @@ const GameContent = styled.div`
     left: 0;
      right: 0;
     margin: 0 auto;
-    width: 80%;
+    width: 75%;
     height: 100%;
     background-image: ${props => props.backgroundImage ? `url(${props.backgroundImage})` : 'none'};
     background-size: cover;
@@ -113,13 +113,18 @@ const FixedUI = styled.div`
     padding: 1rem;
     top: 0;
     display: flex;
-    width: 80%;
+    width: 75%;
     justify-content: space-between;
     pointer-events: none;
     
     
     z-index: 5;
 `;
+
+    const EndScreenWrapper = styled.div`
+    position: relative;
+    z-index: 15;
+    `;
 
 interface GameAppProps {
     onBackgroundChange?: (backgroundImage: string) => void;
@@ -237,7 +242,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
-                                initialTime={10} 
+                                initialTime={45} 
                                 isRunning={gameRunning} 
                                 onTimeOut={handleTimeOut}
                                 countDown={true}
@@ -251,8 +256,8 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
                      
                         <RuneHuntGame
-                            width="80%" 
-                            height="80%"
+                            width="75%" 
+                            height="75%"
                             backgroundColor="transparent"
                             // backgroundImage={selectedBackground}
                             numRunes={8}
@@ -271,9 +276,11 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                 </GameScreenContainer>
             ) : (
                 <EndScreenContainer>
-                    <EndScreen 
-                        score={score}  
-                    />
+                    <GameBackground backgroundImage={selectedBackground} 
+                    style={{ width: '100%' }}/>
+                    <EndScreenWrapper>
+                        <EndScreen score={score} />
+                    </EndScreenWrapper>
                 </EndScreenContainer>
             )}
         </div>
