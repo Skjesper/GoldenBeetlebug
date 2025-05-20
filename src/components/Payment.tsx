@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import Button from './Button';
+import AnimatedTarget from './AnimatedTarget';
 
 const PaymentContainer = styled.div`
   width: 100%;
@@ -43,9 +44,14 @@ const Input = styled.input`
 `;
 
 function Payment() {
+
+    const targetImagePath = 'src/assets/TargetIcon.png';
+
     return (
         <PaymentContainer className='paymentContainer'>
             <Title>Rune Hunt</Title>
+
+            <AnimatedTarget targetImagePath={targetImagePath} />
 
             <Form className='formContainer'>
                 <Input type="text" id="username" placeholder="Användarnamn" />
