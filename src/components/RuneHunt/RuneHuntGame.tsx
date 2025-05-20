@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 import Rune, { setRuneImageSources } from './Rune'; 
@@ -38,7 +38,7 @@ interface RuneHuntProps {
   backgroundImage?: string;
   numRunes?: number;
   isActive?: boolean;
-  onRuneClick?: (rune: Rune) => void;
+  onRuneClick?: (rune: Rune) => void;  // Uppdaterad för att ta emot en Rune
 }
 
 const RuneHuntGame: React.FC<RuneHuntProps> = ({
@@ -58,32 +58,31 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   const backgroundImageRef = useRef<HTMLImageElement | null>(null);
   const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
   const [gameSize, setGameSize] = useState({ width: 800, height: 600 });
+  
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
 
-  // Device detection
   useEffect(() => {
     const handleDeviceDetection = () => {
       setIsMobile(window.innerWidth < 768);
     };
     
     window.addEventListener('resize', handleDeviceDetection);
-    return () => window.removeEventListener('resize', handleDeviceDetection);
+    return () => {
+      window.removeEventListener('resize', handleDeviceDetection);
+    };
   }, []);
 
-  // Canvas size management
-  const updateCanvasSize = useCallback(() => {
+  const updateCanvasSize = () => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
-    
     const { width: containerWidth, height: containerHeight } = container.getBoundingClientRect();
     canvas.width = containerWidth;
     canvas.height = containerHeight;
     setGameSize({ width: containerWidth, height: containerHeight });
     return { width: containerWidth, height: containerHeight };
-  }, []);
+  };
 
-  // Background image loading
   useEffect(() => {
     if (backgroundImage) {
       setIsBackgroundLoaded(false);
@@ -99,8 +98,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     }
   }, [backgroundImage]);
 
-  // Canvas drawing
-  const drawCanvas = useCallback(() => {
+  const drawCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -116,60 +114,42 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     }
 
     runesRef.current.forEach(rune => rune.draw(ctx));
-  }, [backgroundColor, isBackgroundLoaded]);
+  };
 
-  // Rune updates
-  const updateRunes = useCallback(() => {
-    if (!isActive || !runeGeneratorRef.current) return;
-    
-    // Ta bort utgångna bad runes och uppdatera positioner
-    runesRef.current = runeGeneratorRef.current.filterExpiredBadRunes(runesRef.current);
+  const updateRunes = () => {
+    if (!isActive) return;
     runesRef.current.forEach(rune => rune.update(gameSize.width, gameSize.height));
-  }, [isActive, gameSize]);
+  };
 
-  // RuneGenerator setup
+
   useEffect(() => {
     if (!runeGeneratorRef.current) {
       runeGeneratorRef.current = new RuneGenerator(gameSize.width, gameSize.height, isMobile);
-      
-      // Sätt upp bad rune spawn callback
-      runeGeneratorRef.current.setBadRuneSpawnCallback((badRune: Rune) => {
-        runesRef.current = [...runesRef.current, badRune];
-      });
-      
-      // Starta bad rune spawning
-      runeGeneratorRef.current.startBadRuneSpawning();
     } else {
       runeGeneratorRef.current.updateGameSize(gameSize.width, gameSize.height);
       runeGeneratorRef.current.setDeviceType(isMobile);
     }
-
-    // Cleanup function
-    return () => {
-      runeGeneratorRef.current?.cleanup();
-    };
   }, [gameSize, isMobile]);
 
-  // Ensure adequate number of regular runes
-  const ensureRunes = useCallback(() => {
+  
+  const ensureRunes = () => {
     if (runeGeneratorRef.current) {
-      runesRef.current = runeGeneratorRef.current.ensureRegularRunes(runesRef.current, numRunes);
+      // Skapa en blandning av bra och dåliga runer med 20% dåliga
+      runesRef.current = runeGeneratorRef.current.ensureRunes(runesRef.current, numRunes, 0.2);
     }
-  }, [numRunes]);
+  };
 
-  // Create initial runes
-  const createInitialRunes = useCallback(() => {
+  const createInitialRunes = () => {
     if (runeGeneratorRef.current) {
-      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes);
+      // Skapa en blandning av bra och dåliga runer med 20% dåliga
+      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes, 0.1);
     }
-  }, [numRunes]);
+  };
 
-  // Setup rune images
   useEffect(() => {
     setRuneImageSources(runeImage, runeImage2);
   }, []);
 
-  // Initial setup and resize handling
   useEffect(() => {
     if (animationFrameIdRef.current) {
       cancelAnimationFrame(animationFrameIdRef.current);
@@ -184,6 +164,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     const handleResize = () => {
       const newSize = updateCanvasSize();
       if (newSize) {
+       
         createInitialRunes();
       }
     };
@@ -196,23 +177,21 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
         cancelAnimationFrame(animationFrameIdRef.current);
       }
     };
-  }, [updateCanvasSize, createInitialRunes]);
+  }, []);
 
-  // Canvas position adjustment
   useEffect(() => {
     if (gameSize.width > 0 && gameSize.height > 0 && runeGeneratorRef.current) {
+      
       runeGeneratorRef.current.adjustRunesToFitCanvas(runesRef.current);
     }
   }, [gameSize]);
 
-  // Background loading effect
   useEffect(() => {
     if (isBackgroundLoaded && canvasRef.current) {
       drawCanvas();
     }
-  }, [isBackgroundLoaded, drawCanvas]);
+  }, [isBackgroundLoaded]);
 
-  // Main game loop
   useEffect(() => {
     if (animationFrameIdRef.current) {
       cancelAnimationFrame(animationFrameIdRef.current);
@@ -232,10 +211,9 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
         cancelAnimationFrame(animationFrameIdRef.current);
       }
     };
-  }, [updateRunes, ensureRunes, drawCanvas]);
+  }, [isActive, gameSize]);
 
-  // Click handling
-  const handleCanvasClick = useCallback((event: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isActive) return;
 
     const canvas = canvasRef.current;
@@ -252,11 +230,16 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     });
 
     if (clickedRuneIndex !== -1) {
+      // Spara referens till den klickade runen innan vi tar bort den
       const clickedRune = runesRef.current[clickedRuneIndex];
+      
+      // Ta bort runen från listan
       runesRef.current.splice(clickedRuneIndex, 1);
+      
+      // Anropa callback med runen
       onRuneClick(clickedRune);
     }
-  }, [isActive, onRuneClick]);
+  };
 
   return (
     <GameContainer ref={containerRef} gameWidth={width} gameHeight={height}>
