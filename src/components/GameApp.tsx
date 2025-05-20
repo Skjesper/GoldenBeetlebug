@@ -153,7 +153,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
     function startGame() {
         setStart(true);
-        setCountDown(300);
+        setCountDown(3);
         setGameOver(false);
         setScore(0);
 
