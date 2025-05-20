@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 import Button from './Button';
 
+import React from "react";
+import { useGameContext } from "../services/gameContext";
+import { GAME_CONFIG } from "../services/gameConfig";
+import { processPayment } from "../services/transactionService";
+
 const PaymentContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -42,7 +47,44 @@ const Input = styled.input`
     padding-left: 10px;
 `;
 
-function Payment() {
+
+const PaymentSection: React.FC = () => {
+  const {
+    setHasPaid,
+    isProcessing,
+    setIsProcessing,
+    // paymentError,
+    setPaymentError,
+    jwtToken,
+    inputRef,
+  } = useGameContext();
+
+  const handlePayment = async () => {
+    setIsProcessing(true);
+    setPaymentError(null);
+
+    try {
+      const result = await processPayment(jwtToken);
+
+      if (result.success) {
+        setHasPaid(true);
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 0);
+      } else {
+        setPaymentError(result.error || "Payment failed");
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      setPaymentError(
+        error instanceof Error ? error.message : "Payment failed"
+      );
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+// function Payment() {
     return (
         <PaymentContainer className='paymentContainer'>
             <Title>Rune Hunt</Title>
@@ -52,10 +94,11 @@ function Payment() {
                 <Input type="password" id="password" placeholder="Lösenord"/>
             </Form>
             
-            <Button to='/play'>Betala</Button>
+            <Button onClick={handlePayment}
+        disabled={isProcessing}>Betala</Button>
 
         </PaymentContainer>
     );
-}
+};
 
-export default Payment;
+export default PaymentSection;
