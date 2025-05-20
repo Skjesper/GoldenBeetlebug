@@ -153,7 +153,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
     function startGame() {
         setStart(true);
-        setCountDown(300);
+        setCountDown(3);
         setGameOver(false);
         setScore(0);
 
@@ -237,7 +237,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
-                                initialTime={10} 
+                                initialTime={45} 
                                 isRunning={gameRunning} 
                                 onTimeOut={handleTimeOut}
                                 countDown={true}
