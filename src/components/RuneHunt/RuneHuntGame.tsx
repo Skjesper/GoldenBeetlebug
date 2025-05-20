@@ -142,7 +142,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   const createInitialRunes = () => {
     if (runeGeneratorRef.current) {
       // Skapa en blandning av bra och dåliga runer med 20% dåliga
-      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes, 0.1);
+      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes, 0.2);
     }
   };
 
