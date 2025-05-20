@@ -23,8 +23,6 @@ export const DEFAULT_RUNE: RuneProps = {
     velocityX: 2,
     velocityY: 2,
     isActive: true
-
-
 };
 
 // Image cache to avoid loading the same image multiple times
@@ -81,14 +79,14 @@ export class Rune {
     }
 
     update(canvasWidth: number, canvasHeight: number) {
-        // Hämta egenskaper från this.props
+       
         const { gravity, velocityX, velocityY, radius, x, y } = this.props;
         
-        // Uppdatera hastighet med gravitation (ska vara 0 i detta fall)
+        
         const newVelocityY = velocityY + gravity;
         this.props.velocityY = newVelocityY;
         
-        // Uppdatera position baserat på båda hastighetskomponenterna
+        
         const newPositionX = x + velocityX;
         const newPositionY = y + newVelocityY;
         
