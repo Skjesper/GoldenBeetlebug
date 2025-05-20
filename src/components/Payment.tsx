@@ -43,23 +43,37 @@ const Input = styled.input`
     padding-left: 10px;
 `;
 
-function Payment() {
+const TitleWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
 
+const OverlayTarget = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; 
+`;
+
+function Payment() {
     const targetImagePath = 'src/assets/TargetIcon.png';
 
     return (
-        <PaymentContainer className='paymentContainer'>
-            <Title>Rune Hunt</Title>
+        <PaymentContainer>
+            <TitleWrapper>
+                <Title>Rune Hunt</Title>
+                <OverlayTarget>
+                    <AnimatedTarget targetImagePath={targetImagePath} />
+                </OverlayTarget>
+            </TitleWrapper>
 
-            <AnimatedTarget targetImagePath={targetImagePath} />
-
-            <Form className='formContainer'>
+            <Form>
                 <Input type="text" id="username" placeholder="Användarnamn" />
-                <Input type="password" id="password" placeholder="Lösenord"/>
+                <Input type="password" id="password" placeholder="Lösenord" />
             </Form>
             
             <Button to='/play'>Betala</Button>
-
         </PaymentContainer>
     );
 }
