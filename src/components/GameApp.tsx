@@ -4,13 +4,19 @@ import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
 import StageSelect from './StageSelect';
 import RuneHuntGame from './RuneHunt/RuneHuntGame';
+
 import Rune from './RuneHunt/Rune';
 
-import backgroundImage1 from './../assets/backgroundImages/game_background.png'
-import backgroundImage2 from './../assets/backgroundImages/dessert_bg.png'
-import backgroundImage3 from './../assets/backgroundImages/forest_bg.png'
-import backgroundImage4 from './../assets/backgroundImages/winter_bg.png'
+import BackgroundMusic from './BackgroundMusic';
+
+
+import backgroundImage1 from './../assets/backgroundImages/beachclub1.png'
+import backgroundImage2 from './../assets/backgroundImages/coachella1.png'
+import backgroundImage3 from './../assets/backgroundImages/skogsrave1.png'
+import backgroundImage4 from './../assets/backgroundImages/afterski3.png'
 import styled from '@emotion/styled';
+
+import gameplayMusic from './../assets/audio/runebeats.mp3';
 
 const GameScreenContainer = styled.section`
     height: 100%;
@@ -28,7 +34,6 @@ const GameContent = styled.div`
     width: 100%;
     height: 100%;
 `;
-
 
     const GameBackground = styled.div<{ backgroundImage?: string }>`
     position: absolute;
@@ -122,12 +127,15 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
     const [highScore, setHighscore] = useState<number>(0);
 
     const [selectedBackground, setSelectedBackground] = useState<string | undefined>(undefined);
+    
+    const [musicPlaying, setMusicPlaying] = useState<boolean>(false);
 
     const handleTimeOut = useCallback(() => {
         console.log("Times up");
         localStorage.setItem('gameScore', score.toString());
         setGameRunning(false);
         setGameOver(true);
+        setMusicPlaying(false);
 
         if (onGameOver) {
             onGameOver(score);
@@ -145,6 +153,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                 if (prevCount <= 1) {
                     clearInterval(countdownInterval);
                     setGameRunning(true);
+                    setMusicPlaying(true);
                     return 0;
                 }
                 return prevCount - 1;
@@ -191,6 +200,14 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
     return (
         <div>
+
+            <BackgroundMusic 
+                isPlaying={musicPlaying}
+                audioSrc={gameplayMusic}
+                volume={0.4}
+                loop={true}
+            />
+            
             {StageSelectMode && (
                 <EndScreenContainer>
                     <StageSelect 
@@ -211,15 +228,15 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
-                                initialTime={300} 
+                                initialTime={10} 
                                 isRunning={gameRunning} 
                                 onTimeOut={handleTimeOut}
                                 countDown={true}
                             />
                             <Scoreboard 
                                 score={score} 
-                                highScore={highScore}
-                                onScorePoint={handleScore}
+                                // highScore={highScore}
+                                // onScorePoint={handleScore}
                             />
                         </FixedUI>
 
@@ -245,8 +262,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
             ) : (
                 <EndScreenContainer>
                     <EndScreen 
-                        score={score}
-                        highScore={highScore}
+                        score={score}  
                     />
                 </EndScreenContainer>
             )}

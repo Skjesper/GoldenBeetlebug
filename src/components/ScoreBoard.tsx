@@ -1,9 +1,8 @@
-
 import styled from '@emotion/styled';
+import { useHighScore } from './useHighScore';
 
 
 const ScoreContainer = styled.section`
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,33 +10,28 @@ const ScoreContainer = styled.section`
 `;
 
 const ScoreText = styled.h2`
-    text-align: center;
+  text-align: center;
 `;
+
 interface ScoreboardProps {
-
-    score: number;
-    highScore?: number;
-    onScorePoint?: () => void;
-
+  score: number;
+  showHighScore?: boolean;
 }
-export default function Scoreboard({ 
-    score, 
-    // highScore, 
-    // onScorePoint 
-  }: ScoreboardProps) {
 
-    return (
-        <ScoreContainer>
+export default function Scoreboard({ score, showHighScore = true }: ScoreboardProps) {
+  const { highestScore } = useHighScore();
+
+  return (
+    <ScoreContainer>
+      <ScoreText>
+        {score}p
+      </ScoreText>
+      {showHighScore && (
         <ScoreText>
-          {score}p
+          {highestScore}p
         </ScoreText>
-       
-        <h2>
-            {/* Rekord: <span>{highScore}</span> */}
-        </h2>
-      
-
-        </ScoreContainer>
-    )
-
+      )}
+    </ScoreContainer>
+  )
 }
+
