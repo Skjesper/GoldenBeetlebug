@@ -121,6 +121,11 @@ const FixedUI = styled.div`
     z-index: 5;
 `;
 
+    const EndScreenWrapper = styled.div`
+    position: relative;
+    z-index: 15;
+    `;
+
 interface GameAppProps {
     onBackgroundChange?: (backgroundImage: string) => void;
     onGameOver?: (finalScore: number) => void; 
@@ -271,9 +276,11 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                 </GameScreenContainer>
             ) : (
                 <EndScreenContainer>
-                    <EndScreen 
-                        score={score}  
-                    />
+                    <GameBackground backgroundImage={selectedBackground} 
+                    style={{ width: '100%' }}/>
+                    <EndScreenWrapper>
+                        <EndScreen score={score} />
+                    </EndScreenWrapper>
                 </EndScreenContainer>
             )}
         </div>
