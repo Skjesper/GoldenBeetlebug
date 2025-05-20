@@ -70,6 +70,7 @@ const CountdownContainer = styled.div`
     right: 0;
     bottom: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 5;
@@ -80,7 +81,7 @@ const CountdownNumber = styled.h2`
     color: #000000;
     font-weight: bold;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
-    animation: pulse 1s infinite; 
+    animation: pulse 1s infinite;
     
     @keyframes pulse {
         0% {
@@ -98,6 +99,14 @@ const CountdownNumber = styled.h2`
         font-size: 18rem;
     }
 `;
+
+const SoundOnText = styled.p`
+    font-size: 2rem;
+    font-weight: var(--weight-bold);
+    color: #000;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    padding-top: 1.5rem;
+;`
 
 const FixedUI = styled.div`
     position: absolute;
@@ -144,7 +153,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
     function startGame() {
         setStart(true);
-        setCountDown(3);
+        setCountDown(300);
         setGameOver(false);
         setScore(0);
 
@@ -253,6 +262,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         
                         {countdown > 0 && (
                             <CountdownContainer className='countdownContainer'>
+                                <SoundOnText>SOUND ON</SoundOnText>
                                 <CountdownNumber>{countdown}</CountdownNumber>
                             </CountdownContainer>
                         )}
