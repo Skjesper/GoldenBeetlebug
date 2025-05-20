@@ -19,7 +19,7 @@ const CONFIGS = {
   mobile: {
     minMargin: 20,
     minRadius: 25,  
-    maxRadius: 38,  
+    maxRadius: 35,  
     minSpeed: 2.0,
     maxSpeed: 4.5
   }
@@ -65,6 +65,7 @@ export class RuneGenerator {
     
     if (isBad) {
       radius *= 1.4;
+
     }
 
     return new Rune({
