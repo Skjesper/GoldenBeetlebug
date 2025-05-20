@@ -1,7 +1,5 @@
-// RuneGenerator.ts
 import Rune from './Rune';
 
-// Konfigurationsinterface för runor
 interface RuneConfig {
   minMargin: number;
   minRadius: number;
@@ -11,21 +9,21 @@ interface RuneConfig {
 }
 
 const CONFIGS = {
-    desktop: {
-      minMargin: 50,
-      minRadius: 30,  // Fast värde som ser bra ut på desktop
-      maxRadius: 45,
-      minSpeed: 1.5,
-      maxSpeed: 3.0
-    },
-    mobile: {
-      minMargin: 20,
-      minRadius: 25,  // Öka detta värde - tillräckligt stort för att se bra ut på mobil
-      maxRadius: 35,  // Även detta kan ökas för konsekvens
-      minSpeed: 1.0,
-      maxSpeed: 2.0
-    }
-  } as const;
+  desktop: {
+    minMargin: 50,
+    minRadius: 30,  
+    maxRadius: 45,
+    minSpeed: 3,
+    maxSpeed: 6
+  },
+  mobile: {
+    minMargin: 20,
+    minRadius: 25,  
+    maxRadius: 35,  
+    minSpeed: 2.0,
+    maxSpeed: 4.5
+  }
+} as const;
 
 export class RuneGenerator {
   private gameWidth: number;
@@ -38,62 +36,68 @@ export class RuneGenerator {
     this.config = isMobile ? CONFIGS.mobile : CONFIGS.desktop;
   }
   
-  // Kombinerad metod för att uppdatera enhet och/eller storlek
   updateSettings(settings: { gameWidth?: number, gameHeight?: number, isMobile?: boolean }): void {
     if (settings.gameWidth !== undefined) this.gameWidth = settings.gameWidth;
     if (settings.gameHeight !== undefined) this.gameHeight = settings.gameHeight;
     if (settings.isMobile !== undefined) this.config = settings.isMobile ? CONFIGS.mobile : CONFIGS.desktop;
   }
   
-  // För bakåtkompatibilitet (kan tas bort om alla anropsställen uppdateras)
   setDeviceType(isMobile: boolean): void {
     this.updateSettings({ isMobile });
   }
   
-  // För bakåtkompatibilitet (kan tas bort om alla anropsställen uppdateras)
   updateGameSize(width: number, height: number): void {
     this.updateSettings({ gameWidth: width, gameHeight: height });
   }
   
-  createRandomRune(): Rune {
+  createRandomRune(isBad = false): Rune {
     const { minMargin, minRadius, maxRadius, minSpeed, maxSpeed } = this.config;
-    
-    // Beräkna position
+
     const randomX = minMargin + Math.random() * (this.gameWidth - 2 * minMargin);
     const randomY = minMargin + Math.random() * (this.gameHeight - 2 * minMargin);
     
-    // Enkel beräkning av radius - aldrig mindre än minRadius
-    const radius = minRadius + Math.random() * (maxRadius - minRadius);
+    let radius = minRadius + Math.random() * (maxRadius - minRadius);
     
-    // Hastigheter
     const speedX = minSpeed + Math.random() * (maxSpeed - minSpeed);
     const speedY = minSpeed + Math.random() * (maxSpeed - minSpeed);
     const directionX = Math.random() > 0.5 ? 1 : -1;
     const directionY = Math.random() > 0.5 ? 1 : -1;
     
+    if (isBad) {
+      radius *= 1.4;
+
+    }
+
     return new Rune({
       id: Date.now() + Math.random(), 
       x: randomX,
       y: randomY,
-      radius,       // Denna kommer aldrig vara mindre än minRadius
+      radius,     
       velocityX: speedX * directionX,
       velocityY: speedY * directionY,
-      gravity: 0.0
+      gravity: 0.0,
+      isBad
     });
   }
   
-  // Funktioner som skapar eller hanterar flera runor
-  createInitialRunes(numRunes: number): Rune[] {
-    return Array.from({ length: numRunes }, () => this.createRandomRune());
+  // Ny metod för att skapa en rune med sannolikhet att vara dålig
+  createNewRune(badRuneRatio: number = 0.2): Rune {
+    // Bestäm slumpmässigt om denna rune ska vara dålig
+    const shouldBeBad = Math.random() < badRuneRatio;
+    return this.createRandomRune(shouldBeBad);
+  }
+
+  createInitialRunes(numRunes: number, badRuneRatio: number = 0.2): Rune[] {
+    return Array.from({ length: numRunes }, () => this.createNewRune(badRuneRatio));
   }
   
-  ensureRunes(currentRunes: Rune[], targetNumber: number): Rune[] {
+  ensureRunes(currentRunes: Rune[], targetNumber: number, badRuneRatio: number = 0.2): Rune[] {
     if (currentRunes.length >= targetNumber) return currentRunes;
     
-    return [
-      ...currentRunes,
-      ...this.createInitialRunes(targetNumber - currentRunes.length)
-    ];
+    const numToAdd = targetNumber - currentRunes.length;
+    const newRunes = Array.from({ length: numToAdd }, () => this.createNewRune(badRuneRatio));
+    
+    return [...currentRunes, ...newRunes];
   }
   
   adjustRunesToFitCanvas(runes: Rune[]): void {

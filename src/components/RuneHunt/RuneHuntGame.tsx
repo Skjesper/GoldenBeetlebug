@@ -38,7 +38,7 @@ interface RuneHuntProps {
   backgroundImage?: string;
   numRunes?: number;
   isActive?: boolean;
-  onRuneClick?: () => void;
+  onRuneClick?: (rune: Rune) => void;  // Uppdaterad för att ta emot en Rune
 }
 
 const RuneHuntGame: React.FC<RuneHuntProps> = ({
@@ -53,15 +53,14 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const runesRef = useRef<Rune[]>([]);
-  const runeGeneratorRef = useRef<RuneGenerator | null>(null); // Ny ref för RuneGenerator
+  const runeGeneratorRef = useRef<RuneGenerator | null>(null);
   const animationFrameIdRef = useRef<number | null>(null);
   const backgroundImageRef = useRef<HTMLImageElement | null>(null);
   const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
   const [gameSize, setGameSize] = useState({ width: 800, height: 600 });
-  // Enkel enhetsdetektering
+  
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
 
-  // Uppdatera isMobile när fönstret ändrar storlek
   useEffect(() => {
     const handleDeviceDetection = () => {
       setIsMobile(window.innerWidth < 768);
@@ -122,7 +121,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     runesRef.current.forEach(rune => rune.update(gameSize.width, gameSize.height));
   };
 
-  // Initialisera eller uppdatera RuneGenerator när spelstorleken eller enhetstypen ändras
+
   useEffect(() => {
     if (!runeGeneratorRef.current) {
       runeGeneratorRef.current = new RuneGenerator(gameSize.width, gameSize.height, isMobile);
@@ -132,18 +131,18 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     }
   }, [gameSize, isMobile]);
 
-  // Ta bort de flyttade funktionerna - låt RuneGenerator hantera detta
-  // createRandomPositionedRune är nu borta
   
   const ensureRunes = () => {
     if (runeGeneratorRef.current) {
-      runesRef.current = runeGeneratorRef.current.ensureRunes(runesRef.current, numRunes);
+      // Skapa en blandning av bra och dåliga runer med 20% dåliga
+      runesRef.current = runeGeneratorRef.current.ensureRunes(runesRef.current, numRunes, 0.2);
     }
   };
 
   const createInitialRunes = () => {
     if (runeGeneratorRef.current) {
-      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes);
+      // Skapa en blandning av bra och dåliga runer med 20% dåliga
+      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes, 0.2);
     }
   };
 
@@ -165,7 +164,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     const handleResize = () => {
       const newSize = updateCanvasSize();
       if (newSize) {
-        // Återskapa runor när skärmstorleken ändras för att passa det nya utrymmet bättre
+       
         createInitialRunes();
       }
     };
@@ -182,7 +181,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
 
   useEffect(() => {
     if (gameSize.width > 0 && gameSize.height > 0 && runeGeneratorRef.current) {
-      // Använd RuneGenerator för att justera runorna
+      
       runeGeneratorRef.current.adjustRunesToFitCanvas(runesRef.current);
     }
   }, [gameSize]);
@@ -224,7 +223,6 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     const gameX = event.clientX - rect.left;
     const gameY = event.clientY - rect.top;
 
-    // Hitta första rune som träffas
     const clickedRuneIndex = runesRef.current.findIndex(rune => {
       const dx = rune.props.x - gameX;
       const dy = rune.props.y - gameY;
@@ -232,8 +230,14 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     });
 
     if (clickedRuneIndex !== -1) {
+      // Spara referens till den klickade runen innan vi tar bort den
+      const clickedRune = runesRef.current[clickedRuneIndex];
+      
+      // Ta bort runen från listan
       runesRef.current.splice(clickedRuneIndex, 1);
-      onRuneClick();
+      
+      // Anropa callback med runen
+      onRuneClick(clickedRune);
     }
   };
 

@@ -4,7 +4,11 @@ import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
 import StageSelect from './StageSelect';
 import RuneHuntGame from './RuneHunt/RuneHuntGame';
+
+import Rune from './RuneHunt/Rune';
+
 import BackgroundMusic from './BackgroundMusic';
+
 
 import backgroundImage1 from './../assets/backgroundImages/beachclub1.png'
 import backgroundImage2 from './../assets/backgroundImages/coachella1.png'
@@ -163,11 +167,17 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
         }
     }, [score, highScore]);
 
-    const handleScore = useCallback(() => {
+    const handleScore = useCallback((rune?: Rune) => {
         if (gameRunning) {
+          if (rune && rune.props.isBad) {
+            // Om det är en dålig rune, subtrahera 25 poäng
+            setScore(prevScore => prevScore - 25);
+          } else {
+            // Om det är en bra rune eller ingen rune angavs, lägg till 10 poäng
             setScore(prevScore => prevScore + 10);
+          }
         }
-    }, [gameRunning]);
+      }, [gameRunning]);
 
     const handleStageSelect = (selectedId: number) => {
         const selectedStage = stageImages.find(stage => stage.id === selectedId);
