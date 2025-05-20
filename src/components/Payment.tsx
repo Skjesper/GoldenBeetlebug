@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import Button from './Button';
+import AnimatedTarget from './AnimatedTarget';
 
 const PaymentContainer = styled.div`
   width: 100%;
@@ -42,18 +43,37 @@ const Input = styled.input`
     padding-left: 10px;
 `;
 
-function Payment() {
-    return (
-        <PaymentContainer className='paymentContainer'>
-            <Title>Rune Hunt</Title>
+const TitleWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
 
-            <Form className='formContainer'>
+const OverlayTarget = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; 
+`;
+
+function Payment() {
+    const targetImagePath = 'src/assets/TargetIcon.png';
+
+    return (
+        <PaymentContainer>
+            <TitleWrapper>
+                <Title>Rune Hunt</Title>
+                <OverlayTarget>
+                    <AnimatedTarget targetImagePath={targetImagePath} />
+                </OverlayTarget>
+            </TitleWrapper>
+
+            <Form>
                 <Input type="text" id="username" placeholder="Användarnamn" />
-                <Input type="password" id="password" placeholder="Lösenord"/>
+                <Input type="password" id="password" placeholder="Lösenord" />
             </Form>
             
             <Button to='/play'>Betala</Button>
-
         </PaymentContainer>
     );
 }
