@@ -23,20 +23,21 @@ const StyledHeader = styled.div`
   
   h1 {
     margin: 0 0 0.25rem 0;
-    font-size: 1.5rem;
+    font-size: 3rem;
+
     
     @media (max-width: 768px) {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
     }
   }
   
   p {
     margin: 0 auto;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     max-width: 90%;
     
     @media (max-width: 768px) {
-      font-size: 0.8rem;
+      font-size: 1rem;
     }
   }
 `;
@@ -158,7 +159,7 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
         <StyledContainer className='selectContainer'>
             <StyledHeader>
                 <h1>Välj bana</h1>
-                <h3>Info om hur du spelar, varför du spelar, hur du vinner, varför du aldrig kommer vinna och hur vi ska tjäna alla pengar.</h3>
+                <p>Skjut så många Rune du kan med champagnekorken innan tiden tar slut. Får du över 150p är det en vinst! Men se upp så du inte träffar fel person... </p>
             </StyledHeader>
             
             <StyledImageGrid className='styledImageGrid'>
