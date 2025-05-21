@@ -7,15 +7,16 @@ const PaymentContainer = styled.div`
   height: 100%;
   padding:2rem;
   margin: 0 auto;
+  border-radius: 20px;
+  background-color: var(--background);
  
   display: flex;
   flex-direction: column; 
-  /* justify-content: center;  */
   align-items: center; 
   justify-content: center;
-  /* height: 100%; */
-  background-color: var(--background);
   gap: 1.5rem;
+  /* justify-content: center;  */
+  /* height: 100%; */
   
 `;
 
