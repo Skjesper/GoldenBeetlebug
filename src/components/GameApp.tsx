@@ -23,7 +23,7 @@ const GameScreenContainer = styled.section`
     width: 100vw;
     display: flex;
     justify-content: center;
-`;
+    `;
 
 const GameContent = styled.div`
     display: flex;
@@ -33,13 +33,13 @@ const GameContent = styled.div`
     align-items: center;
     width: 100%;
     height: 100%;
-`;
+    `;
 
-    const GameBackground = styled.div<{ backgroundImage?: string }>`
+const GameBackground = styled.div<{ backgroundImage?: string }>`
     position: absolute;
     top: 0;
     left: 0;
-     right: 0;
+    right: 0;
     margin: 0 auto;
     width: 75%;
     height: 100%;
@@ -47,6 +47,7 @@ const GameContent = styled.div`
     background-size: cover;
     background-position: center;
     z-index: 0;
+    border-radius: 20px;
 `;
 
 

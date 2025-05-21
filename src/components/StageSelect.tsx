@@ -74,14 +74,14 @@ const Overlay = styled.div`
     opacity: 0;
     transition: .5s ease;
     background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 0.5rem;
+    border-radius: 20px;
 `;
 
 const StyledImageContainer = styled.div`
   position: relative;
   width: 100%;
   aspect-ratio: 5/3;
-  border-radius: 0.5rem;
+  border-radius: 20px;
   box-sizing: border-box;
   outline: 2px solid transparent;
   outline-offset: 4px;
@@ -107,7 +107,7 @@ const StyledImageContainer = styled.div`
   img {
     width: 100%;
     height: 100%;
-    border-radius: 0.5rem;
+    border-radius: 20px;
     object-fit: cover;
     display: block;
   }
@@ -174,7 +174,7 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
                             style={{ 
                                 width: '100%',
                                 height: '100%', 
-                                borderRadius: '0.5rem',
+                                borderRadius: '20px',
                                 objectFit: 'cover'
                             }}
                         />

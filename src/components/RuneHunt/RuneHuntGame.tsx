@@ -21,7 +21,7 @@ const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
 const GameCanvas = styled.canvas`
   display: block;
   border: 2px solid #4a2511;
-  border-radius: 8px;
+  border-radius: 20px;
   cursor: url(${Champagne}) 90 10, pointer;
   width: 100%;
   height: 100%;
