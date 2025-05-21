@@ -1,7 +1,7 @@
-
 import Window from '../components/Window';
 import Payment from '../components/Payment';
-import { GameProvider } from '../services/gameContext';
+import JwtDisplay from '../services/JwtDisplay';
+import { GameProvider } from '../services/GameContext';
 
 
 function RuneHuntPage() {
@@ -9,6 +9,7 @@ function RuneHuntPage() {
     <>
  <GameProvider>
 
+  <JwtDisplay/> 
       <Window blurred>
      
         <Payment></Payment>

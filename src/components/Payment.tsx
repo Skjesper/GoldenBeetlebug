@@ -65,7 +65,7 @@ const handlePayment = async () => {
     
     try {
       const result = await processPayment(jwtToken);
-      console.log(result + "hoho")
+      console.log("Payment result:", result, "hoho");
       
       if (result.success) {
         setHasPaid(true);

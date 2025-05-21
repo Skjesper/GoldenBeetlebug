@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGameContext } from "./GameContext";
 import { decodeJwt } from "./auth";
 
@@ -14,8 +14,11 @@ export default function JwtDisplay() {
     const handleMessage = (event: MessageEvent) => {
       try {
         const allowedOrigins = [
+          "http://localhost:5173",
           "http://localhost:3000",
           "http://127.0.0.1:3000",
+          "*",
+          "https://tivoli.yrgobanken.vip"
         ];
 
         if (!allowedOrigins.includes(event.origin)) {
@@ -30,6 +33,7 @@ export default function JwtDisplay() {
 
           setJwtToken(token);
 
+          console.log("JWT token set in context:", token);
           const decoded = decodeJwt(token);
           if (decoded) {
             setDecodedToken(decoded);
