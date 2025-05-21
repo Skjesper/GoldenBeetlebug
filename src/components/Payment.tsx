@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import Button from './Button';
 
 import React from "react";
-import { useGameContext } from "../services/gameContext";
+import { useGameContext } from "../services/GameContext";
 import { GAME_CONFIG } from "../services/gameConfig";
 import { processPayment } from "../services/transactionService";
 
@@ -59,13 +59,14 @@ const PaymentSection: React.FC = () => {
     inputRef,
   } = useGameContext();
 
-  const handlePayment = async () => {
+const handlePayment = async () => {
     setIsProcessing(true);
     setPaymentError(null);
-
+    
     try {
       const result = await processPayment(jwtToken);
-
+      console.log(result + "hoho")
+      
       if (result.success) {
         setHasPaid(true);
         setTimeout(() => {

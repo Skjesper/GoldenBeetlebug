@@ -78,11 +78,13 @@ export async function createTransaction(
 export async function processPayment(
   jwtToken: string | null
 ): Promise<TransactionResult> {
-  if (!jwtToken) {
-    return {
-      success: false,
-      error: "No JWT token available",
-    };
+
+    if (!jwtToken) {
+        console.log("tjo")
+        return {
+            success: false,
+            error: "No JWT token available",
+        };
   }
 
   try {
