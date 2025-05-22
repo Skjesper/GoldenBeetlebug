@@ -73,7 +73,9 @@ export default function EndScreen({ score }: EndScreenProps) {
             </Button>
           </ButtonContainer>
 
-          {/* <WinnerRewards /> */}
+          <WinnerRewards onRewardClaimed={function (): void {
+          throw new Error('Function not implemented.');
+        } } />
 
   
         </Container>
