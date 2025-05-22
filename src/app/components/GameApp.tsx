@@ -5,17 +5,14 @@ import Scoreboard from './ScoreBoard';
 import EndScreen from './EndScreen';
 import StageSelect from './StageSelect';
 import RuneHuntGame from './RuneHunt/RuneHuntGame';
-
 import Rune from './RuneHunt/Rune';
-
 import BackgroundMusic from './BackgroundMusic';
-
-import backgroundImage1 from './../assets/backgroundImages/beachclub1.png'
-import backgroundImage2 from './../assets/backgroundImages/coachella1.png'
-import backgroundImage3 from './../assets/backgroundImages/skogsrave1.png'
-import backgroundImage4 from './../assets/backgroundImages/afterski3.png'
 import styled from '@emotion/styled';
 
+const backgroundImage1 = '/assets/backgroundImages/beachclub1.png'
+const backgroundImage2 = '/assets/backgroundImages/coachella1.png'
+const backgroundImage3 = '/assets/backgroundImages/skogsrave1.png'
+const backgroundImage4 = '/assets/backgroundImages/afterski3.png'
 
 const GameScreenContainer = styled.section`
     height: 100%;
