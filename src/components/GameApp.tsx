@@ -19,10 +19,11 @@ import styled from '@emotion/styled';
 import gameplayMusic from './../assets/audio/runebeats.mp3';
 
 const GameScreenContainer = styled.section`
-    height: 100%;
+    height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
+    align-items: center;
 `;
 
 const GameContent = styled.div`
@@ -31,17 +32,18 @@ const GameContent = styled.div`
     position: relative;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 75%;
 `;
 
     const GameBackground = styled.div<{ backgroundImage?: string }>`
     position: absolute;
+
     top: 0;
     left: 0;
-     right: 0;
+    right: 0;
     margin: 0 auto;
-    width: 75%;
+    width: 100%;
     height: 100%;
     background-image: ${props => props.backgroundImage ? `url(${props.backgroundImage})` : 'none'};
     background-size: cover;
