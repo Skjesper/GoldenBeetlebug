@@ -49,7 +49,7 @@ function Payment() {
                 </OverlayTarget>
             </TitleWrapper>
             
-            <Button to='/play'>Betala</Button>
+            <Button to='/play'>Betala €2</Button>
         </PaymentContainer>
     );
 }

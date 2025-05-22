@@ -41,10 +41,10 @@ export default function EndScreen({ score }: EndScreenProps) {
   const { highestScore } = useHighScore();
 
     const getResultMessage = () => {
-        if (score >= highestScore && highestScore > 0) return "Nytt rekord!";
-        if (score > 0) return "Bra spelat!";
+        if (score >= highestScore && highestScore > 0) return "Nytt rekord! Grymt spelat!";
+        if (score > 300) return "Grattis du vann! Bra spelat!";
         console.log(highestScore)
-        return "Försök igen!";
+        return "Bättre lycka nästa gång!";
     };
 
     return (
