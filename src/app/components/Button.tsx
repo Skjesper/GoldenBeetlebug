@@ -7,21 +7,10 @@ const StyledButton = styled.button`
         background-color: var(--secondary);
         color: var(--background);
         border: none;
-        display: flex;
-        height: 44px;
-        padding: 10px 32px;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        flex-shrink: 0;
-        align-self: stretch;
-        aspect-ratio: 31/11;
-        border-radius: 40px;
+        font-size: 1.5rem;
         text-decoration: none;
-        font-size: 20px;
-        font-weight: 400;
-        font-family: var(--font-secondary);
-
+        border-radius: 40px;
+        padding: 0.5rem 1.5rem;
 
         &:hover {
             background-color: var(--primary);

@@ -15,7 +15,7 @@ const BackgroundDiv = styled.div<{ maxWidth?: string; maxHeight?: string; blurre
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 8px;
+    border-radius: 20px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
