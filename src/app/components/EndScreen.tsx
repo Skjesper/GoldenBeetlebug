@@ -2,6 +2,9 @@
 import Button from './Button';
 import styled from '@emotion/styled';
 import { useHighScore } from './useHighScore';
+import { processReward } from "../services/transactionService";
+// import { WinnerRewards } from './../services/WinnerRewards';
+import WinnerRewards from '../services/WinnerRewards';
 
 interface EndScreenProps {
     score: number;
@@ -35,6 +38,10 @@ const ButtonContainer = styled.div`
   gap: 1rem;
 `;
 
+interface WinnerRewardsProps {
+  onRewardClaimed: () => void;
+}
+
 
 
 export default function EndScreen({ score }: EndScreenProps) {
@@ -65,6 +72,10 @@ export default function EndScreen({ score }: EndScreenProps) {
               Spara resultat
             </Button>
           </ButtonContainer>
+
+          {/* <WinnerRewards /> */}
+
+  
         </Container>
     );
 }

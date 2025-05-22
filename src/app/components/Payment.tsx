@@ -1,19 +1,27 @@
+'use client'
 import styled from '@emotion/styled';
 import Button from './Button';
-import AnimatedTarget from './AnimatedTarget';
+
+import React from "react";
+import { useGameContext } from "../services/GameContext";
+import { GAME_CONFIG } from "../services/gameConfig";
+import { processPayment } from "../services/transactionService";
 
 const PaymentContainer = styled.div`
   width: 100%;
   height: 100%;
   padding:2rem;
   margin: 0 auto;
+ 
   display: flex;
   flex-direction: column; 
+  /* justify-content: center;  */
   align-items: center; 
   justify-content: center;
+  /* height: 100%; */
   background-color: var(--background);
   gap: 1.5rem;
-  border-radius: 20px;
+  
 `;
 
 const Title = styled.h1`
@@ -24,34 +32,75 @@ const Title = styled.h1`
     color: var(--dark);
 `;
 
-const TitleWrapper = styled.div`
-  position: relative;
-  display: inline-block;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
 `;
 
-const OverlayTarget = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none; 
+const Input = styled.input`
+    width: 264px;
+    height: 31px;
+    border-radius: 20px;
+    border: none;
+    margin-bottom: 25px;
+    padding-left: 10px;
 `;
 
-function Payment() {
-    const targetImagePath = '/assets/TargetIcon.png';
 
+const PaymentSection: React.FC = () => {
+  const {
+    setHasPaid,
+    isProcessing,
+    setIsProcessing,
+    // paymentError,
+    setPaymentError,
+    jwtToken,
+    inputRef,
+  } = useGameContext();
+
+const handlePayment = async () => {
+    setIsProcessing(true);
+    setPaymentError(null);
+    
+    try {
+      const result = await processPayment(jwtToken);
+      console.log("Payment result:", result, "hoho");
+      
+      if (result.success) {
+        setHasPaid(true);
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 0);
+      } else {
+        setPaymentError(result.error || "Payment failed");
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      setPaymentError(
+        error instanceof Error ? error.message : "Payment failed"
+      );
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+// function Payment() {
     return (
-        <PaymentContainer>
-            <TitleWrapper>
-                <Title>Rune Hunt</Title>
-                <OverlayTarget>
-                    <AnimatedTarget targetImagePath={targetImagePath} />
-                </OverlayTarget>
-            </TitleWrapper>
+        <PaymentContainer className='paymentContainer'>
+            <Title>Rune Hunt</Title>
+
+            <Form className='formContainer'>
+                <Input type="text" id="username" placeholder="Användarnamn" />
+                <Input type="password" id="password" placeholder="Lösenord"/>
+            </Form>
             
-            <Button to='/play'>Betala</Button>
+            <Button onClick={handlePayment}
+        disabled={isProcessing}>Betala</Button>
+
         </PaymentContainer>
     );
-}
+};
 
-export default Payment;
+export default PaymentSection;
