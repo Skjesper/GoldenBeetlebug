@@ -1,13 +1,10 @@
 'use client'
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 
 import Rune, { setRuneImageSources } from './Rune'; 
 import RuneGenerator from './RuneGenerator'; 
-import Champagne from '../../assets/mouseClickers/champagne_bottle.png';
 
-import runeImage from '../../assets/RuneAlive.png';
-import runeImage2 from '../../assets/RuneDead.png';
 
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;
@@ -23,7 +20,7 @@ const GameCanvas = styled.canvas`
   display: block;
   border: 2px solid #4a2511;
   border-radius: 20px;
-  cursor: url(${Champagne}) 90 10, pointer;
+  cursor: url(/assets/mouseClickers/champagne_bottle.png) 90 10, pointer;
   width: 100%;
   height: 100%;
   touch-action: none;
@@ -167,7 +164,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
 
   // Setup rune images
   useEffect(() => {
-    setRuneImageSources(runeImage, runeImage2);
+    setRuneImageSources('/assets/RuneAlive.png', '/assets/RuneDead.png');
   }, []);
 
   // Initial setup and resize handling
