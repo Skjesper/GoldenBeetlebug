@@ -10,14 +10,12 @@ import Rune from './RuneHunt/Rune';
 
 import BackgroundMusic from './BackgroundMusic';
 
-
 import backgroundImage1 from './../assets/backgroundImages/beachclub1.png'
 import backgroundImage2 from './../assets/backgroundImages/coachella1.png'
 import backgroundImage3 from './../assets/backgroundImages/skogsrave1.png'
 import backgroundImage4 from './../assets/backgroundImages/afterski3.png'
 import styled from '@emotion/styled';
 
-import gameplayMusic from './../assets/audio/runebeats.mp3';
 
 const GameScreenContainer = styled.section`
     height: 100%;
@@ -145,6 +143,8 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
     const [selectedBackground, setSelectedBackground] = useState<string | undefined>(undefined);
     
     const [musicPlaying, setMusicPlaying] = useState<boolean>(false);
+
+    const gameplayMusic = 'assets/audio/runebeats.mp3';
 
     const handleTimeOut = useCallback(() => {
         console.log("Times up");
