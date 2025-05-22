@@ -23,8 +23,10 @@ const GameScreenContainer = styled.section`
     width: 100vw;
     display: flex;
     justify-content: center;
+
     align-items: center;
 `;
+
 
 const GameContent = styled.div`
     display: flex;
@@ -36,19 +38,23 @@ const GameContent = styled.div`
     height: 75%;
 `;
 
-    const GameBackground = styled.div<{ backgroundImage?: string }>`
+
+const GameBackground = styled.div<{ backgroundImage?: string }>`
     position: absolute;
 
     /* top: 0;
     left: 0;
+
     right: 0; */
     margin: 0 auto;
     width: 90%;
+
     height: 100%;
     background-image: ${props => props.backgroundImage ? `url(${props.backgroundImage})` : 'none'};
     background-size: cover;
     background-position: center;
     z-index: 0;
+    border-radius: 20px;
 `;
 
 
@@ -115,7 +121,9 @@ const FixedUI = styled.div`
     padding: 1rem;
     top: 0;
     display: flex;
+
     width: 90%;
+
     justify-content: space-between;
     pointer-events: none;
     
@@ -260,6 +268,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         <RuneHuntGame
                             width="90%" 
                             height="100%"
+
                             backgroundColor="transparent"
                             // backgroundImage={selectedBackground}
                             numRunes={8}
