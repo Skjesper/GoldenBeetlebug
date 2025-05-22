@@ -7,16 +7,13 @@ const PaymentContainer = styled.div`
   height: 100%;
   padding:2rem;
   margin: 0 auto;
- 
   display: flex;
   flex-direction: column; 
-  /* justify-content: center;  */
   align-items: center; 
   justify-content: center;
-  /* height: 100%; */
   background-color: var(--background);
   gap: 1.5rem;
-  
+  border-radius: 20px;
 `;
 
 const Title = styled.h1`
@@ -25,22 +22,6 @@ const Title = styled.h1`
     text-align: center;
     font-weight: 400;
     color: var(--dark);
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-`;
-
-const Input = styled.input`
-    width: 264px;
-    height: 31px;
-    border-radius: 20px;
-    border: none;
-    margin-bottom: 25px;
-    padding-left: 10px;
 `;
 
 const TitleWrapper = styled.div`
@@ -67,11 +48,6 @@ function Payment() {
                     <AnimatedTarget targetImagePath={targetImagePath} />
                 </OverlayTarget>
             </TitleWrapper>
-
-            <Form>
-                <Input type="text" id="username" placeholder="Användarnamn" />
-                <Input type="password" id="password" placeholder="Lösenord" />
-            </Form>
             
             <Button to='/play'>Betala</Button>
         </PaymentContainer>
