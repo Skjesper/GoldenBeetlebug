@@ -1,5 +1,5 @@
 
-// import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
+import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
 import Payment from '../components/Payment';
 
 
@@ -7,11 +7,11 @@ function RuneHuntPage() {
   return (
     <>
 
-  {/* <OrientationOverlay> */}
+  <OrientationOverlay>
      
         <Payment></Payment>
         
-      {/* </OrientationOverlay> */}
+      </OrientationOverlay>
 
     </>
   );
