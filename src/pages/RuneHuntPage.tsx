@@ -1,5 +1,5 @@
 
-import Window from '../components/Window';
+import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
 import Payment from '../components/Payment';
 
 
@@ -7,11 +7,11 @@ function RuneHuntPage() {
   return (
     <>
 
-      <Window blurred>
+  <OrientationOverlay>
      
         <Payment></Payment>
         
-      </Window>
+      </OrientationOverlay>
 
     </>
   );
