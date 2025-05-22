@@ -73,7 +73,7 @@ export default function EndScreen({ score }: EndScreenProps) {
             </Button>
           </ButtonContainer>
 
-          <WinnerRewards />
+          {/* <WinnerRewards /> */}
 
   
         </Container>

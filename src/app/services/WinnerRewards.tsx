@@ -3,8 +3,8 @@ import { useGameContext } from "./GameContext";
 import { processReward } from "./transactionService";
 import Button from './../components/Button'
 import { GameProvider } from "./GameContext";
-import { decodeJwt } from "./auth";
-import { JwtDisplay } from './JwtDisplay'
+// import { decodeJwt } from "./auth";
+// import { JwtDisplay } from './JwtDisplay'
 
 interface WinnerRewardsProps {
   onRewardClaimed: () => void;

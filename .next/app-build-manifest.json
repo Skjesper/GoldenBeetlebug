@@ -10,10 +10,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/play/page": [
+    "/api/transactions/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/play/page.js"
+      "static/chunks/app/api/transactions/route.js"
     ]
   }
 }
