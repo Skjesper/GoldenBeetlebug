@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import Window from "../components/Window";
 import GameApp from '../components/GameApp';
+import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
 
 function PlayPage() {
     const [backgroundImage, setBackgroundImage] = useState<string | undefined>(undefined);
 
     return (
-        <Window backgroundImage={backgroundImage}>
+        <OrientationOverlay>
             <GameApp onBackgroundChange={setBackgroundImage} />
-        </Window>
+            // </OrientationOverlay>
     );
 }
   

@@ -1,4 +1,5 @@
-import Window from '../components/Window';
+
+import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
 import Payment from '../components/Payment';
 import JwtDisplay from '../services/JwtDisplay';
 import { GameProvider } from '../services/GameContext';
@@ -10,11 +11,12 @@ function RuneHuntPage() {
  <GameProvider>
 
   <JwtDisplay/> 
-      <Window blurred>
+  <OrientationOverlay>
      
         <Payment></Payment>
         
-      </Window>
+      </OrientationOverlay>
+   
  </GameProvider>
 
     </>
