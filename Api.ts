@@ -1,4 +1,4 @@
-import { getMessage } from './src/api/tivoliApi.ts';
+import { getMessage } from './src/app/api/tivoliApi.js';
 
 //detta är också en testfil och ska ersättas. 
 
