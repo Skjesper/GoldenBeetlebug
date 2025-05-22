@@ -24,7 +24,7 @@ const GameScreenContainer = styled.section`
     width: 100vw;
     display: flex;
     justify-content: center;
-`;
+    `;
 
 const GameContent = styled.div`
     display: flex;
@@ -34,20 +34,21 @@ const GameContent = styled.div`
     align-items: center;
     width: 100%;
     height: 100%;
-`;
+    `;
 
-    const GameBackground = styled.div<{ backgroundImage?: string }>`
+const GameBackground = styled.div<{ backgroundImage?: string }>`
     position: absolute;
     top: 0;
     left: 0;
-     right: 0;
+    right: 0;
     margin: 0 auto;
-    width: 80%;
+    width: 75%;
     height: 100%;
     background-image: ${props => props.backgroundImage ? `url(${props.backgroundImage})` : 'none'};
     background-size: cover;
     background-position: center;
     z-index: 0;
+    border-radius: 20px;
 `;
 
 
@@ -71,6 +72,7 @@ const CountdownContainer = styled.div`
     right: 0;
     bottom: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 5;
@@ -81,7 +83,7 @@ const CountdownNumber = styled.h2`
     color: #000000;
     font-weight: bold;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
-    animation: pulse 1s infinite; 
+    animation: pulse 1s infinite;
     
     @keyframes pulse {
         0% {
@@ -100,18 +102,31 @@ const CountdownNumber = styled.h2`
     }
 `;
 
+const SoundOnText = styled.p`
+    font-size: 2rem;
+    font-weight: var(--weight-bold);
+    color: #000;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    padding-top: 1.5rem;
+;`
+
 const FixedUI = styled.div`
     position: absolute;
     padding: 1rem;
     top: 0;
     display: flex;
-    width: 80%;
+    width: 75%;
     justify-content: space-between;
     pointer-events: none;
     
     
     z-index: 5;
 `;
+
+    const EndScreenWrapper = styled.div`
+    position: relative;
+    z-index: 15;
+    `;
 
 interface GameAppProps {
     onBackgroundChange?: (backgroundImage: string) => void;
@@ -229,7 +244,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
-                                initialTime={10} 
+                                initialTime={45} 
                                 isRunning={gameRunning} 
                                 onTimeOut={handleTimeOut}
                                 countDown={true}
@@ -243,8 +258,8 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
                      
                         <RuneHuntGame
-                            width="80%" 
-                            height="80%"
+                            width="75%" 
+                            height="75%"
                             backgroundColor="transparent"
                             // backgroundImage={selectedBackground}
                             numRunes={8}
@@ -254,6 +269,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         
                         {countdown > 0 && (
                             <CountdownContainer className='countdownContainer'>
+                                <SoundOnText>SOUND ON</SoundOnText>
                                 <CountdownNumber>{countdown}</CountdownNumber>
                             </CountdownContainer>
                         )}
@@ -262,9 +278,11 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                 </GameScreenContainer>
             ) : (
                 <EndScreenContainer>
-                    <EndScreen 
-                        score={score}  
-                    />
+                    <GameBackground backgroundImage={selectedBackground} 
+                    style={{ width: '100%' }}/>
+                    <EndScreenWrapper>
+                        <EndScreen score={score} />
+                    </EndScreenWrapper>
                 </EndScreenContainer>
             )}
         </div>

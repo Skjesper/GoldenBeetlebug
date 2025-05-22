@@ -19,13 +19,14 @@ const ScoreInput = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 `;
 
 const Input = styled.input`
     width: 264px;
     height: 31px;
     border-radius: 20px;
-    border: none;
+    border: 1px solid #dc4d0047;
     margin-bottom: 25px;
     padding-left: 10px;
 `;
