@@ -128,7 +128,7 @@ export async function processReward(
     if (rewardType === "cash") {
       payload = {
         amusement_id: GAME_CONFIG.AMUSEMENT_ID,
-        payout_amount: 2.0,
+        payout_amount: 3.0,
       };
     } else {
       // For stamp rewards
@@ -150,7 +150,7 @@ export async function processReward(
       success: result.success,
       message:
         rewardType === "cash"
-          ? "You received a €2 reward!"
+          ? "You received a €3 reward!"
           : "You received a new stamp for your collection!",
       transactionId: result.transaction_id,
     };
