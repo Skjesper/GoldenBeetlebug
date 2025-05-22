@@ -97,7 +97,7 @@ const handlePayment = async () => {
             </Form>
             
             <Button onClick={handlePayment}
-        disabled={isProcessing}>Betala</Button>
+        disabled={isProcessing} to='/play'>Betala</Button>
 
         </PaymentContainer>
     );
