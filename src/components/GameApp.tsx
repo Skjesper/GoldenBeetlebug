@@ -43,8 +43,8 @@ const GameContent = styled.div`
     left: 0;
     right: 0; */
     margin: 0 auto;
-    width: 75%;
-    height: 75%;
+    width: 90%;
+    height: 100%;
     background-image: ${props => props.backgroundImage ? `url(${props.backgroundImage})` : 'none'};
     background-size: cover;
     background-position: center;
@@ -115,7 +115,7 @@ const FixedUI = styled.div`
     padding: 1rem;
     top: 0;
     display: flex;
-    width: 75%;
+    width: 90%;
     justify-content: space-between;
     pointer-events: none;
     
@@ -258,8 +258,8 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
                      
                         <RuneHuntGame
-                            width="75%" 
-                            height="75%"
+                            width="90%" 
+                            height="100%"
                             backgroundColor="transparent"
                             // backgroundImage={selectedBackground}
                             numRunes={8}
