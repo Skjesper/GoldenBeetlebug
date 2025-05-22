@@ -4,20 +4,16 @@ import AnimatedTarget from './AnimatedTarget';
 
 const PaymentContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding:2rem;
   margin: 0 auto;
-  border-radius: 20px;
-  background-color: var(--background);
- 
   display: flex;
   flex-direction: column; 
   align-items: center; 
   justify-content: center;
+  background-color: var(--background);
   gap: 1.5rem;
-  /* justify-content: center;  */
-  /* height: 100%; */
-  
+  border-radius: 20px;
 `;
 
 const Title = styled.h1`
@@ -26,22 +22,6 @@ const Title = styled.h1`
     text-align: center;
     font-weight: 400;
     color: var(--dark);
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-`;
-
-const Input = styled.input`
-    width: 264px;
-    height: 31px;
-    border-radius: 20px;
-    border: none;
-    margin-bottom: 25px;
-    padding-left: 10px;
 `;
 
 const TitleWrapper = styled.div`
@@ -58,7 +38,7 @@ const OverlayTarget = styled.div`
 `;
 
 function Payment() {
-    const targetImagePath = 'src/assets/TargetIcon.png';
+    const targetImagePath = '/assets/TargetIcon.png';
 
     return (
         <PaymentContainer>
@@ -68,11 +48,6 @@ function Payment() {
                     <AnimatedTarget targetImagePath={targetImagePath} />
                 </OverlayTarget>
             </TitleWrapper>
-
-            <Form>
-                <Input type="text" id="username" placeholder="Användarnamn" />
-                <Input type="password" id="password" placeholder="Lösenord" />
-            </Form>
             
             <Button to='/play'>Betala</Button>
         </PaymentContainer>
