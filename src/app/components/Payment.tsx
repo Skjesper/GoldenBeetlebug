@@ -1,11 +1,6 @@
-'use client'
 import styled from '@emotion/styled';
 import Button from './Button';
-
-import React from "react";
-import { useGameContext } from "../services/GameContext";
-import { GAME_CONFIG } from "../services/gameConfig";
-import { processPayment } from "../services/transactionService";
+import AnimatedTarget from './AnimatedTarget';
 
 const PaymentContainer = styled.div`
   width: 100%;
@@ -48,59 +43,39 @@ const Input = styled.input`
     padding-left: 10px;
 `;
 
+const TitleWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
 
-const PaymentSection: React.FC = () => {
-  const {
-    setHasPaid,
-    isProcessing,
-    setIsProcessing,
-    // paymentError,
-    setPaymentError,
-    jwtToken,
-    inputRef,
-  } = useGameContext();
+const OverlayTarget = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; 
+`;
 
-const handlePayment = async () => {
-    setIsProcessing(true);
-    setPaymentError(null);
-    
-    try {
-      const result = await processPayment(jwtToken);
-      console.log("Payment result:", result, "hoho");
-      
-      if (result.success) {
-        setHasPaid(true);
-        setTimeout(() => {
-          inputRef.current?.focus();
-        }, 0);
-      } else {
-        setPaymentError(result.error || "Payment failed");
-      }
-    } catch (error) {
-      console.error("Payment error:", error);
-      setPaymentError(
-        error instanceof Error ? error.message : "Payment failed"
-      );
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+function Payment() {
+    const targetImagePath = '/assets/TargetIcon.png';
 
-// function Payment() {
     return (
-        <PaymentContainer className='paymentContainer'>
-            <Title>Rune Hunt</Title>
+        <PaymentContainer>
+            <TitleWrapper>
+                <Title>Rune Hunt</Title>
+                <OverlayTarget>
+                    <AnimatedTarget targetImagePath={targetImagePath} />
+                </OverlayTarget>
+            </TitleWrapper>
 
-            <Form className='formContainer'>
+            <Form>
                 <Input type="text" id="username" placeholder="Användarnamn" />
-                <Input type="password" id="password" placeholder="Lösenord"/>
+                <Input type="password" id="password" placeholder="Lösenord" />
             </Form>
             
-            <Button onClick={handlePayment}
-        disabled={isProcessing}>Betala</Button>
-
+            <Button to='/play'>Betala</Button>
         </PaymentContainer>
     );
-};
+}
 
-export default PaymentSection;
+export default Payment;

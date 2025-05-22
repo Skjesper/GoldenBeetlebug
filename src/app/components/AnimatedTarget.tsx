@@ -25,7 +25,7 @@ interface AnimatedTargetProps {
   targetImagePath?: string;
 }
 
-export default function AnimatedTarget({ targetImagePath = '/assets/bullseye.png' }: AnimatedTargetProps) {
+export default function AnimatedTarget({ targetImagePath = '/assets/TargetIcon.png' }: AnimatedTargetProps) {
   const [position, setPosition] = useState({ x: 20, y: 20 });
   const [locked, setLocked] = useState(false);
   const animationRef = useRef<number | null>(null);
