@@ -76,7 +76,6 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed }) => {
 
   return (
 <>
-<GameProvider>
 
         <Button
           onClick={handleCashReward}
@@ -92,7 +91,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed }) => {
          stamp
         </Button>
 
-</GameProvider>
+
 
 </>
   );

@@ -5,11 +5,25 @@ import { useHighScore } from './useHighScore';
 import { processReward } from "../services/transactionService";
 // import { WinnerRewards } from './../services/WinnerRewards';
 import WinnerRewards from '../services/WinnerRewards';
+import { JwtDisplay } from './../services/JwtDisplay';
+import { useGameContext } from "../services/GameContext";
 
 interface EndScreenProps {
     score: number;
     highestScore?: number;
 }
+
+// const PaymentSection: React.FC = () => {
+//   const {
+//     setHasPaid,
+//     isProcessing,
+//     setIsProcessing,
+//     // paymentError,
+//     setPaymentError,
+//     jwtToken,
+//     inputRef,
+//   } = useGameContext();
+// }
 
 const Container = styled.div`
   padding: 4rem;

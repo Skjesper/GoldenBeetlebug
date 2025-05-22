@@ -8,7 +8,7 @@ import { GameProvider } from '../services/GameContext';
 function RuneHuntPage() {
   return (
     <>
- <GameProvider>
+ {/* <GameProvider> */}
 
   <JwtDisplay/> 
   {/* <OrientationOverlay> */}
@@ -17,7 +17,7 @@ function RuneHuntPage() {
         
       {/* </OrientationOverlay> */}
    
- </GameProvider>
+ {/* </GameProvider> */}
 
     </>
   );

@@ -29,7 +29,7 @@ function LeaderboardPage() {
 
   return (
      <div>
-      <GameProvider>
+      {/* <GameProvider> */}
 
    <Window backgroundImage={backgroundImage}>
       <PageContainer>
@@ -40,7 +40,7 @@ function LeaderboardPage() {
       )}
       </PageContainer>
    </Window>
-      </GameProvider>
+      {/* </GameProvider> */}
  </div>
   );
 

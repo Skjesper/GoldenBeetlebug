@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import GlobalStyles from './styles/GlobalStyles';
+import { GameProvider } from './services/GameContext';
 
 export const metadata: Metadata = {
   title: 'RuneHunt',
@@ -35,8 +36,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <GameProvider>
+
         <GlobalStyles />
         {children}
+        </GameProvider>
       </body>
     </html>
   );

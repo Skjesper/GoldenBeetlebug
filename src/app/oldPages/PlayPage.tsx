@@ -9,13 +9,14 @@ function PlayPage() {
     const [backgroundImage, setBackgroundImage] = useState<string | undefined>(undefined);
 
     return (
-
-<GameProvider>
+<>
+{/* <GameProvider> */}
 
             <GameApp onBackgroundChange={setBackgroundImage} />
        
-</GameProvider>
+{/* </GameProvider> */}
 
+</>
         // <OrientationOverlay>
         //     <GameApp onBackgroundChange={setBackgroundImage} />
         //     // </OrientationOverlay>
