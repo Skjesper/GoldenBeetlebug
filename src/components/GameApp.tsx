@@ -39,12 +39,12 @@ const GameContent = styled.div`
     const GameBackground = styled.div<{ backgroundImage?: string }>`
     position: absolute;
 
-    top: 0;
+    /* top: 0;
     left: 0;
-    right: 0;
+    right: 0; */
     margin: 0 auto;
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 75%;
     background-image: ${props => props.backgroundImage ? `url(${props.backgroundImage})` : 'none'};
     background-size: cover;
     background-position: center;
