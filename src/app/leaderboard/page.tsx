@@ -1,5 +1,5 @@
 'use client';
-import LeaderboardPage from '../../src/app/pages/LeaderboardPage';
+import LeaderboardPage from '../oldPages/LeaderboardPage';
 
 export default function Leaderboard() {
   return <LeaderboardPage />;

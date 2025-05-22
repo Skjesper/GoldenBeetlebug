@@ -1,5 +1,5 @@
 'use client';
-import PlayPage from '../../src/app/pages/PlayPage';
+import PlayPage from '../oldPages/PlayPage';
 
 export default function Play() {
   return <PlayPage />;
