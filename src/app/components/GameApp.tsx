@@ -241,7 +241,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
-                                initialTime={45} 
+                                initialTime={5} 
                                 isRunning={gameRunning} 
                                 onTimeOut={handleTimeOut}
                                 countDown={true}
