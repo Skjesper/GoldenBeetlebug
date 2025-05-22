@@ -143,7 +143,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
     
     const [musicPlaying, setMusicPlaying] = useState<boolean>(false);
 
-    const gameplayMusic = 'assets/audio/runebeats.mp3';
+    const gameplayMusic = 'assets/audio/denLillaRödaPandan.mp3';
 
     const handleTimeOut = useCallback(() => {
         console.log("Times up");
