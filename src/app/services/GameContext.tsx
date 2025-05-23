@@ -32,7 +32,7 @@ interface GameContextProps {
   encouragingMessages: EncouragementGenerator[];
 }
 
-const GameContext = createContext<GameContextProps | undefined>(undefined);
+export const GameContext = createContext<GameContextProps | undefined>(undefined);
 
 export const GameProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -104,12 +104,4 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
       {children}
     </GameContext.Provider>
   );
-};
-
-export const useGameContext = () => {
-  const context = useContext(GameContext);
-  if (context === undefined) {
-    throw new Error("useGameContext must be used within a GameProvider");
-  }
-  return context;
 };

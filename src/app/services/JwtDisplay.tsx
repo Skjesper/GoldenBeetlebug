@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { useGameContext } from "./GameContext";
+import { useGameContext } from "./useGameContext";
 import { decodeJwt } from "./auth";
 
 /**

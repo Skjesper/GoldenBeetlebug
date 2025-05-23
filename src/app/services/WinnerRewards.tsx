@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGameContext } from "./GameContext";
+import { useGameContext } from "./useGameContext";
 import { processReward } from "./transactionService";
 import Button from './../components/Button'
 interface WinnerRewardsProps {
