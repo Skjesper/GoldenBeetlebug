@@ -2,6 +2,7 @@
 import styled from '@emotion/styled';
 import Button from './Button';
 
+
 import React from "react";
 import { useGameContext } from "../services/GameContext";
 import { GAME_CONFIG } from "../services/gameConfig";
@@ -48,8 +49,8 @@ const Input = styled.input`
     padding-left: 10px;
 `;
 
-
 const PaymentSection: React.FC = () => {
+  
   const {
     setHasPaid,
     isProcessing,
@@ -70,6 +71,7 @@ const handlePayment = async () => {
       
       if (result.success) {
         setHasPaid(true);
+        window.location.href = '/play'; 
         setTimeout(() => {
           inputRef.current?.focus();
         }, 0);
@@ -97,7 +99,7 @@ const handlePayment = async () => {
             </Form>
             
             <Button onClick={handlePayment}
-        disabled={isProcessing} to='/play'>Betala</Button>
+        disabled={isProcessing} >Betala</Button>
 
         </PaymentContainer>
     );

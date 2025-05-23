@@ -58,7 +58,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   const [gameSize, setGameSize] = useState({ width: 800, height: 600 });
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
 
-  // Device detection
+ // Device detection
   useEffect(() => {
     const handleDeviceDetection = () => {
       setIsMobile(window.innerWidth < 768);

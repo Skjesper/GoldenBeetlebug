@@ -1,5 +1,5 @@
 import { GAME_CONFIG } from "./gameConfig";
-import { JwtDisplay } from './JwtDisplay'
+
 
 export interface PaymentResult {
   success: boolean;

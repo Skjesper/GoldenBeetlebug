@@ -5,7 +5,7 @@ import { useHighScore } from './useHighScore';
 import { processReward } from "../services/transactionService";
 // import { WinnerRewards } from './../services/WinnerRewards';
 import WinnerRewards from '../services/WinnerRewards';
-import { JwtDisplay } from './../services/JwtDisplay';
+
 import { useGameContext } from "../services/GameContext";
 
 interface EndScreenProps {

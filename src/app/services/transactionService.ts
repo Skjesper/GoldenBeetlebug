@@ -128,7 +128,7 @@ export async function processReward(
     if (rewardType === "cash") {
       payload = {
         amusement_id: GAME_CONFIG.AMUSEMENT_ID,
-        payout_amount: 3.0,
+        payout_amount: 10.0,
       };
     } else {
 
