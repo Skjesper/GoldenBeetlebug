@@ -1,5 +1,3 @@
-// auth.ts - uppdaterad version för webbläsare
-
 export interface DecodedToken {
     id: string;
     [key: string]: any;
@@ -17,7 +15,7 @@ export interface DecodedToken {
    * @param secretKey Secret key for verification (note: client-side verification is less secure)
    * @returns Auth response with user ID and authentication status
    */
-  export function verifyToken(token: string, secretKey: string): AuthResponse {
+  export function verifyToken(token: string): AuthResponse {
     try {
       // För klientsidan använder vi främst decodeJwt och litar på token
       // OBS: Detta är mindre säkert än server-verifiering men fungerar för klientsida
