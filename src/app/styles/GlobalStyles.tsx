@@ -10,6 +10,7 @@ const globalStyles = css`
     --accent: #5f9422;
     --dark: #300e0a;
     --background: #fffaf1;
+    --white-primary: #ffffff;
     --disabled: #efa7a0;
     --error: #e74c3c;
 

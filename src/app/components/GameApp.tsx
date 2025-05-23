@@ -76,10 +76,10 @@ const CountdownContainer = styled.div`
 `;
 
 const CountdownNumber = styled.h2`
-    font-size: 25rem; 
-    color: #000000;
+
+    font-size: 30rem; 
+    color: white;
     font-weight: bold;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
     animation: pulse 1s infinite;
     
     @keyframes pulse {
@@ -100,15 +100,16 @@ const CountdownNumber = styled.h2`
 `;
 
 const SoundOnText = styled.p`
-    font-size: 2rem;
+    font-size: 5rem;
     font-weight: var(--weight-bold);
-    color: #000;
+    color: #ffffff;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     padding-top: 1.5rem;
 ;`
 
 const FixedUI = styled.div`
     position: absolute;
+    
     padding: 1rem;
     top: 0;
     display: flex;
@@ -243,7 +244,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
-                                initialTime={5} 
+                                initialTime={60} 
                                 isRunning={gameRunning} 
                                 onTimeOut={handleTimeOut}
                                 countDown={true}
