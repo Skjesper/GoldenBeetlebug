@@ -7,6 +7,7 @@ import ScoreForm from '../components/ScoreForm';
 import styled from "@emotion/styled";
 import { GameProvider } from "../services/GameContext";
 
+
 const PageContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -29,7 +30,7 @@ function LeaderboardPage() {
 
   return (
      <div>
-      {/* <GameProvider> */}
+   
 
    <Window backgroundImage={backgroundImage}>
       <PageContainer>
@@ -40,7 +41,7 @@ function LeaderboardPage() {
       )}
       </PageContainer>
    </Window>
-      {/* </GameProvider> */}
+    
  </div>
   );
 
