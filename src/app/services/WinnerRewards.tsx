@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import { useGameContext } from "./GameContext";
+import { useGameContext } from "./useGameContext";
 import { processReward } from "./transactionService";
 import Button from './../components/Button'
-import { GameProvider } from "./GameContext";
-// import { decodeJwt } from "./auth";
-// import { JwtDisplay } from './JwtDisplay'
-
 interface WinnerRewardsProps {
   onRewardClaimed: () => void;
   score: number;
@@ -29,7 +25,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
       const result = await processReward(jwtToken, "cash");
 
       if (result.success) {
-        setSuccessMessage(`You received a €3 reward!`);
+        setSuccessMessage(`Du har fått €3 och en stamp!`);
         onRewardClaimed();
       } else {
         setError(result.error || "Failed to process cash reward");
@@ -54,7 +50,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
       const result = await processReward(jwtToken, "stamp");
 
       if (result.success) {
-        setSuccessMessage(`You received a new stamp for your collection!`);
+        setSuccessMessage(`Du har mottagit en stamp!`);
         onRewardClaimed();
       } else {
         setError(result.error || "Failed to process stamp reward");
@@ -77,10 +73,11 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
 
   return (
 <>
-{score > 300 ? (
+{score > 30 ? (
         <Button
           onClick={handleCashReward}
           disabled={isProcessing}
+          className="greenButton"
           >
           Hämta vinst & stamp
         </Button>
@@ -88,11 +85,17 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
         <Button
           onClick={handleStampReward}
           disabled={isProcessing}
+          className="greenButton"
           >
          Hämta stamp
         </Button>
  )}
 
+  {error && (
+    <div className="mt-4 p-2 bg-red-100 text-red-800 border border-red-300 rounded-lg w-full text-center">
+      {error}
+    </div>
+  )}
 
 </>
   );

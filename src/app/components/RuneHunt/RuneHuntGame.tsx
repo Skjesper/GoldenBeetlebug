@@ -56,7 +56,12 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   const backgroundImageRef = useRef<HTMLImageElement | null>(null);
   const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
   const [gameSize, setGameSize] = useState({ width: 800, height: 600 });
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+  if (typeof window !== 'undefined') {
+    return window.innerWidth < 768;
+  }
+  return false; 
+});
 
  // Device detection
   useEffect(() => {
