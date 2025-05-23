@@ -46,20 +46,16 @@ export function setRuneImageSources(goodImage1: string, goodImage2: string, badI
   // Load good rune images
   runeImageSource1 = new Image();
   runeImageSource1.src = goodImage1;
-  runeImageSource1.onload = () => console.log('Good rune image 1 loaded');
-  
+
   runeImageSource2 = new Image();
   runeImageSource2.src = goodImage2;
-  runeImageSource2.onload = () => console.log('Good rune image 2 loaded');
-  
+
   // Load bad rune images (Hans)
   badRuneImageSource1 = new Image();
   badRuneImageSource1.src = badImage1;
-  badRuneImageSource1.onload = () => console.log('Hans Happy image loaded');
-  
+
   badRuneImageSource2 = new Image();
   badRuneImageSource2.src = badImage2;
-  badRuneImageSource2.onload = () => console.log('Hans Mad image loaded');
 }
 
 export class Rune {

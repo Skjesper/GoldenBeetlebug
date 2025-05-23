@@ -19,7 +19,6 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
 
     try {
       console.log(
-        "Processing cash reward with token:",
         jwtToken ? "Token exists" : "No token"
       );
       const result = await processReward(jwtToken, "cash");
@@ -44,7 +43,6 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
 
     try {
       console.log(
-        "Processing stamp reward with token:",
         jwtToken ? "Token exists" : "No token"
       );
       const result = await processReward(jwtToken, "stamp");

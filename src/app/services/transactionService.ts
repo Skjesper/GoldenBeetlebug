@@ -31,8 +31,6 @@ export async function createTransaction(
       throw new Error("No authentication token provided");
     }
 
-    console.log("Creating transaction with payload:", payload);
-
     const response = await fetch("/api/transactions", {
       method: "POST",
       headers: {
@@ -44,7 +42,7 @@ export async function createTransaction(
 
     // Get raw text response first for debugging
     const responseText = await response.text();
-    console.log("Transaction raw response:", responseText);
+    console.log("Transaction created");
 
     // Try to parse as JSON
     let data;
@@ -80,7 +78,6 @@ export async function processPayment(
 ): Promise<TransactionResult> {
 
     if (!jwtToken) {
-        console.log("tjo")
         return {
             success: false,
             error: "No JWT token available",
@@ -138,11 +135,6 @@ export async function processReward(
         stamp_id: GAME_CONFIG.STAMP_ID,
       };
     }
-
-    console.log(
-      `Creating ${rewardType} reward transaction with payload:`,
-      payload
-    );
 
     const result = await createTransaction(payload, jwtToken);
 

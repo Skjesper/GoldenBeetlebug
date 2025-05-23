@@ -39,7 +39,6 @@ export default function EndScreen({ score }: EndScreenProps) {
     const getResultMessage = () => {
         if (score >= highestScore && highestScore > 0) return "Grymt spelat! Nytt rekord!";
         if (score > 300) return "Grattis du vann! Bra spelat! ";
-        console.log(highestScore)
         return "Bättre lycka nästa gång!";
     };
 
