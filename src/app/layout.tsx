@@ -1,5 +1,5 @@
 import GlobalStyles from './styles/GlobalStyles';
-import { GameProvider } from './services/GameContext';
+import { GameContextProvider } from './services/GameContextProvider';
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -13,10 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <GameProvider>
+        <GameContextProvider>
         <GlobalStyles />
         {children}
-        </GameProvider>
+        </GameContextProvider>
       </body>
     </html>
   );
