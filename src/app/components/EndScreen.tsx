@@ -8,7 +8,6 @@ interface EndScreenProps {
     highestScore?: number;
 }
 
-
 const Container = styled.div`
   padding: 4rem;
   display: flex;
@@ -18,7 +17,6 @@ const Container = styled.div`
   background-color: var(--background);
   border-radius: 20px;
   gap: 1rem;
-
 `;
 
 const ScoreItem = styled.div`
@@ -27,7 +25,6 @@ const ScoreItem = styled.div`
   flex-direction: row;
   align-items: center;
   gap:3rem;
-
 `;
 
 const ButtonContainer = styled.div`
@@ -54,19 +51,15 @@ export default function EndScreen({ score }: EndScreenProps) {
               <h3>Resultat: {score}</h3>
               <h3>High Score: {highestScore}</h3>
             </ScoreItem>
-         
-          
           
             <h5>{getResultMessage()}</h5>
           
+          <WinnerRewards onRewardClaimed={() => {}} score={score}/>
           <ButtonContainer>
-            <WinnerRewards onRewardClaimed={() => {}} score={score}/>
             <Button to="/leaderboard">
               Spara resultat
             </Button>
           </ButtonContainer>
-
-
   
         </Container>
     );
