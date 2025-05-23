@@ -29,7 +29,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
       const result = await processReward(jwtToken, "cash");
 
       if (result.success) {
-        setSuccessMessage(`You received a €3 reward!`);
+        setSuccessMessage(`Du har fått €3 och en stamp!`);
         onRewardClaimed();
       } else {
         setError(result.error || "Failed to process cash reward");
@@ -54,7 +54,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
       const result = await processReward(jwtToken, "stamp");
 
       if (result.success) {
-        setSuccessMessage(`You received a new stamp for your collection!`);
+        setSuccessMessage(`Du har mottagit en stamp!`);
         onRewardClaimed();
       } else {
         setError(result.error || "Failed to process stamp reward");
