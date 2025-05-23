@@ -36,10 +36,6 @@ const ButtonContainer = styled.div`
   gap: 1rem;
 `;
 
-interface WinnerRewardsProps {
-  onRewardClaimed: () => void;
-}
-
 export default function EndScreen({ score }: EndScreenProps) {
   const { highestScore } = useHighScore();
 
@@ -64,12 +60,12 @@ export default function EndScreen({ score }: EndScreenProps) {
             <h5>{getResultMessage()}</h5>
           
           <ButtonContainer>
+            <WinnerRewards onRewardClaimed={() => {}} score={score}/>
             <Button to="/leaderboard">
               Spara resultat
             </Button>
           </ButtonContainer>
 
-           <WinnerRewards onRewardClaimed={() => {}} score={score}/>
 
   
         </Container>
