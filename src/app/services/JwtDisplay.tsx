@@ -3,12 +3,19 @@ import { useEffect, useState } from "react";
 import { useGameContext } from "./useGameContext";
 import { decodeJwt } from "./auth";
 
+interface DecodedToken {
+  exp?: number;
+  iat?: number;
+  sub?: string;
+  [key: string]: unknown; // Om du vill tillåta fler fält
+}
+
 /**
  * Component to receive and display JWT token from parent application
  */
 export default function JwtDisplay() {
   const { jwtToken, setJwtToken } = useGameContext();
-  const [decodedToken, setDecodedToken] = useState<any>(null);
+const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
