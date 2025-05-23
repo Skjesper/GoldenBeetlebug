@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import GameApp from '../components/GameApp';
-import { GameProvider } from '../services/GameContext';
 
-// import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
+
+import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
 
 
 function PlayPage() {
@@ -10,16 +10,13 @@ function PlayPage() {
 
     return (
 <>
-{/* <GameProvider> */}
 
+            <OrientationOverlay>
             <GameApp onBackgroundChange={setBackgroundImage} />
-       
-{/* </GameProvider> */}
+            </OrientationOverlay>
+
 
 </>
-        // <OrientationOverlay>
-        //     <GameApp onBackgroundChange={setBackgroundImage} />
-        //     // </OrientationOverlay>
 
     );
 }

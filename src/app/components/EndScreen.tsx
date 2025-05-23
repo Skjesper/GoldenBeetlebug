@@ -87,7 +87,7 @@ export default function EndScreen({ score }: EndScreenProps) {
             </Button>
           </ButtonContainer>
 
-           <WinnerRewards onRewardClaimed={() => {}} score={score}/>
+          <WinnerRewards onRewardClaimed={() => {}} score={score}/>
 
   
         </Container>
