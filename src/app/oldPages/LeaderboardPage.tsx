@@ -6,6 +6,7 @@ import Leaderboard from "../components/Leaderboard";
 import ScoreForm from '../components/ScoreForm';
 import styled from "@emotion/styled";
 
+
 const PageContainer = styled.div`
     width: 100%;
     height: 100%;
