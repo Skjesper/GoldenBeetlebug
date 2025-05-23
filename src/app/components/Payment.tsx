@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import Button from './Button';
 import AnimatedTarget from './AnimatedTarget';
 import { useGameContext } from "../services/GameContext";
-import { GAME_CONFIG } from "../services/gameConfig";
 import { processPayment } from "../services/transactionService";
 
 const PaymentContainer = styled.div`
