@@ -8,7 +8,7 @@ import { processPayment } from "../services/transactionService";
 
 const PaymentContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding:2rem;
   margin: 0 auto;
   display: flex;
