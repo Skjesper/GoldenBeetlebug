@@ -3,17 +3,8 @@ import { useEffect, useState } from "react";
 import { useGameContext } from "./useGameContext";
 import { decodeJwt } from "./auth";
 
-interface DecodedToken {
-  exp?: number;
-  iat?: number;
-  sub?: string;
-  [key: string]: unknown;
-}
-
-
 export default function JwtDisplay() {
   const { jwtToken, setJwtToken } = useGameContext();
-const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -43,7 +34,6 @@ const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
           console.log("JWT token set in context:", token);
           const decoded = decodeJwt(token);
           if (decoded) {
-            setDecodedToken(decoded);
             setError(null);
           } else {
             setError("Failed to decode token");
