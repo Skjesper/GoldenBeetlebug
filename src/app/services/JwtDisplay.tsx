@@ -65,13 +65,7 @@ export default function JwtDisplay() {
   }, [setJwtToken]);
 
   if (!jwtToken) {
-    return (
-      <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg mb-6">
-        <p className="text-sm text-yellow-700">
-          Waiting for JWT token from parent application...
-        </p>
-      </div>
-    );
+    return null;
   }
 
   if (error) {
