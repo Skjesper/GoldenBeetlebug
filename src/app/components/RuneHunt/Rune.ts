@@ -1,4 +1,3 @@
-
 export interface RuneProps {
     id: number;
     x: number;
@@ -31,19 +30,36 @@ const imageCache: Record<string, HTMLImageElement> = {};
 // We'll set this from RuneHuntGame.tsx
 let runeImageSrc: string | null = null;
 
-// This makes it possible to have two different runes
+// This makes it possible to have two different runes for good runes
 let runeImageSource1: HTMLImageElement | null = null;
 let runeImageSource2: HTMLImageElement | null = null;
+
+// Bad rune images (Hans)
+let badRuneImageSource1: HTMLImageElement | null = null;
+let badRuneImageSource2: HTMLImageElement | null = null;
+
 let currentImageIndex = 0;
 let lastSwitchTime = 0;
 const SWITCH_INTERVAL = 500; 
 
-export function setRuneImageSources(image1: string, image2: string) {
+export function setRuneImageSources(goodImage1: string, goodImage2: string, badImage1: string, badImage2: string) {
+  // Load good rune images
   runeImageSource1 = new Image();
-  runeImageSource1.src = image1;
+  runeImageSource1.src = goodImage1;
+  runeImageSource1.onload = () => console.log('Good rune image 1 loaded');
   
   runeImageSource2 = new Image();
-  runeImageSource2.src = image2;
+  runeImageSource2.src = goodImage2;
+  runeImageSource2.onload = () => console.log('Good rune image 2 loaded');
+  
+  // Load bad rune images (Hans)
+  badRuneImageSource1 = new Image();
+  badRuneImageSource1.src = badImage1;
+  badRuneImageSource1.onload = () => console.log('Hans Happy image loaded');
+  
+  badRuneImageSource2 = new Image();
+  badRuneImageSource2.src = badImage2;
+  badRuneImageSource2.onload = () => console.log('Hans Mad image loaded');
 }
 
 export class Rune {
@@ -120,49 +136,49 @@ export class Rune {
         }
     }
 
-draw(ctx: CanvasRenderingContext2D) {
-  const currentTime = Date.now();
-  
-  // Rune animation switching logic
-  if (currentTime - lastSwitchTime > SWITCH_INTERVAL) {
-    currentImageIndex = currentImageIndex === 0 ? 1 : 0;
-    lastSwitchTime = currentTime;
-  }
-  
-  // Välj rätt bild baserat på animationstillstånd
-  const currentImage = currentImageIndex === 0 ? runeImageSource1 : runeImageSource2;
-  
-  if (currentImage) {
-    // Spara canvas-tillstånd innan vi ritar
-    ctx.save();
-    
-    // Rita originalbild
-    ctx.drawImage(
-      currentImage,
-      this.props.x - this.props.radius,
-      this.props.y - this.props.radius,
-      this.props.radius * 2,
-      this.props.radius * 2
-    );
-    
-    // Om det är en dålig rune, lägg till röd overlay
-    if (this.props.isBad) {
-      // Ställ in blandningsläge för overlay
-      ctx.globalCompositeOperation = 'source-atop';
-      
-      // Skapa en röd halvtransparent overlay
-      ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-      
-      // Rita en cirkel med overlay över bilden
-      ctx.beginPath();
-      ctx.arc(this.props.x, this.props.y, this.props.radius, 0, Math.PI * 2);
-      ctx.fill();
+    draw(ctx: CanvasRenderingContext2D) {
+        const currentTime = Date.now();
+        
+        // Rune animation switching logic
+        if (currentTime - lastSwitchTime > SWITCH_INTERVAL) {
+            currentImageIndex = currentImageIndex === 0 ? 1 : 0;
+            lastSwitchTime = currentTime;
+        }
+        
+        // Välj rätt bilder baserat på om det är en bad rune eller inte
+        let currentImage: HTMLImageElement | null = null;
+        
+        if (this.props.isBad) {
+            // Bad rune (Hans) - växla mellan Happy och Mad
+            currentImage = currentImageIndex === 0 ? badRuneImageSource1 : badRuneImageSource2;
+        } else {
+            // Good rune - växla mellan Alive och Dead
+            currentImage = currentImageIndex === 0 ? runeImageSource1 : runeImageSource2;
+        }
+        
+        if (currentImage) {
+            // Spara canvas-tillstånd innan vi ritar
+            ctx.save();
+            
+            // Rita bilden
+            ctx.drawImage(
+                currentImage,
+                this.props.x - this.props.radius,
+                this.props.y - this.props.radius,
+                this.props.radius * 2,
+                this.props.radius * 2
+            );
+            
+            // Återställ canvas-tillståndet
+            ctx.restore();
+        } else {
+            // Fallback rendering om bilderna inte har laddats än
+            ctx.fillStyle = this.props.isBad ? '#ff0000' : '#00ff00';
+            ctx.beginPath();
+            ctx.arc(this.props.x, this.props.y, this.props.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
     }
-    
-    // Återställ canvas-tillståndet
-    ctx.restore();
-  }
-}
     
     // Metod för att kontrollera om en punkt är inuti denna rune (används för klick)
     containsPoint(pointX: number, pointY: number): boolean {

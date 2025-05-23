@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import Rune, { setRuneImageSources } from './Rune'; 
 import RuneGenerator from './RuneGenerator'; 
 
-
 const GameContainer = styled.div<{ gameWidth?: string; gameHeight?: string }>`
   position: relative;
   width: ${props => props.gameWidth || '100%'};
@@ -63,7 +62,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   return false; 
 });
 
- // Device detection
+  // Device detection
   useEffect(() => {
     const handleDeviceDetection = () => {
       setIsMobile(window.innerWidth < 768);
@@ -123,10 +122,7 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
 
   // Rune updates
   const updateRunes = useCallback(() => {
-    if (!isActive || !runeGeneratorRef.current) return;
-    
-    // Ta bort utgångna bad runes och uppdatera positioner
-    runesRef.current = runeGeneratorRef.current.filterExpiredBadRunes(runesRef.current);
+    if (!isActive) return;
     runesRef.current.forEach(rune => rune.update(gameSize.width, gameSize.height));
   }, [isActive, gameSize]);
 
@@ -134,42 +130,36 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
   useEffect(() => {
     if (!runeGeneratorRef.current) {
       runeGeneratorRef.current = new RuneGenerator(gameSize.width, gameSize.height, isMobile);
-      
-      // Sätt upp bad rune spawn callback
-      runeGeneratorRef.current.setBadRuneSpawnCallback((badRune: Rune) => {
-        runesRef.current = [...runesRef.current, badRune];
-      });
-      
-      // Starta bad rune spawning
-      runeGeneratorRef.current.startBadRuneSpawning();
     } else {
       runeGeneratorRef.current.updateGameSize(gameSize.width, gameSize.height);
       runeGeneratorRef.current.setDeviceType(isMobile);
     }
-
-    // Cleanup function
-    return () => {
-      runeGeneratorRef.current?.cleanup();
-    };
   }, [gameSize, isMobile]);
 
-  // Ensure adequate number of regular runes
+  // Ensure adequate number of runes
   const ensureRunes = useCallback(() => {
     if (runeGeneratorRef.current) {
-      runesRef.current = runeGeneratorRef.current.ensureRegularRunes(runesRef.current, numRunes);
+      runesRef.current = runeGeneratorRef.current.ensureRunes(runesRef.current, numRunes, 0.2);
     }
   }, [numRunes]);
 
   // Create initial runes
   const createInitialRunes = useCallback(() => {
     if (runeGeneratorRef.current) {
-      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes);
+      runesRef.current = runeGeneratorRef.current.createInitialRunes(numRunes, 0.2);
     }
   }, [numRunes]);
 
-  // Setup rune images
+   // Setup rune images - Now with 4 parameters!
   useEffect(() => {
-    setRuneImageSources('/assets/RuneAlive.png', '/assets/RuneDead.png');
+    // Ladda bilder från public mappen - både vanliga och bad runes (Hans)
+    setRuneImageSources(
+      '/assets/RuneAlive.png',    // Good rune alive
+      '/assets/RuneDead.png',     // Good rune dead  
+      '/assets/HansHappy.png',    // Bad rune happy (Hans)
+      '/assets/HansMad.png'       // Bad rune mad (Hans)
+    );
+    console.log('Loading all rune images from public/assets/');
   }, []);
 
   // Initial setup and resize handling
