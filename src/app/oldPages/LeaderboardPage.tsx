@@ -1,11 +1,11 @@
 
 'use client'
 import { useEffect, useState } from "react";
-import Window from "../components/Window";
+
 import Leaderboard from "../components/Leaderboard";
 import ScoreForm from '../components/ScoreForm';
 import styled from "@emotion/styled";
-import { GameProvider } from "../services/GameContext";
+import OrientationOverlay from "../components/OrientationCheck/OrientationCheck";
 
 const PageContainer = styled.div`
     width: 100%;
@@ -29,9 +29,9 @@ function LeaderboardPage() {
 
   return (
      <div>
-      {/* <GameProvider> */}
+     
 
-   <Window backgroundImage={backgroundImage}>
+   <OrientationOverlay>
       <PageContainer>
      {!display ? (
        <ScoreForm score={gameScore}  onDisplayChange={setDisplay}/>
@@ -39,8 +39,8 @@ function LeaderboardPage() {
         <Leaderboard/>
       )}
       </PageContainer>
-   </Window>
-      {/* </GameProvider> */}
+      </OrientationOverlay>
+
  </div>
   );
 
