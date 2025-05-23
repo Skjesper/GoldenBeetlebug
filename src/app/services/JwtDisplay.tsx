@@ -7,12 +7,10 @@ interface DecodedToken {
   exp?: number;
   iat?: number;
   sub?: string;
-  [key: string]: unknown; // Om du vill tillåta fler fält
+  [key: string]: unknown;
 }
 
-/**
- * Component to receive and display JWT token from parent application
- */
+
 export default function JwtDisplay() {
   const { jwtToken, setJwtToken } = useGameContext();
 const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
@@ -83,38 +81,5 @@ const [decodedToken, setDecodedToken] = useState<DecodedToken | null>(null);
     );
   }
 
-  return (
-    <div className="p-4 bg-white rounded-lg border-2 border-[#e0d5c5] mb-6">
-      <h2 className="text-xl font-bold mb-3">JWT Token Information</h2>
-
-      <div className="mb-4">
-        <h3 className="text-sm font-medium text-gray-500 mb-1">Raw Token:</h3>
-        <div className="bg-gray-50 p-3 rounded overflow-auto max-h-24">
-          <p className="text-xs font-mono break-all">{jwtToken}</p>
-        </div>
-      </div>
-
-      {decodedToken && (
-        <div>
-          <h3 className="text-sm font-medium text-gray-500 mb-1">
-            Decoded Content:
-          </h3>
-          <div className="bg-gray-50 p-3 rounded overflow-auto max-h-80">
-            <pre className="text-xs font-mono whitespace-pre-wrap">
-              {JSON.stringify(decodedToken, null, 2)}
-            </pre>
-          </div>
-
-          {decodedToken.exp && (
-            <div className="mt-3 text-xs">
-              <p>
-                <span className="font-medium">Expires:</span>{" "}
-                {new Date(decodedToken.exp * 1000).toLocaleString()}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
+  return null;
 }
