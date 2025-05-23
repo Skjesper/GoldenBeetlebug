@@ -145,11 +145,16 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
     }
   }, [numRunes]);
 
-  // Setup rune images
+   // Setup rune images - Now with 4 parameters!
   useEffect(() => {
-    // Ladda bilder från public mappen
-    setRuneImageSources('/assets/RuneAlive.png', '/assets/RuneDead.png');
-    console.log('Loading rune images from public/assets/');
+    // Ladda bilder från public mappen - både vanliga och bad runes (Hans)
+    setRuneImageSources(
+      '/assets/RuneAlive.png',    // Good rune alive
+      '/assets/RuneDead.png',     // Good rune dead  
+      '/assets/HansHappy.png',    // Bad rune happy (Hans)
+      '/assets/HansMad.png'       // Bad rune mad (Hans)
+    );
+    console.log('Loading all rune images from public/assets/');
   }, []);
 
   // Initial setup and resize handling
