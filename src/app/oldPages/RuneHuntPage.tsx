@@ -1,23 +1,22 @@
 
-// import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
+import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
 import Payment from '../components/Payment';
-import JwtDisplay from '../services/JwtDisplay';
-import { GameProvider } from '../services/GameContext';
+
 
 
 function RuneHuntPage() {
   return (
     <>
- {/* <GameProvider> */}
 
-  <JwtDisplay/> 
-  {/* <OrientationOverlay> */}
+
+ 
+  <OrientationOverlay>
      
         <Payment></Payment>
         
-      {/* </OrientationOverlay> */}
+      </OrientationOverlay>
    
- {/* </GameProvider> */}
+
 
     </>
   );
