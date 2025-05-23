@@ -36,22 +36,17 @@ type ButtonProps = {
 
 function Button({ children, to, onClick, disabled }: ButtonProps) {
 
-    if (disabled) {
-        return <StyledButton disabled>{children}</StyledButton>;
-    }
     if (to) {
         return (
-            <Link href={to} passHref legacyBehavior>
-                <StyledButton as="a">{children}</StyledButton>
+            <Link href={to}>
+                <StyledButton disabled={disabled} onClick={onClick}>
+                    {children}
+                </StyledButton>
             </Link>
         );
     }
 
-    return <StyledButton onClick={onClick}>{children}</StyledButton>;
+    return <StyledButton onClick={onClick} disabled={disabled}>{children}</StyledButton>;
 }
-
-{/* <Button to="/"></Button>
-<Button to="/resultat"></Button>
-<Button to="/runesbeachclub"></Button> */}
 
 export default Button;
