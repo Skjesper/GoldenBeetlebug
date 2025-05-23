@@ -5,7 +5,6 @@ import Window from "../components/Window";
 import Leaderboard from "../components/Leaderboard";
 import ScoreForm from '../components/ScoreForm';
 import styled from "@emotion/styled";
-import { GameProvider } from "../services/GameContext";
 
 const PageContainer = styled.div`
     width: 100%;
@@ -29,8 +28,6 @@ function LeaderboardPage() {
 
   return (
      <div>
-      {/* <GameProvider> */}
-
    <Window backgroundImage={backgroundImage}>
       <PageContainer>
      {!display ? (
@@ -40,7 +37,6 @@ function LeaderboardPage() {
       )}
       </PageContainer>
    </Window>
-      {/* </GameProvider> */}
  </div>
   );
 
