@@ -71,7 +71,6 @@ const handlePayment = async () => {
       
       if (result.success) {
         setHasPaid(true);
-        window.location.href = '/play'; 
         setTimeout(() => {
           inputRef.current?.focus();
         }, 0);
@@ -98,7 +97,7 @@ const handlePayment = async () => {
                 <Input type="password" id="password" placeholder="Lösenord"/>
             </Form>
             
-            <Button onClick={handlePayment}
+            <Button to='/play' onClick={handlePayment}
         disabled={isProcessing} >Betala</Button>
 
         </PaymentContainer>
