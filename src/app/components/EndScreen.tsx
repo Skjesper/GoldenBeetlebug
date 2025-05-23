@@ -2,28 +2,12 @@
 import Button from './Button';
 import styled from '@emotion/styled';
 import { useHighScore } from './useHighScore';
-import { processReward } from "../services/transactionService";
-// import { WinnerRewards } from './../services/WinnerRewards';
 import WinnerRewards from '../services/WinnerRewards';
-
-import { useGameContext } from "../services/GameContext";
-
 interface EndScreenProps {
     score: number;
     highestScore?: number;
 }
 
-// const PaymentSection: React.FC = () => {
-//   const {
-//     setHasPaid,
-//     isProcessing,
-//     setIsProcessing,
-//     // paymentError,
-//     setPaymentError,
-//     jwtToken,
-//     inputRef,
-//   } = useGameContext();
-// }
 
 const Container = styled.div`
   padding: 4rem;
@@ -56,16 +40,14 @@ interface WinnerRewardsProps {
   onRewardClaimed: () => void;
 }
 
-
-
 export default function EndScreen({ score }: EndScreenProps) {
   const { highestScore } = useHighScore();
 
     const getResultMessage = () => {
-        if (score >= highestScore && highestScore > 0) return "Nytt rekord!";
-        if (score > 0) return "Bra spelat!";
+        if (score >= highestScore && highestScore > 0) return "Grymt spelat! Nytt rekord!";
+        if (score > 300) return "Grattis du vann! Bra spelat! ";
         console.log(highestScore)
-        return "Försök igen!";
+        return "Bättre lycka nästa gång!";
     };
 
     return (
