@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { useGameContext } from "./GameContext";
 import { processReward } from "./transactionService";
 import Button from './../components/Button'
-import { GameProvider } from "./GameContext";
-// import { decodeJwt } from "./auth";
-// import { JwtDisplay } from './JwtDisplay'
-
 interface WinnerRewardsProps {
   onRewardClaimed: () => void;
   score: number;
@@ -77,7 +73,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
 
   return (
 <>
-{score > 300 ? (
+{score > 30 ? (
         <Button
           onClick={handleCashReward}
           disabled={isProcessing}
@@ -94,7 +90,6 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
          Hämta stamp
         </Button>
  )}
-
 
 </>
   );
