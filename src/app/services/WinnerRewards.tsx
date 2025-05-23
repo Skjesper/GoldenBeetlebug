@@ -91,6 +91,12 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
         </Button>
  )}
 
+  {error && (
+    <div className="mt-4 p-2 bg-red-100 text-red-800 border border-red-300 rounded-lg w-full text-center">
+      {error}
+    </div>
+  )}
+
 </>
   );
 };
