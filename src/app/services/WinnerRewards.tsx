@@ -8,9 +8,10 @@ import { GameProvider } from "./GameContext";
 
 interface WinnerRewardsProps {
   onRewardClaimed: () => void;
+  score: number;
 }
 
-const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed }) => {
+const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score }) => {
   const { jwtToken } = useGameContext();
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +29,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed }) => {
       const result = await processReward(jwtToken, "cash");
 
       if (result.success) {
-        setSuccessMessage(`You received a €2 reward!`);
+        setSuccessMessage(`You received a €3 reward!`);
         onRewardClaimed();
       } else {
         setError(result.error || "Failed to process cash reward");
@@ -76,21 +77,21 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed }) => {
 
   return (
 <>
-
+{score > 300 ? (
         <Button
           onClick={handleCashReward}
           disabled={isProcessing}
           >
-          cash
+          Hämta vinst & stamp
         </Button>
-
+  ) : (
         <Button
           onClick={handleStampReward}
           disabled={isProcessing}
           >
-         stamp
+         Hämta stamp
         </Button>
-
+ )}
 
 
 </>
