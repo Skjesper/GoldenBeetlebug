@@ -81,6 +81,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
         <Button
           onClick={handleCashReward}
           disabled={isProcessing}
+          className="greenButton"
           >
           Hämta vinst & stamp
         </Button>
@@ -88,6 +89,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
         <Button
           onClick={handleStampReward}
           disabled={isProcessing}
+          className="greenButton"
           >
          Hämta stamp
         </Button>
