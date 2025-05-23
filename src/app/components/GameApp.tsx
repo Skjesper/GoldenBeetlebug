@@ -146,7 +146,6 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
     const gameplayMusic = 'assets/audio/denLillaRödaPandan.mp3';
 
     const handleTimeOut = useCallback(() => {
-        console.log("Times up");
         localStorage.setItem('gameScore', score.toString());
         setGameRunning(false);
         setGameOver(true);

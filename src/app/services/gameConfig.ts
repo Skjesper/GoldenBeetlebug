@@ -8,4 +8,4 @@ export const GAME_CONFIG: GameConfig = {
   STAMP_ID: 19, 
 };
 
-console.log("Game configuration:", GAME_CONFIG);
+

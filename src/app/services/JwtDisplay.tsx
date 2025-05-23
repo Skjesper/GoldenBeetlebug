@@ -20,9 +20,7 @@ export default function JwtDisplay() {
         ];
 
         if (!allowedOrigins.includes(event.origin)) {
-          console.log(
-            `Ignoring message from unauthorized origin: ${event.origin}`
-          );
+          
           return;
         }
 
@@ -30,8 +28,7 @@ export default function JwtDisplay() {
           const { token } = event.data;
 
           setJwtToken(token);
-
-          console.log("JWT token set in context:", token);
+          console.log("JWT token set");
           const decoded = decodeJwt(token);
           if (decoded) {
             setError(null);
@@ -39,7 +36,7 @@ export default function JwtDisplay() {
             setError("Failed to decode token");
           }
 
-          console.log("Received JWT token from parent application");
+          
         }
       } catch (err) {
         console.error("Error processing message:", err);
@@ -51,7 +48,6 @@ export default function JwtDisplay() {
 
     if (window.parent !== window) {
       window.parent.postMessage({ type: "GAME_READY" }, "*");
-      console.log("Game ready message sent to parent");
     }
 
     return () => {

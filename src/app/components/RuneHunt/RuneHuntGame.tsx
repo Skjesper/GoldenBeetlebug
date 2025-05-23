@@ -159,7 +159,6 @@ const RuneHuntGame: React.FC<RuneHuntProps> = ({
       '/assets/HansHappy.png',    // Bad rune happy (Hans)
       '/assets/HansMad.png'       // Bad rune mad (Hans)
     );
-    console.log('Loading all rune images from public/assets/');
   }, []);
 
   // Initial setup and resize handling

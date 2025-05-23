@@ -57,8 +57,6 @@ function Leaderboard() {
               if (error) {
                 throw error;
               }
-
-              console.log(data);
               
               setLeaderBoardScores(data);
             } catch (error) {
