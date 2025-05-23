@@ -50,7 +50,7 @@ export async function createTransaction(
     let data;
     try {
       data = responseText ? JSON.parse(responseText) : {};
-    } catch (e) {
+    } catch {
       console.error("Failed to parse response:", responseText);
       throw new Error(`Invalid response format: ${responseText}`);
     }

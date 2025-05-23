@@ -55,7 +55,7 @@ export default function Timer({
   if (countDown && time <= 0 && onTimeOut) {
     onTimeOut();
   }
-}, [time]);
+}, [time, countDown, onTimeChange, onTimeOut]);
   
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;

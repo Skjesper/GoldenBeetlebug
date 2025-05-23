@@ -25,18 +25,18 @@ interface AnimatedTargetProps {
   targetImagePath?: string;
 }
 
-export default function AnimatedTarget({ targetImagePath = '/assets/TargetIcon.png' }: AnimatedTargetProps) {
-  const [position, setPosition] = useState({ x: 20, y: 20 });
-  const [locked, setLocked] = useState(false);
-  const animationRef = useRef<number | null>(null);
-  const startTime = useRef(Date.now());
-
   const config = {
     duration: 5000,
     initialRadius: 100,
     finalRadius: 8,
     rotationSpeed: 0.003, 
   };
+
+export default function AnimatedTarget({ targetImagePath = '/assets/TargetIcon.png' }: AnimatedTargetProps) {
+  const [position, setPosition] = useState({ x: 20, y: 20 });
+  const [locked, setLocked] = useState(false);
+  const animationRef = useRef<number | null>(null);
+  const startTime = useRef(Date.now());
 
   useEffect(() => {
     const animate = () => {
@@ -62,7 +62,7 @@ export default function AnimatedTarget({ targetImagePath = '/assets/TargetIcon.p
     return () => {
       if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
     };
-  }, []);
+  }, [locked]);
 
   return (
     <Wrapper>

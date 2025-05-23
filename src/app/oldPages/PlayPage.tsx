@@ -1,26 +1,12 @@
-import { useState } from 'react';
 import GameApp from '../components/GameApp';
-import { GameProvider } from '../services/GameContext';
-
-// import OrientationOverlay from '../components/OrientationCheck/OrientationCheck';
-
 
 function PlayPage() {
-    const [backgroundImage, setBackgroundImage] = useState<string | undefined>(undefined);
-
+    
     return (
 <>
-{/* <GameProvider> */}
-
-            <GameApp onBackgroundChange={setBackgroundImage} />
+     <GameApp />
        
-{/* </GameProvider> */}
-
 </>
-        // <OrientationOverlay>
-        //     <GameApp onBackgroundChange={setBackgroundImage} />
-        //     // </OrientationOverlay>
-
     );
 }
   

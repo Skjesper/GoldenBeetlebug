@@ -22,7 +22,7 @@ const StyledButton = styled.button`
 
         @media (orientation: portrait) {
             display: none;
-        }  
+        } 
 `;
 
 type ButtonProps = {
@@ -31,22 +31,23 @@ type ButtonProps = {
     onClick?: () => void;
     disabled?: boolean;
     type?: string
+    className?: string
     
 }
 
-function Button({ children, to, onClick, disabled }: ButtonProps) {
+function Button({ children, to, onClick, disabled, className }: ButtonProps) {
 
     if (to) {
         return (
             <Link href={to}>
-                <StyledButton disabled={disabled} onClick={onClick}>
+                <StyledButton disabled={disabled} onClick={onClick} className={className}>
                     {children}
                 </StyledButton>
             </Link>
         );
     }
 
-    return <StyledButton onClick={onClick} disabled={disabled}>{children}</StyledButton>;
+    return <StyledButton onClick={onClick} disabled={disabled} className={className}>{children}</StyledButton>;
 }
 
 export default Button;

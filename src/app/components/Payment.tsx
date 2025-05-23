@@ -3,7 +3,7 @@ import React from "react";
 import styled from '@emotion/styled';
 import Button from './Button';
 import AnimatedTarget from './AnimatedTarget';
-import { useGameContext } from "../services/GameContext";
+import { useGameContext } from "../services/useGameContext";
 import { processPayment } from "../services/transactionService";
 
 const PaymentContainer = styled.div`
@@ -90,7 +90,7 @@ const handlePayment = async () => {
             </TitleWrapper>
             
             <Button to='/play' onClick={handlePayment}
-        disabled={isProcessing}>Betala €5</Button>
+        disabled={isProcessing}>Betala €2</Button>
 
         </PaymentContainer>
     );
