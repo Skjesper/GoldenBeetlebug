@@ -1,11 +1,9 @@
 'use client'
+import React from "react";
 import styled from '@emotion/styled';
 import Button from './Button';
-
-
-import React from "react";
+import AnimatedTarget from './AnimatedTarget';
 import { useGameContext } from "../services/GameContext";
-import { GAME_CONFIG } from "../services/gameConfig";
 import { processPayment } from "../services/transactionService";
 
 const PaymentContainer = styled.div`
@@ -13,16 +11,13 @@ const PaymentContainer = styled.div`
   height: 100%;
   padding:2rem;
   margin: 0 auto;
- 
   display: flex;
   flex-direction: column; 
-  /* justify-content: center;  */
   align-items: center; 
   justify-content: center;
-  /* height: 100%; */
   background-color: var(--background);
   gap: 1.5rem;
-  
+  border-radius: 20px;
 `;
 
 const Title = styled.h1`
@@ -31,31 +26,29 @@ const Title = styled.h1`
     text-align: center;
     font-weight: 400;
     color: var(--dark);
+    padding-bottom: 50px;
 `;
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
+const TitleWrapper = styled.div`
+  position: relative;
+  display: inline-block;
 `;
 
-const Input = styled.input`
-    width: 264px;
-    height: 31px;
-    border-radius: 20px;
-    border: none;
-    margin-bottom: 25px;
-    padding-left: 10px;
+const OverlayTarget = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; 
 `;
 
 const PaymentSection: React.FC = () => {
+  const targetImagePath = '/assets/TargetIcon.png';
   
   const {
     setHasPaid,
     isProcessing,
     setIsProcessing,
-    // paymentError,
     setPaymentError,
     jwtToken,
     inputRef,
@@ -86,19 +79,18 @@ const handlePayment = async () => {
       setIsProcessing(false);
     }
   };
-
-// function Payment() {
     return (
+      
         <PaymentContainer className='paymentContainer'>
-            <Title>Rune Hunt</Title>
-
-            <Form className='formContainer'>
-                <Input type="text" id="username" placeholder="Användarnamn" />
-                <Input type="password" id="password" placeholder="Lösenord"/>
-            </Form>
+            <TitleWrapper>
+                <Title>Rune Hunt</Title>
+                <OverlayTarget>
+                    <AnimatedTarget targetImagePath={targetImagePath} />
+                </OverlayTarget>
+            </TitleWrapper>
             
             <Button to='/play' onClick={handlePayment}
-        disabled={isProcessing} >Betala</Button>
+        disabled={isProcessing}>Betala €5</Button>
 
         </PaymentContainer>
     );
