@@ -17,16 +17,25 @@ const ScoreBoardContainer = styled.div`
     align-items: center;
     justify-content: center;
 
+    @media (orientation: landscape) and (min-width: 1100px) {
+        padding: 3rem; 
+        gap: 1.5rem; 
 
+    } 
     
 `;
 
 const StyledH2 = styled.h2`
     font-family: var(--font-primary);
-    font-size: 3rem; /* Mobil landscape (bas) */
+    font-size: 3rem; 
     text-align: center;
     font-weight: 400;
     color: var(--primary);
+
+     @media (orientation: landscape) and (min-width: 1100px) {
+        font-size: 4rem;
+        
+    } 
     
 `;
 
