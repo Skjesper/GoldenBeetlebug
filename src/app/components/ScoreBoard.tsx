@@ -8,12 +8,7 @@ const ScoreContainer = styled.section`
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
-  color: white;
-  text-shadow: 
-        -1px -1px 0 black,
-        1px -1.2px 0 black,
-        -1px 1px 0 black,
-        1px 1px 0 black;
+  
 `;
 
 const ScoreText = styled.h2`

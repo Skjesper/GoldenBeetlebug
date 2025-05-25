@@ -130,7 +130,12 @@ const FixedUI = styled.div`
     width: 90%;
     justify-content: space-between;
     pointer-events: none;
-    
+    color: white;
+    text-shadow: 
+        -1px -1px 0 black,
+        1px -1.2px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
     
     z-index: 5;
 `;
@@ -173,7 +178,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
     function startGame() {
         setStart(true);
-        setCountDown(500);
+        setCountDown(3);
         setGameOver(false);
         setScore(0);
 

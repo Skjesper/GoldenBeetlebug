@@ -16,6 +16,8 @@ const PageContainer = styled.div`
     background-color: white;
 `;
 
+
+
 function LeaderboardPage() {
   const [gameScore, setGameScore] = useState<number>(0);
   const [display, setDisplay] = useState<boolean>(false); 
@@ -32,7 +34,9 @@ function LeaderboardPage() {
    <OrientationOverlay>
       <PageContainer>
      {!display ? (
+       
        <ScoreForm score={gameScore}  onDisplayChange={setDisplay}/>
+       
       ) : (
         <Leaderboard/>
       )}
