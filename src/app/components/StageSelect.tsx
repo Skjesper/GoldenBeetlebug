@@ -120,13 +120,15 @@ const StyledImageContainer = styled.div`
   }
 `;
 
+
 const StyledButton = styled(Button)`
+
   position: absolute;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  /* Ta bort margin eftersom vi nu använder absolut positionering */
+
 `;
 
 const OverlayText = styled.div`
@@ -161,6 +163,9 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
         setSelectedId(id);
         onStageSelect?.(id);
     };
+    
+    const isDisabled = selectedId === null;
+    
     return (
         <StyledContainer className='selectContainer'>
             <StyledHeader>
@@ -194,8 +199,10 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
                     </StyledImageContainer>
                 ))}
             </StyledImageGrid>
+
             <StyledButton onClick={startGame} disabled={selectedId === null}>Spela</StyledButton>
             
+
         </StyledContainer>
     );
 }
