@@ -16,11 +16,16 @@ const backgroundImage4 = '/assets/backgroundImages/afterski3.png'
 
 const GameScreenContainer = styled.section`
     height: 100vh;
+    height: 100dvh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
 `;
 
 const GameContent = styled.div`
@@ -35,10 +40,6 @@ const GameContent = styled.div`
 
 const GameBackground = styled.div<{ backgroundImage?: string }>`
     position: absolute;
-
-    /* top: 0;
-    left: 0;
-    right: 0; */
     margin: 0 auto;
     width: 90%;
     height: 100%;
@@ -49,18 +50,21 @@ const GameBackground = styled.div<{ backgroundImage?: string }>`
     border-radius: 20px;
 `;
 
-
 const EndScreenContainer = styled.div`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 10;
+    overflow: hidden;
 `;
 
 const CountdownContainer = styled.div`
@@ -99,9 +103,8 @@ const CountdownNumber = styled.h2`
         }
     }
 
-     @media (orientation: landscape) and (min-width: 1100px) {
+    @media (orientation: landscape) and (min-width: 1100px) {
         font-size: 20rem;
-
     } 
 `;
 
@@ -116,11 +119,10 @@ const SoundOnText = styled.p`
         -1.2px 1.2px 0 black,
         1.2px 1.2px 0 black;
 
-        @media (orientation: landscape) and (min-width: 1100px) {
+    @media (orientation: landscape) and (min-width: 1100px) {
         font-size: 3rem;
-
     } 
-;`
+`;
 
 const FixedUI = styled.div`
     position: absolute;
@@ -140,10 +142,10 @@ const FixedUI = styled.div`
     z-index: 5;
 `;
 
-    const EndScreenWrapper = styled.div`
+const EndScreenWrapper = styled.div`
     position: relative;
     z-index: 15;
-    `;
+`;
 
 interface GameAppProps {
     onBackgroundChange?: (backgroundImage: string) => void;
@@ -164,6 +166,22 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
     const [musicPlaying, setMusicPlaying] = useState<boolean>(false);
 
     const gameplayMusic = 'assets/audio/denLillaRödaPandan.mp3';
+
+    useEffect(() => {
+        const hideAddressBar = () => {
+            setTimeout(() => window.scrollTo(0, 1), 100);
+            setTimeout(() => window.scrollTo(0, 0), 200);
+        };
+        
+        hideAddressBar();
+        
+        const handleOrientationChange = () => {
+            setTimeout(hideAddressBar, 500);
+        };
+        
+        window.addEventListener('orientationchange', handleOrientationChange);
+        return () => window.removeEventListener('orientationchange', handleOrientationChange);
+    }, []);
 
     const handleTimeOut = useCallback(() => {
         localStorage.setItem('gameScore', score.toString());
@@ -204,14 +222,12 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
     const handleScore = useCallback((rune?: Rune) => {
         if (gameRunning) {
           if (rune && rune.props.isBad) {
-            // Om det är en dålig rune, subtrahera 25 poäng
             setScore(prevScore => prevScore - 25);
           } else {
-            // Om det är en bra rune eller ingen rune angavs, lägg till 10 poäng
             setScore(prevScore => prevScore + 10);
           }
         }
-      }, [gameRunning]);
+    }, [gameRunning]);
 
     const handleStageSelect = (selectedId: number) => {
         const selectedStage = stageImages.find(stage => stage.id === selectedId);
@@ -234,7 +250,6 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
     return (
         <div>
-
             <BackgroundMusic 
                 isPlaying={musicPlaying}
                 audioSrc={gameplayMusic}
@@ -254,12 +269,9 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
 
             {!gameOver ? (
                 <GameScreenContainer className='gameContainer'>
-
                     <GameContent>
-                    <GameBackground backgroundImage={selectedBackground} />
+                        <GameBackground backgroundImage={selectedBackground} />
 
-
-                        {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
                                 initialTime={35} 
@@ -269,17 +281,13 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                             />
                             <Scoreboard 
                                 score={score} 
-                                // highScore={highScore}
-                                // onScorePoint={handleScore}
                             />
                         </FixedUI>
 
-                     
                         <RuneHuntGame
                             width="90%" 
                             height="100%"
                             backgroundColor="transparent"
-                            // backgroundImage={selectedBackground}
                             numRunes={8}
                             isActive={gameRunning} 
                             onRuneClick={handleScore}
@@ -291,13 +299,14 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                                 <CountdownNumber>{countdown}</CountdownNumber>
                             </CountdownContainer>
                         )}
-                        
                     </GameContent>
                 </GameScreenContainer>
             ) : (
                 <EndScreenContainer>
-                    <GameBackground backgroundImage={selectedBackground} 
-                    style={{ width: '100%' }}/>
+                    <GameBackground 
+                        backgroundImage={selectedBackground} 
+                        style={{ width: '100%' }}
+                    />
                     <EndScreenWrapper>
                         <EndScreen score={score} />
                     </EndScreenWrapper>
