@@ -30,17 +30,25 @@ export class RuneGenerator {
   private gameWidth: number;
   private gameHeight: number;
   private config: RuneConfig;
+  private maxBadRunes: number;
   
-  constructor(gameWidth: number, gameHeight: number, isMobile: boolean = false) {
+  constructor(gameWidth: number, gameHeight: number, isMobile: boolean = false, maxBadRunes: number = 3) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.config = isMobile ? CONFIGS.mobile : CONFIGS.desktop;
+    this.maxBadRunes = maxBadRunes;
   }
   
-  updateSettings(settings: { gameWidth?: number, gameHeight?: number, isMobile?: boolean }): void {
+  updateSettings(settings: { 
+    gameWidth?: number, 
+    gameHeight?: number, 
+    isMobile?: boolean,
+    maxBadRunes?: number 
+  }): void {
     if (settings.gameWidth !== undefined) this.gameWidth = settings.gameWidth;
     if (settings.gameHeight !== undefined) this.gameHeight = settings.gameHeight;
     if (settings.isMobile !== undefined) this.config = settings.isMobile ? CONFIGS.mobile : CONFIGS.desktop;
+    if (settings.maxBadRunes !== undefined) this.maxBadRunes = settings.maxBadRunes;
   }
   
   setDeviceType(isMobile: boolean): void {
@@ -49,6 +57,14 @@ export class RuneGenerator {
   
   updateGameSize(width: number, height: number): void {
     this.updateSettings({ gameWidth: width, gameHeight: height });
+  }
+  
+  setMaxBadRunes(max: number): void {
+    this.maxBadRunes = max;
+  }
+  
+  private countBadRunes(runes: Rune[]): number {
+    return runes.filter(rune => rune.props.isBad).length;
   }
   
   createRandomRune(isBad = false): Rune {
@@ -80,23 +96,50 @@ export class RuneGenerator {
     });
   }
   
-  // Skapa en rune med sannolikhet att vara dålig
-  createNewRune(badRuneRatio: number = 0.2): Rune {
+  createNewRune(badRuneRatio: number = 0.2, existingRunes: Rune[] = []): Rune {
+    const currentBadCount = this.countBadRunes(existingRunes);
+    
+    if (currentBadCount >= this.maxBadRunes) {
+      return this.createRandomRune(false);
+    }
+    
     const shouldBeBad = Math.random() < badRuneRatio;
     return this.createRandomRune(shouldBeBad);
   }
 
   createInitialRunes(numRunes: number, badRuneRatio: number = 0.2): Rune[] {
-    return Array.from({ length: numRunes }, () => this.createNewRune(badRuneRatio));
+    const runes: Rune[] = [];
+    
+    for (let i = 0; i < numRunes; i++) {
+      const newRune = this.createNewRune(badRuneRatio, runes);
+      runes.push(newRune);
+    }
+    
+    return runes;
   }
   
   ensureRunes(currentRunes: Rune[], targetNumber: number, badRuneRatio: number = 0.2): Rune[] {
     if (currentRunes.length >= targetNumber) return currentRunes;
     
     const numToAdd = targetNumber - currentRunes.length;
-    const newRunes = Array.from({ length: numToAdd }, () => this.createNewRune(badRuneRatio));
+    const newRunes: Rune[] = [];
+    
+    for (let i = 0; i < numToAdd; i++) {
+      const allRunes = [...currentRunes, ...newRunes];
+      const newRune = this.createNewRune(badRuneRatio, allRunes);
+      newRunes.push(newRune);
+    }
     
     return [...currentRunes, ...newRunes];
+  }
+  
+  getBadRuneStats(runes: Rune[]): { count: number, max: number, canCreateMore: boolean } {
+    const count = this.countBadRunes(runes);
+    return {
+      count,
+      max: this.maxBadRunes,
+      canCreateMore: count < this.maxBadRunes
+    };
   }
   
   adjustRunesToFitCanvas(runes: Rune[]): void {
