@@ -120,22 +120,15 @@ const StyledImageContainer = styled.div`
   }
 `;
 
-const StyledButton = styled(Button)<{ $isDisabled: boolean }>`
+
+const StyledButton = styled(Button)`
+
   position: absolute;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  background-color: ${props => props.$isDisabled ? 'transparent' : 'var(--primary, #007bff)'};
-  border: ${props => props.$isDisabled ? '2px solid rgba(255, 255, 255, 0.3)' : '2px solid var(--primary, #007bff)'};
-  color: ${props => props.$isDisabled ? 'rgba(255, 255, 255, 0.5)' : 'white'};
-  pointer-events: ${props => props.$isDisabled ? 'none' : 'auto'};
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background-color: ${props => props.$isDisabled ? 'transparent' : 'var(--primary-hover, #0056b3)'};
-    border-color: ${props => props.$isDisabled ? 'rgba(255, 255, 255, 0.3)' : 'var(--primary-hover, #0056b3)'};
-  }
+
 `;
 
 const OverlayText = styled.div`
@@ -206,14 +199,10 @@ export default function StageSelect({ images, startGame, onStageSelect }: StageS
                     </StyledImageContainer>
                 ))}
             </StyledImageGrid>
+
+            <StyledButton onClick={startGame} disabled={selectedId === null}>Spela</StyledButton>
             
-            <StyledButton 
-                onClick={startGame} 
-                disabled={isDisabled}
-                $isDisabled={isDisabled}
-            >
-                Spela
-            </StyledButton>
+
         </StyledContainer>
     );
 }
