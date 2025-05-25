@@ -15,7 +15,7 @@ const CONFIGS = {
     minRadius: 30,  
     maxRadius: 45,
     minSpeed: 3,
-    maxSpeed: 6
+    maxSpeed: 4
   },
   mobile: {
     minMargin: 20,
