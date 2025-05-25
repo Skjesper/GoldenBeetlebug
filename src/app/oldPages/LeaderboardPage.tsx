@@ -13,12 +13,12 @@ const PageContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
 `;
 
 function LeaderboardPage() {
   const [gameScore, setGameScore] = useState<number>(0);
   const [display, setDisplay] = useState<boolean>(false); 
-  const [backgroundImage] = useState<string | undefined>(undefined);
     
   useEffect(() => {
     const savedScore = localStorage.getItem('gameScore');

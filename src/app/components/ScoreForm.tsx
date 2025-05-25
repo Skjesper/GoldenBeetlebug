@@ -5,30 +5,46 @@ import Scoreboard from './ScoreBoard';
 import styled from '@emotion/styled';
 import Button from './Button';
 
+
+
 const ScoreBoardContainer = styled.div`
-    padding: 4rem;
+    padding: 1rem;
     border-radius: 20px;
     background: var(--background);
     display: flex;
     gap:1rem;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
+
+
+    
 `;
 
+const StyledH2 = styled.h2`
+    font-family: var(--font-primary);
+    font-size: 3rem; /* Mobil landscape (bas) */
+    text-align: center;
+    font-weight: 400;
+    color: var(--primary);
+    
+`;
+
+
 const ScoreInput = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 0.625rem;
 `;
 
 const Input = styled.input`
-    width: 264px;
-    height: 31px;
-    border-radius: 20px;
-    border: 1px solid #dc4d0047;
-    margin-bottom: 25px;
-    padding-left: 10px;
+   width: 16.5rem;
+   height: 1.9375rem;
+   border-radius: 1.25rem;
+   border: 1px solid #dc4d0047;
+   margin-bottom: 1.5625rem;
+   padding-left: 0.625rem;
 `;
 
 interface ScoreFormProps {
@@ -81,7 +97,7 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
     <div>
       
       <ScoreBoardContainer >
-        <h1>Grymt jobbat!</h1>
+        <StyledH2>Grymt jobbat!</StyledH2>
         <h3>Vill du spara ditt resultat?</h3>
           <ScoreInput onSubmit={handleSubmit}>
           <Scoreboard score={score} showHighScore={false} />
