@@ -8,7 +8,7 @@ import Button from './Button';
 
 
 const ScoreBoardContainer = styled.div`
-    padding: 1rem;
+    padding: 2rem;
     border-radius: 20px;
     background: var(--background);
     display: flex;
@@ -46,6 +46,14 @@ const Input = styled.input`
    margin-bottom: 1.5625rem;
    padding-left: 0.625rem;
 `;
+
+  const ButtonContainer = styled.div`
+  
+  display: flex;
+  gap: 1rem;
+
+  
+  `;
 
 interface ScoreFormProps {
   score?: number;
@@ -111,7 +119,7 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
                 placeholder='Nickname'
               />
 
-
+          <ButtonContainer>
             <Button 
             type="submit" 
             disabled={loading} 
@@ -125,6 +133,7 @@ const ScoreForm: React.FC<ScoreFormProps> = ({ score = 0, onDisplayChange}) => {
             disabled={loading} >
               {'Startsidan'}
             </Button>
+            </ButtonContainer>
 
           </ScoreInput>
           {message && <p>{message}</p>}
