@@ -14,7 +14,12 @@ const TimerContainer = styled.div`
   font-size: 2rem;
   font-family: var(--font-secondary-big);
   font-weight: var(--weight-bold);
-  color: var(--dark);
+  color: white;
+  text-shadow: 
+        -1.2px -1.2px 0 black,
+        1.2px -1.2px 0 black,
+        -1.2px 1.2px 0 black,
+        1.2px 1.2px 0 black;
 `;
 
 export default function Timer({ 

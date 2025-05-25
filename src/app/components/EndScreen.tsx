@@ -9,7 +9,7 @@ interface EndScreenProps {
 }
 
 const Container = styled.div`
-  padding: 4rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,8 +53,8 @@ export default function EndScreen({ score }: EndScreenProps) {
           
             <h5>{getResultMessage()}</h5>
           
-          <WinnerRewards onRewardClaimed={() => {}} score={score}/>
           <ButtonContainer>
+          <WinnerRewards onRewardClaimed={() => {}} score={score}/>
             <Button to="/leaderboard">
               Spara resultat
             </Button>

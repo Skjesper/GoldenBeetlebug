@@ -20,6 +20,7 @@ const GameScreenContainer = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 `;
 
 const GameContent = styled.div`
@@ -76,11 +77,15 @@ const CountdownContainer = styled.div`
 `;
 
 const CountdownNumber = styled.h2`
-    font-size: 25rem; 
-    color: #000000;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+    font-size: 8rem; 
+    color: white;
+    font-weight: bold; 
     animation: pulse 1s infinite;
+    text-shadow: 
+        -2px -2px 0 black,
+        2px -2px 0 black,
+        -2px 2px 0 black,
+        2px 2px 0 black;
     
     @keyframes pulse {
         0% {
@@ -94,17 +99,27 @@ const CountdownNumber = styled.h2`
         }
     }
 
-    @media (min-width: 768px) {
-        font-size: 18rem;
-    }
+     @media (orientation: landscape) and (min-width: 1100px) {
+        font-size: 20rem;
+
+    } 
 `;
 
 const SoundOnText = styled.p`
     font-size: 2rem;
     font-weight: var(--weight-bold);
-    color: #000;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    color: white;
     padding-top: 1.5rem;
+    text-shadow: 
+        -1.2px -1.2px 0 black,
+        1.2px -1.2px 0 black,
+        -1.2px 1.2px 0 black,
+        1.2px 1.2px 0 black;
+
+        @media (orientation: landscape) and (min-width: 1100px) {
+        font-size: 3rem;
+
+    } 
 ;`
 
 const FixedUI = styled.div`
@@ -115,7 +130,12 @@ const FixedUI = styled.div`
     width: 90%;
     justify-content: space-between;
     pointer-events: none;
-    
+    color: white;
+    text-shadow: 
+        -1px -1px 0 black,
+        1px -1.2px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
     
     z-index: 5;
 `;
@@ -242,7 +262,7 @@ export default function GameApp({ onBackgroundChange, onGameOver }: GameAppProps
                         {/* UI ovanpå canvas */}
                         <FixedUI>
                             <Timer 
-                                initialTime={5} 
+                                initialTime={35} 
                                 isRunning={gameRunning} 
                                 onTimeOut={handleTimeOut}
                                 countDown={true}

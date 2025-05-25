@@ -22,7 +22,7 @@ const CONFIGS = {
     minRadius: 25,  
     maxRadius: 35,  
     minSpeed: 2.0,
-    maxSpeed: 4.5
+    maxSpeed: 3.0,
   }
 } as const;
 
