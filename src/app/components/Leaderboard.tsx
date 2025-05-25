@@ -10,13 +10,23 @@ const Container = styled.div `
     align-items: center;
     justify-content: center;
     background-color: var(--background);
-    padding: 4rem 12rem;
+    padding: 2rem;
     border-radius: 20px;
     gap: 2rem;
+
+    @media (orientation: landscape) and (min-width: 1100px) {
+        padding: 3rem 5rem;
+
+    } 
 `;
 
 const Title = styled.h1 `
-    font-size: 4rem;
+    font-size: 2rem;
+
+    @media (orientation: landscape) and (min-width: 1100px) {
+        font-size: 5rem;
+
+    } 
 `;
 
 const ListContainer = styled.ol `
@@ -29,9 +39,14 @@ const ListContainer = styled.ol `
 
 const ListItem = styled.li `
     font-family: var(--font-secondary);
-    font-size: 1.5rem;
+    font-size: 1rem;
     text-decoration: 0.8px black underline;
     font-weight: 100;
+
+    @media (orientation: landscape) and (min-width: 1100px) {
+        font-size: 2rem;
+
+    } 
 `;
 
 interface LeaderboardScore {
