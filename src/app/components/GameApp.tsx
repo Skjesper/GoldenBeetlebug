@@ -20,6 +20,7 @@ const GameScreenContainer = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 `;
 
 const GameContent = styled.div`
