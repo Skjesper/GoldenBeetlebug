@@ -1,4 +1,4 @@
-import GlobalStyles from './styles/GlobalStyles';
+import './styles/globals.css';
 import { GameContextProvider } from './services/GameContextProvider';
 
 
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <GameContextProvider>
-        <GlobalStyles />
+        {/* <GlobalStyles /> */}
         {children}
         </GameContextProvider>
       </body>
