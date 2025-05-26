@@ -71,7 +71,7 @@ const WinnerRewards: React.FC<WinnerRewardsProps> = ({ onRewardClaimed, score })
 
   return (
 <>
-{score > 30 ? (
+{score > 150 ? (
         <Button
           onClick={handleCashReward}
           disabled={isProcessing}

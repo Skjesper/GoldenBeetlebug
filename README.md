@@ -12,7 +12,7 @@ Rune Hunt is a Next.js-based casual click-based game where players use a champag
 - **Payment Integration**: JWT-authenticated payment system for game access (€2 entry fee)
 - **Reward System**: 
  - Playing: Earn a stamp
- - Score 300+ points: Earn €3 cash reward + stamp
+ - Score 150+ points: Earn €3 cash reward + stamp
 - **Multiple Game Stages**: Choose from four visually distinct backgrounds (Beach Club, Coachella, Forest Rave, After Ski)
 - **Dynamic Gameplay**: 
  - Regular Runes bounce with random velocity (+10 points each)
