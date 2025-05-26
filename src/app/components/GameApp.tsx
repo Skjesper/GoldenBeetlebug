@@ -111,7 +111,7 @@ const CountdownNumber = styled.h2`
 const SoundOnText = styled.p`
     font-size: 2rem;
     font-weight: var(--weight-bold);
-    color: white;
+    color: red;
     padding-top: 1.5rem;
     text-shadow: 
         -1.2px -1.2px 0 black,
